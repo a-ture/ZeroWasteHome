@@ -1,0 +1,20 @@
+.cards-list {
+  display: flex; /* Attiva Flexbox per disporre gli elementi */
+  flex-direction: column; /* Dispone gli elementi all'interno della lista (titolo e container delle card) in una colonna, quindi uno sotto l'altro */
+  align-items: center; /* Centra il contenuto orizzontalmente nella pagina */
+}
+
+.title {
+  font-size: 1.5rem; /* Imposta la dimensione del font del titolo */
+  margin-bottom: 20px; /* Aggiunge uno spazio sotto il titolo per separarlo dalle card */
+  color: #333; /* Colore del testo del titolo */
+  text-align: center; /* Centra il testo del titolo */
+}
+
+.card-container {
+  display: flex; /* Attiva Flexbox per disporre le card */
+  flex-direction: row; /* Dispone le card in una riga orizzontale */
+  gap: 20px; /* Aggiunge uno spazio di 20px tra ogni card */
+  flex-wrap: wrap; /* Permette alle card di andare a capo se non c'è abbastanza spazio in orizzontale */
+  justify-content: center; /* Centra le card orizzontalmente all'interno del contenitore */
+}

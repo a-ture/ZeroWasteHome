@@ -1,0 +1,21 @@
+<div class="cards-list">
+  <!-- Titolo principale della lista di card -->
+  <h2 class="title">Lista di Card</h2>
+
+  <!-- Contenitore delle card -->
+  <div class="card-container">
+    <!-- Ciclo *ngFor per generare una card per ogni oggetto nell'array 'cards' -->
+    <!-- Direttiva ngFor per iterare su ogni oggetto 'card' nell'array 'cards' -->
+    <!-- Binding del titolo della card -->
+    <!-- Binding del sottotitolo della card -->
+    <!-- Binding del contenuto della card -->
+    <!-- Binding dell'URL dell'immagine della card -->
+    <app-example-card
+      *ngFor="let card of cards"
+      [title]="card.title"
+      [subtitle]="card.subtitle"
+      [content]="card.content"
+      [imageUrl]="card.image"
+    ></app-example-card>
+  </div>
+</div>

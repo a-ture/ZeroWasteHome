@@ -1,0 +1,35 @@
+<p-card [style]="{ width: '360px' }">
+  <!-- Componente PrimeNG per visualizzare una card con stile personalizzato per la larghezza -->
+
+  <!-- Sezione Header della Card -->
+  <ng-template pTemplate="header">
+    <!-- Definisce il template per l'header della card -->
+    <h3>{{ title }}</h3>
+    <!-- Visualizza il titolo della card, ottenuto tramite property binding con `@Input()` -->
+    <h5>{{ subtitle }}</h5>
+    <!-- Visualizza il sottotitolo della card, ottenuto tramite property binding con `@Input()` -->
+    <img alt="Card" [src]="imageUrl" />
+    <!-- Visualizza un'immagine nella card; `imageUrl` è ottenuto tramite property binding -->
+  </ng-template>
+
+  <!-- Contenuto principale della Card -->
+  <p>{{ content }}</p>
+  <!-- Paragrafo che mostra il contenuto della card, ottenuto tramite property binding con `@Input()` -->
+
+  <!-- Sezione Footer della Card -->
+  <ng-template pTemplate="footer">
+    <!-- Definisce il template per il footer della card -->
+    <div class="flex gap-3 mt-1">
+      <!-- Contenitore flessibile per i pulsanti con spaziatura tra di essi -->
+      <p-button
+        label="Cancel"
+        severity="secondary"
+        class="w-full"
+        styleClass="w-full"
+      />
+      <!-- Pulsante "Cancel" con stile personalizzato -->
+      <p-button label="Save" class="w-full" styleClass="w-full" />
+      <!-- Pulsante "Save" con stile personalizzato -->
+    </div>
+  </ng-template>
+</p-card>
