@@ -14,7 +14,6 @@ import { CardModule } from 'primeng/card'; // Importa CardModule di PrimeNG per 
 })
 export class ExampleCardComponent {
   // Definizione della classe del componente
-
   @Input() title: string = 'Default Title'; // Proprietà 'title' della card, con valore predefinito; può essere impostata dall'esterno
   @Input() subtitle: string = 'Default Subtitle'; // Proprietà 'subtitle' della card, con valore predefinito; può essere impostata dall'esterno
   @Input() content: string = 'Default content of the card.'; // Proprietà 'content' della card, con valore predefinito; può essere impostata dall'esterno
