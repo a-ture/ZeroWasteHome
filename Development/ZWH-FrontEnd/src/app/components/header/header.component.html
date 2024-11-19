@@ -1,0 +1,46 @@
+<nav class="navbar">
+  <!-- Logo e Titolo -->
+  <div class="navbar-left">
+    <img src="assets/img/logo.png" alt="ZeroWaste Logo" class="logo" />
+    <span class="navbar-title">ZeroWaste Home</span>
+  </div>
+
+  <div class="navbar-right">
+    <!-- Barra di ricerca -->
+    <div *ngIf="barra_ricerca !== 'no'" class="navbar-search">
+      <span class="pi pi-search search-icon"></span>
+      <input type="text" placeholder="Cerca..." />
+    </div>
+
+    <!-- Link di navigazione con effetto selezione -->
+    <ul class="navbar-links">
+      <li (click)="setActiveLink('alimenti')" [class.active]="activeLink === 'alimenti'">
+        <a href="#">Alimenti</a>
+      </li>
+      <li (click)="setActiveLink('community')" [class.active]="activeLink === 'community'">
+        <a href="#">Community</a>
+      </li>
+      <li (click)="setActiveLink('donazioni')" [class.active]="activeLink === 'donazioni'">
+        <a href="#">Donazioni</a>
+      </li>
+      <!-- Cerchio che si sposta -->
+      <span
+        class="moving-circle"
+        [ngStyle]="{ transform: circleTransform, display: circleDisplay }"
+      ></span>
+    </ul>
+
+    <!-- Icona Profilo Utente -->
+    <div class="navbar-profile" (click)="toggleUserMenu()">
+      <span class="pi pi-user user-icon"></span>
+      <!-- Menu a tendina dell'utente -->
+      <div *ngIf="userMenuVisible" class="dropdown-menu">
+        <ul>
+          <li *ngIf="loggato == 'no'" >Login</li>
+          <li *ngIf="loggato == 'no'">Registrati</li>
+          <li *ngIf="loggato == 'si'">logout</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

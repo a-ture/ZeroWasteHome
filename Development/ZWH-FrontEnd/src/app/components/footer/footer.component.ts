@@ -9,6 +9,6 @@ import { DividerModule } from 'primeng/divider';
   standalone: true,
   imports: [CommonModule, RouterModule, ButtonModule, DividerModule],
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss']
+  styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {}
