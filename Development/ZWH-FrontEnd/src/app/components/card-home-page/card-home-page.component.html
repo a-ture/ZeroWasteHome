@@ -1,0 +1,13 @@
+<div class="external">
+  <div class="card-grid">
+    <div class="card" *ngFor="let section of sections">
+      <div class="card-image">
+        <img [src]="section.imageUrl || 'assets/placeholder.png'" [alt]="section.altText" />
+      </div>
+      <div class="card-content">
+        <h4>{{ section.text }}</h4>
+        <button class="discover-button">Scopri</button>
+      </div>
+    </div>
+  </div>
+</div>

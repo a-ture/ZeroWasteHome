@@ -1,0 +1,68 @@
+<div class="card flex justify-content-center">
+  <!-- Container principale:
+       - Usa la classe "card" per applicare uno stile generale.
+       - La classe "flex justify-content-center" utilizza Flexbox per centrare orizzontalmente il contenuto.
+  -->
+  <p-accordion [activeIndex]="0">
+    <!-- Componente PrimeNG Accordion:
+         - "activeIndex=0": La prima tab è attiva per impostazione predefinita.
+    -->
+    <p-accordionTab header="Come posso recuperare la mia password?">
+      <!-- Tab 1: Recupero password
+           - L'attributo "header" definisce il titolo visibile della tab.
+      -->
+      <p>
+        Per recuperare la tua password, vai alla pagina utente e reimposta la password.
+        <!-- Contenuto della tab: Spiegazione chiara e diretta su come recuperare la password. -->
+      </p>
+    </p-accordionTab>
+
+    <p-accordionTab header="Come posso aggiornare le mie informazioni personali?">
+      <!-- Tab 2: Aggiornamento informazioni personali -->
+      <p>
+        Accedi alla tua area personale, vai alla sezione "Profilo" e seleziona "Modifica".
+        <br />
+        Potrai aggiornare le tue informazioni e salvale una volta completato.
+        <!-- Contenuto della tab:
+             - Spiega come aggiornare i dati personali con passaggi dettagliati.
+             - Il tag <br /> è utilizzato per andare a capo.
+        -->
+      </p>
+    </p-accordionTab>
+
+    <p-accordionTab header="Quali metodi di pagamento sono accettati?">
+      <!-- Tab 3: Metodi di pagamento accettati -->
+      <p>
+        Accettiamo carte di credito/debito (Visa, MasterCard, American Express) e PayPal.
+        <br />
+        Altri metodi di pagamento potrebbero essere aggiunti in futuro.
+        <!-- Contenuto della tab:
+             - Elenco dei metodi di pagamento disponibili.
+             - Aggiunta nota per indicare che altri metodi potrebbero essere supportati in futuro.
+        -->
+      </p>
+    </p-accordionTab>
+
+    <p-accordionTab header="Posso cancellare il mio abbonamento in qualsiasi momento?">
+      <!-- Tab 4: Cancellazione dell'abbonamento -->
+      <p>
+        Si, puoi cancellare il tuo abbonamento in qualsiasi momento contattando l'assistenza.
+        <!-- Contenuto della tab:
+             - Informazione chiara per la gestione dell'abbonamento.
+             - Invito a contattare il supporto per completare la procedura.
+        -->
+      </p>
+    </p-accordionTab>
+
+    <p-accordionTab header="Come posso contattare l'assistenza clienti?">
+      <!-- Tab 5: Contatto con il supporto -->
+      <p>
+        Puoi contattare il nostro team di supporto via email all'indirizzo supporto&#64;esempio.com.
+        <!-- Contenuto della tab:
+             - Fornisce l'indirizzo email per il supporto.
+             - Utilizzo di &#64; per proteggere l'indirizzo dallo spam.
+        -->
+      </p>
+    </p-accordionTab>
+  </p-accordion>
+</div>

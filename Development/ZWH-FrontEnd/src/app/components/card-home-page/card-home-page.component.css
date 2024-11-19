@@ -1,0 +1,82 @@
+.card-grid {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+.external {
+  display: flex;
+  justify-content: center;
+}
+.card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 276px;
+  width: 258px;
+  text-align: center;
+  padding: 10px;
+}
+
+.card-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.card-image img {
+  width: 100%;
+  max-height: 120px;
+  object-fit: contain;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 5px 30px 5px;
+}
+
+.card-content h4 {
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 500;
+  width: 150px;
+  text-align: left;
+}
+
+.discover-button {
+  margin-top: 10px;
+  padding: 5px 15px;
+  border: 1px solid #333;
+  background-color: #fff;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.discover-button:hover {
+  background-color: #e0e0e0;
+}
+
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}

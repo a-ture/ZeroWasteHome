@@ -1,0 +1,20 @@
+<div class="card flex justify-content-center gap-2">
+  <!-- Contenitore principale:
+       - "card": Applica uno stile generale.
+       - "flex justify-content-center": Centra gli elementi orizzontalmente.
+       - "gap-2": Aggiunge uno spazio tra gli elementi. -->
+
+  <p-toast></p-toast>
+  <!-- Componente PrimeNG Toast:
+       - Visualizza messaggi di notifica temporanei. -->
+
+  <p-confirmDialog></p-confirmDialog>
+  <!-- Componente PrimeNG ConfirmDialog:
+       - Mostra una finestra di dialogo di conferma per le azioni. -->
+
+  <p-button (onClick)="confirm1($event)" label="Conferma abbonamento" [outlined]="true"></p-button>
+  <!-- Pulsante PrimeNG:
+       - "onClick": Esegue il metodo `confirm1()` al clic.
+       - "label": Testo visibile del pulsante.
+       - "[outlined]='true'": Applica uno stile di contorno al pulsante. -->
+</div>
