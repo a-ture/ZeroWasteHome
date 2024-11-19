@@ -6,8 +6,5 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app/routes';
 
 bootstrapApplication(AppComponent, {
-  providers: [
-    importProvidersFrom(BrowserAnimationsModule),
-    provideRouter(routes)
-  ],
+  providers: [importProvidersFrom(BrowserAnimationsModule), provideRouter(routes)],
 }).catch(err => console.error(err));

@@ -5,5 +5,4 @@ export const routes: Routes = [
     path: '',
     component: FooterComponent, // Rotta principale che mostra il componente Footer
   },
-
 ];

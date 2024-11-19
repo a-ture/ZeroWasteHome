@@ -13,13 +13,23 @@ import { CommonModule } from '@angular/common';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit {
-  @Input() activeLink: string = ''; // input per link attivo
+  //activelink permette di selezionare la voce del menu direttamente,
+  //in altre parole il menu appare con una voce già selezionata
+  //i valori che accetta sono "alimeni","donazioni","community"
+  // se non si sbaglia a scrivere non seleziona nulla
+  @Input() activeLink: string = '';
+  // se barra_ricerca vale 'si' la visualizza , altrimenti no
   @Input() barra_ricerca: string = '';
+  //se loggato vale "si" il menu a tendina che appare cliccando sull'icona
+  //dell'utente cambia i propri contenuti
+  // 'si' -> logout
+  // 'no' -> login,registrazione
   @Input() loggato: string = '';
 
   circleTransform: string = 'translateX(0px) translateY(0px)';
   circleDisplay: string = 'none';
-  userMenuVisible: boolean = false; // Variabile per gestire la visibilità del menu utente
+  // Variabile per gestire la visibilità del menu utente
+  userMenuVisible: boolean = false;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -32,9 +42,15 @@ export class HeaderComponent implements OnInit {
 
   setActiveLink(link: string) {
     this.activeLink = link;
-    this.cdr.detectChanges(); //forzo di continuare solo dopo aver rilevato il cambiamento di selezione
+
+    //forzo di continuare solo dopo aver rilevato il cambiamento di selezione
+    this.cdr.detectChanges();
+
     this.circleDisplay = 'block';
-    this.cdr.detectChanges(); //forzo di continuare solo dopo aver rilevato il cambiamento di selezione
+
+    //forzo di continuare solo dopo aver rilevato il cambiamento di selezione
+    this.cdr.detectChanges();
+
     this.updateCirclePosition();
   }
 
