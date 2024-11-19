@@ -1,0 +1,16 @@
+<div class="card">
+  <p-galleria
+    [value]="images"
+    [showIndicators]="false"
+    [showThumbnails]="false"
+    [autoPlay]="true"
+    [circular]="true"
+    [transitionInterval]="3000"
+    [responsiveOptions]="responsiveOptions"
+    [containerStyle]="{ 'max-width': '800px' }"
+  >
+    <ng-template pTemplate="item" let-item>
+      <img [src]="item.itemImageSrc" class="fade-image" />
+    </ng-template>
+  </p-galleria>
+</div>
