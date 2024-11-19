@@ -1,0 +1,19 @@
+<div class="utility-bar">
+  <!-- Etichette statiche -->
+  <div class="utility-labels">
+    <span
+      *ngFor="let label of labels"
+      class="utility-label"
+      [class.cliccable-label]="label.cliccable"
+      [class.active]="label.title === activeLabel"
+      (click)="onLabelClick(label)"
+    >
+      {{ label.title }}
+    </span>
+  </div>
+
+  <!-- Bottoni dinamici -->
+  <div class="utility-buttons">
+    <btn1 *ngFor="let button of buttons" label="{{ button.label }}"></btn1>
+  </div>
+</div>
