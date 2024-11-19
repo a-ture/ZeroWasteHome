@@ -1,36 +1,36 @@
-.contenitore{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.contenitore {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .table-container-bordi-rotondi {
-    overflow-x: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 20px;
-    width: 70%;
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  width: 70%;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #f1f1f1;
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f1f1f1;
 }
 
 thead {
-    background-color: #4a4a4a;
-    color: white;
+  background-color: #4a4a4a;
+  color: white;
 }
 
 th,
 td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ccc;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
 }
 
 input[type='checkbox'] {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }

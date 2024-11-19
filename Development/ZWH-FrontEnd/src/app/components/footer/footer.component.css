@@ -1,75 +1,75 @@
 /* Footer Component Styles */
 .footer {
-    margin-top: 200px;
-    background-color: #343a40; /* Dark gray background */
-    color: #f8f9fa; /* Light gray text */
-    display: flex; /* Usa Flexbox */
-    flex-direction: column; /* Disporre gli elementi in colonna */
-    align-items: center; /* Allineare orizzontalmente al centro */
-    justify-content: center; /* Allineare verticalmente al centro */
-    text-align: center; /* Allineamento del testo al centro */
-    padding: 40px 20px; /* Padding per una spaziatura migliore */
+  margin-top: 200px;
+  background-color: #343a40; /* Dark gray background */
+  color: #f8f9fa; /* Light gray text */
+  display: flex; /* Usa Flexbox */
+  flex-direction: column; /* Disporre gli elementi in colonna */
+  align-items: center; /* Allineare orizzontalmente al centro */
+  justify-content: center; /* Allineare verticalmente al centro */
+  text-align: center; /* Allineamento del testo al centro */
+  padding: 40px 20px; /* Padding per una spaziatura migliore */
 }
 
 .footer .footer-content {
-    max-width: 1200px; /* Limita la larghezza massima del contenuto */
-    width: 100%; /* Assicurati che il contenuto occupi tutta la larghezza disponibile */
+  max-width: 1200px; /* Limita la larghezza massima del contenuto */
+  width: 100%; /* Assicurati che il contenuto occupi tutta la larghezza disponibile */
 }
 
 .footer .links {
-    margin-bottom: 20px; /* Distanza tra la sezione dei link e gli altri contenuti */
+  margin-bottom: 20px; /* Distanza tra la sezione dei link e gli altri contenuti */
 }
 
 .footer .links a {
-    color: #ced4da; /* Light gray text for links */
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 14px;
+  color: #ced4da; /* Light gray text for links */
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 14px;
 }
 
 .footer .links a:hover {
-    color: #ffffff; /* Change color on hover */
+  color: #ffffff; /* Change color on hover */
 }
 
 .footer .social-icons {
-    margin-bottom: 20px; /* Distanza tra le icone social e il titolo */
+  margin-bottom: 20px; /* Distanza tra le icone social e il titolo */
 }
 
 .footer .social-icons button {
-    margin: 0 10px;
-    background-color: #6c757d; /* Medium gray button */
-    border: none;
+  margin: 0 10px;
+  background-color: #6c757d; /* Medium gray button */
+  border: none;
 }
 
 .footer .social-icons button:hover {
-    background-color: #495057; /* Darker gray on hover */
+  background-color: #495057; /* Darker gray on hover */
 }
 
 .footer .site-title h2 {
-    color: #f8f9fa; /* Light gray title */
-    font-size: 22px;
+  color: #f8f9fa; /* Light gray title */
+  font-size: 22px;
 }
 
 .footer .subtitle {
-    color: #adb5bd; /* Lighter gray for subtitle */
-    font-size: 14px;
-    margin-top: 5px;
+  color: #adb5bd; /* Lighter gray for subtitle */
+  font-size: 14px;
+  margin-top: 5px;
 }
 
 .footer .social-icons button.pi {
-    color: white; /* Social icons color */
+  color: white; /* Social icons color */
 }
 
 .footer .footer-link {
-    color: #ced4da;
+  color: #ced4da;
 }
 
 .footer .footer-link:hover {
-    color: #ffffff;
-    text-decoration: underline;
+  color: #ffffff;
+  text-decoration: underline;
 }
 .icon-button {
-    margin-right: 0px; /* Spazio tra le icone */
-    height: 2.5rem;
-    width: 2.5rem;
+  margin-right: 0px; /* Spazio tra le icone */
+  height: 2.5rem;
+  width: 2.5rem;
 }
