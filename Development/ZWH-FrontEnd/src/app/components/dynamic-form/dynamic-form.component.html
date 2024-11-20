@@ -1,0 +1,57 @@
+<div class="form-container">
+  <form #form="ngForm" (ngSubmit)="submitForm(form.value)" id="dynamic-form">
+    <div id="header">
+      <span>{{ page }}</span>
+      <input type="submit" />
+    </div>
+
+    <div id="form-body">
+      <div id="form-inputs">
+        <!-- Itera sui campi passati come input -->
+        <div *ngFor="let field of fields" class="form-group">
+          <!-- Genera input o textarea in base al tipo -->
+          <div class="float-label-container">
+            <input
+              *ngIf="field.type !== 'textarea'"
+              [type]="field.type"
+              [name]="field.label"
+              [(ngModel)]="field.value"
+              class="form-control"
+              (focus)="onFocus(field.label)"
+              (blur)="onBlur(field.label)"
+            />
+            <textarea
+              *ngIf="field.type === 'textarea'"
+              [name]="field.label"
+              [(ngModel)]="field.value"
+              class="form-control"
+              (focus)="onFocus(field.label)"
+              (blur)="onBlur(field.label)"
+            ></textarea>
+            <label
+              [class.floating]="field.value || focusedField === field.label"
+              for="{{ field.label }}"
+            >
+              {{ field.label }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottone per caricare l'immagine -->
+      <div class="form-group" id="form-img">
+        <!-- Anteprima dell'immagine -->
+        <div *ngIf="imagePreview" class="image-preview">
+          <img [src]="imagePreview" alt="Anteprima Immagine" />
+        </div>
+
+        <!-- Input nascosto per il caricamento del file -->
+        <input type="file" #fileInput (change)="onImageUpload($event)" style="display: none" />
+        <!-- Pulsante stilizzato -->
+        <button type="button" class="upload-btn" (click)="triggerFileInput(fileInput)">
+          AGGIUNGI FOTO
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

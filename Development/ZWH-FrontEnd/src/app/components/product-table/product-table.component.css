@@ -1,0 +1,74 @@
+.styled-table {
+  width: 800px;
+  margin: 20px auto;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 16px;
+  color: #333;
+}
+
+.styled-table thead tr {
+  background-color: #4d4d4d;
+  color: #ffffff;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 15px;
+  border: 1px solid #ccc;
+}
+
+.styled-table > tbody > tr {
+  background-color: #e6e6e6;
+}
+
+.styled-table > tbody > tr:nth-of-type(even) {
+  background-color: #d4d4d4;
+}
+
+.styled-table th {
+  font-weight: bold;
+}
+
+.styled-table td img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.styled-table .product-options {
+  text-align: center;
+}
+
+.styled-table .product-options > div {
+  margin: 8px;
+}
+
+.styled-table .product-image {
+  width: 100px;
+}
+
+.styled-table .product-information strong {
+  padding: 5px;
+}
+
+/* Stile "reset" per la tabella interna */
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.info-table td {
+  padding: 5px 0;
+  border: none;
+  font-weight: normal;
+  color: inherit;
+}
+
+.info-table td:first-child {
+  font-weight: bold;
+  width: 50%;
+}
