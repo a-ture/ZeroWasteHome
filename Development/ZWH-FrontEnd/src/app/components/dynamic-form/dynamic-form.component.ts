@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgForOf, NgIf } from '@angular/common';
-import { UserBtnComponent } from '../UserBtn/UserBtn.component';
+import { userBtnComponent } from '../userBtn/userBtn.component';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
-import { Btn1Component } from '../NavigationBtn/NavigationBtn.component';
+import { navigationBtnComponent } from '../navigationBtn/navigationBtn.component';
 
 @Component({
   selector: 'dynamic-form',
@@ -15,10 +15,10 @@ import { Btn1Component } from '../NavigationBtn/NavigationBtn.component';
     FormsModule,
     NgForOf,
     NgIf,
-    UserBtnComponent,
+    userBtnComponent,
     FloatLabelModule,
     InputTextModule,
-    Btn1Component,
+    navigationBtnComponent,
   ],
 })
 export class DynamicFormComponent {
