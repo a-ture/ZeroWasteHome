@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Btn1Component } from '../btn1/btn1.component';
+import { Btn1Component } from '../NavigationBtn/NavigationBtn.component';
 import { NgClass, NgForOf } from '@angular/common';
 
 @Component({
