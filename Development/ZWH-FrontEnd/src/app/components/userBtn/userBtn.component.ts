@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'btn2',
+  selector: 'userBtn',
   standalone: true,
   imports: [],
-  templateUrl: './UserBtn.component.html',
-  styleUrl: './UserBtn.component.css',
+  templateUrl: './userBtn.component.html',
+  styleUrl: './userBtn.component.css',
 })
 export class UserBtnComponent {
   @Input() label: string = '';

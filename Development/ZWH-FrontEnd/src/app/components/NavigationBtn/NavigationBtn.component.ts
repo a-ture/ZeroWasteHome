@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'btn1',
+  selector: 'navigationBtn',
   standalone: true,
   imports: [],
-  templateUrl: './NavigationBtn.component.html',
-  styleUrl: './NavigationBtn.component.css',
+  templateUrl: './navigationBtn.component.html',
+  styleUrl: './navigationBtn.component.css',
 })
-export class NavigationBtnComponent {
+export class navigationBtnComponent {
   @Input() label: string = '';
 }

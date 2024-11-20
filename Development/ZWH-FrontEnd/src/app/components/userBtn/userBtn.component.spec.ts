@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserBtnComponent } from './UserBtn.component';
+import { UserBtnComponent } from './userBtn.component';
 
-describe('Btn2Component', () => {
+describe('UserBtnComponent', () => {
   let component: UserBtnComponent;
   let fixture: ComponentFixture<UserBtnComponent>;
 
