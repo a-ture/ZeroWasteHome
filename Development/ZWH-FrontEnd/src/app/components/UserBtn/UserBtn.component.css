@@ -1,0 +1,21 @@
+.my-btn2 {
+  min-width: 100px;
+  background-color: #949494;
+  color: #000000;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.my-btn2:hover {
+  background-color: #aeadad;
+}
+
+.my-btn2:active {
+  transform: scale(0.95); /* Riduci la dimensione del bottone per simulare la pressione */
+  box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.1); /* Aggiungi ombra interna per effetto di profondità */
+}
