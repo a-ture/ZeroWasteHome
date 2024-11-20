@@ -1,0 +1,108 @@
+<div class="login-container">
+  <!-- Contenitore principale per il layout della pagina di login -->
+
+  <div class="login-card">
+    <!-- Card per il form di login -->
+    <h1>LOGIN</h1>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <!-- Form con reactive forms e evento submit -->
+
+      <!-- Campo email -->
+      <div class="input-group">
+        <label for="email">E-MAIL</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          pInputText
+          placeholder="Inserisci email"
+        />
+        <!-- Messaggi di errore per il campo email -->
+        <small
+          *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched"
+          class="error"
+        >
+          L'email è obbligatoria.
+        </small>
+        <small
+          *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched"
+          class="error"
+        >
+          Email non valida.
+        </small>
+      </div>
+
+      <!-- Campo password -->
+      <div class="input-group">
+        <label for="password">PASSWORD</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          pInputText
+          placeholder="Inserisci password"
+        />
+        <!-- Messaggi di errore per il campo password -->
+        <small
+          *ngIf="
+            loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched
+          "
+          class="error"
+        >
+          La password è obbligatoria.
+        </small>
+        <small
+          *ngIf="
+            loginForm.get('password')?.hasError('pattern') && loginForm.get('password')?.touched
+          "
+          class="error"
+        >
+          La password deve contenere almeno 8 caratteri, una lettera maiuscola, una lettera
+          minuscola e un numero.
+        </small>
+      </div>
+
+      <!-- Pulsanti -->
+      <div class="button-group">
+        <!-- Pulsante per reindirizzare alla registrazione -->
+        <button
+          type="button"
+          pButton
+          label="Registrati"
+          class="p-button-secondary"
+          (click)="onRegister()"
+        ></button>
+
+        <!-- Pulsante per inviare il form di login -->
+        <button
+          type="submit"
+          pButton
+          label="Accedi"
+          class="p-button-primary"
+          [disabled]="loginForm.invalid"
+        ></button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Dialog di conferma -->
+<p-dialog
+  header="Conferma autenticazione"
+  [(visible)]="showDialog"
+  modal="true"
+  closable="false"
+  [style]="{ width: '400px' }"
+>
+  <!-- Contenuto del dialog -->
+  <p>Login effettuato con successo!</p>
+  <!-- Pulsante per chiudere il dialog -->
+  <button
+    type="button"
+    pButton
+    label="OK"
+    class="p-button-primary"
+    (click)="showDialog = false"
+  ></button>
+</p-dialog>
