@@ -1,15 +1,15 @@
 import { Component, Input } from '@angular/core';
-import { Btn1Component } from '../navigationBtn/navigationBtn.component';
+import { navigationBtnComponent } from '../navigationBtn/navigationBtn.component';
 import { NgForOf } from '@angular/common';
 
 @Component({
   selector: 'product-table',
   standalone: true,
-  imports: [Btn1Component, NgForOf],
+  imports: [navigationBtnComponent, NgForOf],
   templateUrl: './product-table.component.html',
   styleUrls: ['./product-table.component.css'],
 })
-export class TableTemplateDemo {
+export class productTableComponent {
   // lista prodotti
   @Input() products: {
     src: string;

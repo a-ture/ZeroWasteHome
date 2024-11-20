@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Btn1Component } from '../navigationBtn/navigationBtn.component';
+import { navigationBtnComponent } from '../navigationBtn/navigationBtn.component';
 import { NgClass, NgForOf } from '@angular/common';
 
 @Component({
@@ -7,7 +7,7 @@ import { NgClass, NgForOf } from '@angular/common';
   templateUrl: './utility-bar.component.html',
   standalone: true,
   styleUrls: ['./utility-bar.component.css'],
-  imports: [Btn1Component, NgForOf, NgClass],
+  imports: [navigationBtnComponent, NgForOf, NgClass],
 })
 export class UtilityBarComponent {
   // Etichetta attiva inizialmente nulla

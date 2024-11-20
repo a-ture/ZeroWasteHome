@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'btn1',
+  selector: 'navigationBtn',
   standalone: true,
   imports: [],
   templateUrl: './navigationBtn.component.html',
