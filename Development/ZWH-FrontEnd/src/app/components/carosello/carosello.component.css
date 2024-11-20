@@ -1,0 +1,34 @@
+.card {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  max-width: 1000px;
+  padding: 20px 0;
+}
+
+img {
+  border-radius: 8px;
+  min-width: 800px;
+}
+p-galleria img {
+  width: 100%;
+  height: auto; /* Assicura che l'immagine mantenga le proporzioni */
+}
+.fade-image {
+  animation: fadeEffect 1s ease-in-out;
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+}
+
+@keyframes fadeEffect {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
