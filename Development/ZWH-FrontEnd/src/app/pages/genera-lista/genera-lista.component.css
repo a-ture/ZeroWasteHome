@@ -1,0 +1,85 @@
+.breadcrumb {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 200px;
+}
+:host ::ng-deep .p-breadvrumb p.menuitem-link {
+  gap: 8px;
+}
+
+/* Contenitore principale per la sezione */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px; /* Ridotto per allinearsi meglio */
+  margin: 20px auto;
+  background-color: #d9d9d9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 950px; /* Stessa larghezza del componente sottostante */
+  width: 100%; /* Si adatta al contenitore */
+}
+
+/* Titolo della lista */
+.header-container .list-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #4a4a4a;
+  margin: 0;
+}
+
+/* Bottone "Modifica Lista" */
+.header-container .edit-button {
+  background-color: #4a4a4a;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.header-container .edit-button:hover {
+  background-color: #3b3b3b;
+}
+
+/* Stile per la lista */
+:host ::ng-deep app-shopping-list .list-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px; /* Spaziatura interna per spostare i contenuti a destra */
+  border-bottom: 1px solid #e0e0e0; /* Linea di separazione tra gli elementi */
+}
+:host ::ng-deep app-shopping-list th:nth-child(1),
+:host ::ng-deep app-shopping-list td:nth-child(1) {
+  width: 40%; /* Colonna "Nome Prodotto" */
+  text-align: center;
+}
+
+:host ::ng-deep app-shopping-list th:nth-child(2),
+:host ::ng-deep app-shopping-list td:nth-child(2) {
+  width: 30%; /* Colonna "Quantità" */
+  text-align: center;
+}
+
+:host ::ng-deep app-shopping-list th:nth-child(3),
+:host ::ng-deep app-shopping-list td:nth-child(3) {
+  width: 30%; /* Colonna "Options" */
+  text-align: center;
+}
+:host ::ng-deep app-shopping-list th:first-child {
+  padding-left: 50px; /* Aggiunge padding per spostare "Nome Prodotto" verso destra */
+}
+:host ::ng-deep app-shopping-list .list-item:last-child {
+  border-bottom: none; /* Rimuove il bordo per l'ultima riga */
+}
+:host ::ng-deep app-shopping-list td:nth-child(1) {
+  padding-left: 50px; /* Applica padding solo alla colonna della quantità */
+}
+:host ::ng-deep app-shopping-list td:nth-child(2) {
+  padding-left: 40px; /* Applica padding solo alla colonna della quantità */
+}
