@@ -1,0 +1,10 @@
+<app-header activeLink="alimenti" barra_ricerca="si" loggato="si"></app-header>
+<breadcrumb-basic-demo class="breadcrumb" [items]="items" [home]="home"></breadcrumb-basic-demo>
+<utility-bar
+  class="page-utility-bar"
+  [labels]="labels"
+  [buttons]="buttons"
+  [title]="tableTitle"
+></utility-bar>
+<product-table id="productTable" [products]="productList" [buttuns]="buttonList">></product-table>
+<app-footer></app-footer>
