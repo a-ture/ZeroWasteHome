@@ -62,4 +62,10 @@ export class PaginaAlimentiComponent {
 
   // Proprietà per i buttons relativi ad ogni prodotto
   buttonList = ['Visualizza', 'Modifica', 'Elimina'];
+
+  onLabelChange(newLabel: string) {
+    this.items = [
+      { label: newLabel === 'Frigo' ? 'Alimenti Frigo' : 'Alimenti Dispensa', routerLink: '/' },
+    ];
+  }
 }

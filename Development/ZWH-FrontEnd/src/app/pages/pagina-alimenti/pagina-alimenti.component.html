@@ -5,6 +5,7 @@
   [labels]="labels"
   [buttons]="buttons"
   [title]="tableTitle"
+  (labelChanged)="onLabelChange($event)"
 ></utility-bar>
 <product-table id="productTable" [products]="productList" [buttuns]="buttonList">></product-table>
 <app-footer></app-footer>

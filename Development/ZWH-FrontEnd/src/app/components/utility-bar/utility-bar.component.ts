@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { navigationBtnComponent } from '../navigationBtn/navigationBtn.component';
 import { NgClass, NgForOf } from '@angular/common';
 
@@ -18,11 +18,14 @@ export class UtilityBarComponent {
 
   @Input() title: string = ''; // Proprietà per il titolo
 
+  @Output() labelChanged = new EventEmitter<string>();
+
   // se la label viene cliccata esegue un operazione che aggiorna activeLabel
   onLabelClick(label: { title: string }) {
     if (this.activeLabel !== label.title) {
       console.log(`Etichetta cliccata: ${label.title}`);
       this.activeLabel = label.title; // Aggiorna l'etichetta attiva
+      this.labelChanged.emit(this.activeLabel); // Notifica al genitore
     }
   }
 
