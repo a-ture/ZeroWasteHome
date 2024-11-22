@@ -33,7 +33,7 @@ export class DynamicFormComponent {
   @Output() formSubmit = new EventEmitter<any>();
 
   // Stato per gestire l'immagine caricata
-  imagePreview: string | null = 'assets/img/dynamic-form/form-image-placeholder.svg';
+  @Input() imagePreview: string | null = 'https://placehold.jp/3d4070/ffffff/200x200.png';
 
   // per i campi di input e textarea
   focusedField: string | null = null;
