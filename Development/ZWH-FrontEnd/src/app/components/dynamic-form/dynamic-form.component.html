@@ -2,7 +2,7 @@
   <form #form="ngForm" (ngSubmit)="submitForm(form.value)" id="dynamic-form">
     <div id="header">
       <span>{{ page }}</span>
-      <input type="submit" />
+      <input type="submit" value="Aggiungi" />
     </div>
 
     <div id="form-body">
@@ -12,7 +12,20 @@
           <!-- Genera input o textarea in base al tipo -->
           <div class="float-label-container">
             <input
-              *ngIf="field.type !== 'textarea'"
+              *ngIf="field.type === 'date'"
+              type="date"
+              [name]="field.label"
+              [(ngModel)]="field.value"
+              class="form-control date-field"
+              [ngClass]="{
+                focused: focusedField === field.label,
+                'valid-date': field.value && field.value.length > 0,
+              }"
+              (focus)="onFocus(field.label)"
+              (blur)="onBlur(field.label)"
+            />
+            <input
+              *ngIf="field.type !== 'textarea' && field.type !== 'date'"
               [type]="field.type"
               [name]="field.label"
               [(ngModel)]="field.value"
