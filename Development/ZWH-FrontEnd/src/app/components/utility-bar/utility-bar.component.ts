@@ -11,15 +11,16 @@ import { NgClass, NgForOf } from '@angular/common';
 })
 export class UtilityBarComponent {
   // Etichetta attiva inizialmente nulla
-  activeLabel: string | null = null;
+  activeLabel: string | null = 'Frigo';
 
-  // Input per le etichette (testo statico)
-  @Input() labels: { title: string; cliccable: boolean }[] = [];
+  // Input per le etichette selezionabili
+  @Input() labels: { title: string; showVerticalLine: boolean }[] = [];
 
-  // se la label viene cliccata esegue un operazione se
-  // label.cliccable === true
-  onLabelClick(label: { title: string; cliccable: boolean }) {
-    if (label.cliccable) {
+  @Input() title: string = ''; // Proprietà per il titolo
+
+  // se la label viene cliccata esegue un operazione che aggiorna activeLabel
+  onLabelClick(label: { title: string }) {
+    if (this.activeLabel !== label.title) {
       console.log(`Etichetta cliccata: ${label.title}`);
       this.activeLabel = label.title; // Aggiorna l'etichetta attiva
     }

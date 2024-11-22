@@ -53,6 +53,25 @@
   color: #838383;
 }
 
-.cliccable-label.active {
+.active {
   color: #838383;
+}
+
+.label-with-line {
+  position: relative;
+  padding-right: 10px;
+}
+
+.label-with-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  background-color: #000;
+}
+
+.utility-title {
+  font-size: 18px;
 }

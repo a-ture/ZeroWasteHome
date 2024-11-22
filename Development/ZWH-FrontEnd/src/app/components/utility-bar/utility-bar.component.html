@@ -1,15 +1,22 @@
 <div class="utility-bar">
-  <!-- Etichette statiche -->
+  <!-- Etichette selezionabili -->
   <div class="utility-labels">
     <span
       *ngFor="let label of labels"
-      class="utility-label"
-      [class.cliccable-label]="label.cliccable"
-      [class.active]="label.title === activeLabel"
+      [ngClass]="{
+        active: activeLabel === label.title,
+        'cliccable-label': activeLabel !== label.title,
+        'label-with-line': label.showVerticalLine,
+      }"
       (click)="onLabelClick(label)"
     >
       {{ label.title }}
     </span>
+  </div>
+
+  <!-- Titolo -->
+  <div class="utility-title utility-labels">
+    {{ title }}
   </div>
 
   <!-- Bottoni dinamici -->
