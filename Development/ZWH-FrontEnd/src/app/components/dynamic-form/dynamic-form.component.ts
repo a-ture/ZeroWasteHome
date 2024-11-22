@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgForOf, NgIf } from '@angular/common';
+import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { userBtnComponent } from '../userBtn/userBtn.component';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -19,6 +19,7 @@ import { navigationBtnComponent } from '../navigationBtn/navigationBtn.component
     FloatLabelModule,
     InputTextModule,
     navigationBtnComponent,
+    NgClass,
   ],
 })
 export class DynamicFormComponent {
