@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 
@@ -9,20 +9,24 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
   imports: [BreadcrumbModule], // Importa BreadcrumbModule per il componente breadcrumb
 })
 export class BreadcrumbBasicDemo implements OnInit {
-  items: MenuItem[] | undefined; // Elementi del breadcrumb
-  home: MenuItem | undefined; // Icona e link per la home
+  @Input() items: MenuItem[] | undefined; // Elementi del breadcrumb
+  @Input() home: MenuItem | undefined; // Icona e link per la home
 
   ngOnInit() {
     // Inizializza le voci del breadcrumb
-    this.items = [
-      { label: 'Pagina1' },
-      { label: 'Pagina2' },
-      { label: 'Pagina3' },
-      { label: 'Pagina4' },
-      { label: 'Pagina5' },
-    ];
+    if (!this.items) {
+      this.items = [
+        { label: 'Pagina1', routerLink: '/pagina1' },
+        { label: 'Pagina2', routerLink: '/pagina2' },
+        { label: 'Pagina3', routerLink: '/pagina3' },
+      ];
+    }
 
     // Configura il pulsante Home
-    this.home = { icon: 'pi pi-home', routerLink: '/' };
+    if (!this.home) {
+      this.home = { icon: 'pi pi-home', routerLink: '/' };
+    }
   }
 }
+
+export class BreadcrumbComponent {}

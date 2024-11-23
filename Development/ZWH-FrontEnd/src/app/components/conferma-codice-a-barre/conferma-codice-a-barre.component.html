@@ -1,0 +1,27 @@
+<!-- Contenitore principale per l'interfaccia -->
+<!-- Mostra il contenitore solo quando isModalVisible è true -->
+<!-- Cattura il clic sull'overlay (l'area scura) per chiudere la modale -->
+<div class="container" *ngIf="isModalVisible" (click)="onOverlayClick($event)">
+  <!-- Contenitore interno che racchiude tutti gli elementi della modale -->
+  <!-- Il clic su questo contenitore non si propaga all'overlay, impedendo la chiusura accidentale -->
+  <div class="intern-container" (click)="$event.stopPropagation()">
+    <div class="cancel">
+      <!-- Pulsante per chiudere la modale -->
+      <button id="cancella" (click)="closeModal()">X</button>
+    </div>
+
+    <div class="header">
+      <!-- Titolo che descrive l'azione richiesta all'utente -->
+      <h2>Inserisci codice a Barre</h2>
+      <!-- Campo di input per permettere all'utente di inserire il codice a barre -->
+      <input type="number" placeholder="XXXXXXXXXXXXXX" />
+    </div>
+
+    <div class="footer">
+      <!-- Pulsante personalizzato per l'inserimento manuale -->
+      <navigationBtn label="Inserisci Manualmente"></navigationBtn>
+      <!-- Pulsante personalizzato per confermare il codice inserito -->
+      <navigationBtn label="Conferma Codice"></navigationBtn>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+/* Stile per il contenitore principale */
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+h2 {
+  margin-top: 0px;
+  margin-bottom: 25px;
+  font-style: italic;
+}
+
+/* Stile per il contenitore interno */
+.intern-container {
+  background: #d9d9d9;
+  border-radius: 25px; /* Angoli arrotondati */
+  display: flex; /* Disposizione flessibile per gli elementi figli */
+  flex-direction: column; /* Posiziona gli elementi in colonna */
+  justify-content: space-evenly; /* Spazio uniforme tra gli elementi */
+  height: 250px; /* Altezza fissa del contenitore */
+  width: 450px; /* Larghezza fissa del contenitore */
+  position: relative;
+  z-index: 1001;
+}
+
+.header,
+.footer,
+.cancel {
+  padding-left: 25px; /* Spaziatura interna a sinistra */
+  padding-right: 25px; /* Spaziatura interna a destra */
+}
+
+.footer {
+  display: flex; /* Disposizione flessibile per gli elementi figli */
+  justify-content: space-between; /* Spaziatura uniforme tra gli elementi */
+}
+
+/* Stile per la sezione del pulsante di annullamento */
+.cancel {
+  display: flex; /* Disposizione flessibile per gli elementi figli */
+  flex-direction: row-reverse; /* Posiziona gli elementi da destra a sinistra */
+}
+
+/* Stile per il pulsante generico */
+#cancella {
+  border: none;
+  background: none;
+  font-size: 1rem;
+}
+
+/* Stile per l'intestazione */
+.header {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column; /* Posiziona gli elementi in colonna */
+  align-items: center; /* Allinea gli elementi al centro */
+}
+
+/* Stile per il campo di input */
+input {
+  width: 80%; /* Campo di input largo l'80% del contenitore */
+  padding: 0.75rem; /* Spaziatura interna per un design più leggibile */
+  border-radius: 50px; /* Angoli arrotondati */
+  border: none; /* Rimuove il bordo */
+  font-size: 1rem; /* Dimensione del testo standard */
+}
