@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Importa il modulo CommonModule per abilitare direttive come *ngIf e *ngFor
 import { navigationBtnComponent } from '../navigationBtn/navigationBtn.component';
-import { InserisciProdottoModalService } from '../../services/servizio-inserisci-prodotto/inserisci-prodotto-modal.service'; // Importa il servizio per la gestione della modale
+import { InserisciProdottoModalService } from '../../services/servizio-modale/modal.service'; // Importa il servizio per la gestione della modale
 
 @Component({
   selector: 'app-conferma-codice-a-barre',

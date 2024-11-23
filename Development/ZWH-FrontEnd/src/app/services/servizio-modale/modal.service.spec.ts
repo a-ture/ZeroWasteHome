@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { InserisciProdottoModalService } from './inserisci-prodotto-modal.service';
+import { InserisciProdottoModalService } from './modal.service';
 
 describe('InserisciProdottoModalService', () => {
   let service: InserisciProdottoModalService;

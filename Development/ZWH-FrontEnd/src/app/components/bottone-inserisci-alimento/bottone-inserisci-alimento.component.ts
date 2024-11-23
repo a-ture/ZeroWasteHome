@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { navigationBtnComponent } from '../navigationBtn/navigationBtn.component'; // Importa il componente navigationBtn
-import { InserisciProdottoModalService } from '../../services/servizio-inserisci-prodotto/inserisci-prodotto-modal.service'; // Importa il servizio per la gestione della modale
+import { InserisciProdottoModalService } from '../../services/servizio-modale/modal.service'; // Importa il servizio per la gestione della modale
 
 @Component({
   selector: 'app-bottone-inserisci-alimento',
