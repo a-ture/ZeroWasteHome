@@ -8,9 +8,8 @@ describe('BottoneConfermaAzioneComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BottoneConfermaAzioneComponent]
-    })
-    .compileComponents();
+      imports: [BottoneConfermaAzioneComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BottoneConfermaAzioneComponent);
     component = fixture.componentInstance;

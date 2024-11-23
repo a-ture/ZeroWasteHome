@@ -5,11 +5,9 @@ import { InserisciProdottoModalService } from '../../services/servizio-modale/mo
 @Component({
   selector: 'app-bottone-conferma-azione',
   standalone: true,
-  imports: [
-    navigationBtnComponent,
-  ],
+  imports: [navigationBtnComponent],
   templateUrl: './bottone-conferma-azione.component.html',
-  styleUrl: './bottone-conferma-azione.component.css'
+  styleUrl: './bottone-conferma-azione.component.css',
 })
 export class BottoneConfermaAzioneComponent {
   @Input() text: string = '';
