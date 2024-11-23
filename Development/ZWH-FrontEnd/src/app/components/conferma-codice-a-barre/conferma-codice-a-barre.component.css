@@ -1,8 +1,15 @@
 /* Stile per il contenitore principale */
 .container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 h2 {
@@ -20,6 +27,8 @@ h2 {
   justify-content: space-evenly; /* Spazio uniforme tra gli elementi */
   height: 250px; /* Altezza fissa del contenitore */
   width: 450px; /* Larghezza fissa del contenitore */
+  position: relative;
+  z-index: 1001;
 }
 
 .header,
@@ -41,7 +50,7 @@ h2 {
 }
 
 /* Stile per il pulsante generico */
-button {
+#cancella {
   border: none;
   background: none;
   font-size: 1rem;
