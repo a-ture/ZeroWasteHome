@@ -1,0 +1,26 @@
+<div class="utility-bar">
+  <!-- Etichette selezionabili -->
+  <div class="utility-labels">
+    <span
+      *ngFor="let label of labels"
+      [ngClass]="{
+        active: activeLabel === label.title,
+        'cliccable-label': activeLabel !== label.title,
+        'label-with-line': label.showVerticalLine,
+      }"
+      (click)="onLabelClick(label)"
+    >
+      {{ label.title }}
+    </span>
+  </div>
+
+  <!-- Titolo -->
+  <div class="utility-title utility-labels">
+    {{ title }}
+  </div>
+
+  <!-- Bottoni dinamici -->
+  <div class="utility-buttons">
+    <navigationBtn *ngFor="let button of buttons" label="{{ button.label }}"></navigationBtn>
+  </div>
+</div>
