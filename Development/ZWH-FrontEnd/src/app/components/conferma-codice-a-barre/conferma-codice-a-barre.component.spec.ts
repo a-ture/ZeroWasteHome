@@ -19,4 +19,14 @@ describe('ConfermaCodiceABarreComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should open the modal', () => {
+    component.openModal();
+    expect(component.isModalVisible).toBeTrue();
+  });
+
+  it('should close the modal', () => {
+    component.isModalVisible = true;
+    component.closeModal();
+    expect(component.isModalVisible).toBeFalse();
+  });
 });
