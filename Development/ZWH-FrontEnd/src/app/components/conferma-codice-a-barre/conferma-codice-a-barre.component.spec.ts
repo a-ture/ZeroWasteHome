@@ -8,9 +8,8 @@ describe('ConfermaCodiceABarreComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ConfermaCodiceABarreComponent]
-    })
-    .compileComponents();
+      imports: [ConfermaCodiceABarreComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfermaCodiceABarreComponent);
     component = fixture.componentInstance;
