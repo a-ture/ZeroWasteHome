@@ -1,0 +1,14 @@
+<div class="container" *ngIf="isModalVisible" (click)="onOverlayClick($event)">
+  <div class="intern-container" (click)="$event.stopPropagation()">
+    <div class="header">
+      <h2>Sei sicuro di voler {{ text }}?</h2>
+    </div>
+
+    <div class="footer">
+      <!-- Pulsante personalizzato per l'inserimento manuale -->
+      <navigationBtn label="Annulla" (click)="closeModal()"></navigationBtn>
+      <!-- Pulsante personalizzato per confermare il codice inserito -->
+      <navigationBtn label="Conferma" (click)="closeModal()"></navigationBtn>
+    </div>
+  </div>
+</div>
