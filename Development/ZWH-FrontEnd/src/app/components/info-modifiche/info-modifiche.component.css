@@ -1,0 +1,24 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+/* Stile per il contenitore interno */
+.intern-container {
+  background: #d9d9d9;
+  border-radius: 25px; /* Angoli arrotondati */
+  display: flex; /* Disposizione flessibile per gli elementi figli */
+  align-items: center;
+  justify-content: center;
+  height: 150px; /* Altezza fissa del contenitore */
+  width: 350px; /* Larghezza fissa del contenitore */
+  position: relative;
+  z-index: 1001;
+}
