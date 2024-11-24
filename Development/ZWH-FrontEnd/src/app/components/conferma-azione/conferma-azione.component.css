@@ -1,0 +1,50 @@
+/* Stile per il contenitore principale */
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+h2 {
+  margin-top: 10px;
+  margin-bottom: 0px;
+  font-style: italic;
+}
+
+/* Stile per il contenitore interno */
+.intern-container {
+  background: #d9d9d9;
+  border-radius: 25px; /* Angoli arrotondati */
+  display: flex; /* Disposizione flessibile per gli elementi figli */
+  flex-direction: column; /* Posiziona gli elementi in colonna */
+  justify-content: space-evenly; /* Spazio uniforme tra gli elementi */
+  height: 250px; /* Altezza fissa del contenitore */
+  width: 400px; /* Larghezza fissa del contenitore */
+  position: relative;
+  z-index: 1001;
+}
+
+.header,
+.footer {
+  padding-left: 25px; /* Spaziatura interna a sinistra */
+  padding-right: 25px; /* Spaziatura interna a destra */
+}
+
+.footer {
+  display: flex; /* Disposizione flessibile per gli elementi figli */
+  justify-content: space-between; /* Spaziatura uniforme tra gli elementi */
+}
+
+/* Stile per l'intestazione */
+.header {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+}
