@@ -8,9 +8,8 @@ describe('BottonePopupSegnalazioneIntegrato', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PopupFormSegnalazioneComponent]
-    })
-    .compileComponents();
+      imports: [PopupFormSegnalazioneComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PopupFormSegnalazioneComponent);
     component = fixture.componentInstance;

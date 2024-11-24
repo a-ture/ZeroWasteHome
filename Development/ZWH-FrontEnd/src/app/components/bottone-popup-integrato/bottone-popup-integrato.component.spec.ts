@@ -8,9 +8,8 @@ describe('BottonePopupIntegratoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BottonePerPopupSempliceComponent]
-    })
-    .compileComponents();
+      imports: [BottonePerPopupSempliceComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BottonePerPopupSempliceComponent);
     component = fixture.componentInstance;

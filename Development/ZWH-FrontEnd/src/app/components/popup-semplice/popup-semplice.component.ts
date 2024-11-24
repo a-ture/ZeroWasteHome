@@ -9,8 +9,8 @@ import { CommonModule } from '@angular/common'; // Importa CommonModule
   imports: [CommonModule],
 })
 export class PopupSempliceComponent {
-  visible: boolean = false;  // Determina se il popup è visibile
-  message: string = '';  // Messaggio da visualizzare nel popup
+  visible: boolean = false; // Determina se il popup è visibile
+  message: string = ''; // Messaggio da visualizzare nel popup
 
   // Metodo per aprire il popup
   openPopup(message: string) {
