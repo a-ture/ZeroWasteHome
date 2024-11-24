@@ -1,0 +1,6 @@
+<!-- Pannello di overlay che oscura e sfoca lo sfondo -->
+<div class="popup-overlay" [style.display]="visible ? 'block' : 'none'" (click)="closePopup()">
+  <div class="popup-content" (click)="$event.stopPropagation()"> <!-- Impedisce la chiusura se clicchi dentro al contenuto -->
+    <p>{{ message }}</p>
+  </div>
+</div>
