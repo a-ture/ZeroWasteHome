@@ -1,14 +1,30 @@
-import { ChangeDetectorRef, Component, input, Input, OnInit, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  input,
+  Input,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { MenubarModule } from 'primeng/menubar';
 import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
+import { PopupSempliceComponent } from '../popup-semplice/popup-semplice.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MenubarModule, BadgeModule, AvatarModule, InputTextModule, CommonModule],
+  imports: [
+    MenubarModule,
+    BadgeModule,
+    AvatarModule,
+    InputTextModule,
+    CommonModule,
+    PopupSempliceComponent,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
@@ -94,5 +110,12 @@ export class HeaderComponent implements OnInit {
   navigateToRegister() {
     // Inserisci la logica per navigare alla pagina di registrazione
     console.log('Naviga alla pagina di registrazione');
+  }
+  @ViewChild(PopupSempliceComponent) popup!: PopupSempliceComponent; // Riferimento al popup
+
+  // Metodo che invoca il popup con un messaggio
+  showPopup(messaggio: string) {
+    this.popup.openPopup(messaggio);
+    this.loggato = 'no';
   }
 }
