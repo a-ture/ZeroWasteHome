@@ -1,10 +1,6 @@
-<app-header></app-header>
+<app-header barra_ricerca="no" loggato="si"></app-header>
 <breadcrumb-basic-demo class="breadcrumb" [items]="items" [home]="home"></breadcrumb-basic-demo>
-<div class="header-container">
-  <p class="list-title">Lista della Spesa</p>
-  <userBtn class="userbtn" [label]="'Modifica Lista'"></userBtn>
-</div>
-
+<utility-bar class="" [title]="tableTitle" [buttons]="buttons"></utility-bar>
 <app-shopping-list
   [items]="[
     { name: 'Pane', quantita: 1, checked: true },
