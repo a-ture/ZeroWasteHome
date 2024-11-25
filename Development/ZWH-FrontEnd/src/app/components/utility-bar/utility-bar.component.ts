@@ -30,5 +30,5 @@ export class UtilityBarComponent {
   }
 
   // Input per i bottoni (oggetti con struttura definita)
-  @Input() buttons: { label: string }[] = [];
+  @Input() buttons: { label: string; action?: () => void }[] = [];
 }
