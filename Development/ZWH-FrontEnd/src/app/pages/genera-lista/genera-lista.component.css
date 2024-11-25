@@ -1,50 +1,22 @@
 .breadcrumb {
   display: flex;
   justify-content: flex-start;
-  padding-left: 200px;
+  padding-left: 50px;
+  margin-bottom: 15px;
 }
-:host ::ng-deep .p-breadvrumb p.menuitem-link {
+:host ::ng-deep .p-breadcrumb {
+  border: none;
+}
+:host ::ng-deep .p-breadcrumb p.menuitem-link {
   gap: 8px;
 }
-
-/* Contenitore principale per la sezione */
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px; /* Ridotto per allinearsi meglio */
-  margin: 20px auto;
-  background-color: #d9d9d9;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 950px; /* Stessa larghezza del componente sottostante */
-  width: 100%; /* Si adatta al contenitore */
+:host ::ng-deep .utility-bar {
+  width: 70%;
+  margin: 0 auto;
 }
 
-/* Titolo della lista */
-.header-container .list-title {
-  font-size: 18px;
-  font-weight: bold;
-  color: #4a4a4a;
-  margin: 0;
-}
-
-/* Bottone "Modifica Lista" */
-.header-container .edit-button {
-  background-color: #4a4a4a;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease;
-}
-
-.header-container .edit-button:hover {
-  background-color: #3b3b3b;
+:host ::ng-deep #utility-selectable-labels {
+  position: fixed;
 }
 
 /* Stile per la lista */

@@ -6,6 +6,7 @@ import { BreadcrumbBasicDemo } from '../../components/breadcrumb/breadcrumb.comp
 import { userBtnComponent } from '../../components/userBtn/userBtn.component';
 import { AccordionBasicDemo } from '../../components/accordion-faq/accordion-faq.component';
 import { MenuItem } from 'primeng/api';
+import { UtilityBarComponent } from '../../components/utility-bar/utility-bar.component';
 
 @Component({
   selector: 'app-genera-lista',
@@ -17,6 +18,7 @@ import { MenuItem } from 'primeng/api';
     BreadcrumbBasicDemo,
     userBtnComponent,
     AccordionBasicDemo,
+    UtilityBarComponent,
   ],
   templateUrl: './genera-lista.component.html',
   styleUrl: './genera-lista.component.css',
@@ -28,4 +30,7 @@ export class GeneraListaComponent {
   ];
   //Proprietà per il pulsante Home
   home: MenuItem = { label: 'Home', routerLink: '/' };
+
+  tableTitle: string = 'Lista della Spesa';
+  buttons = [{ label: 'Modifica Lista' }];
 }
