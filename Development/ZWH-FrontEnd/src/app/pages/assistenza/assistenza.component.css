@@ -1,0 +1,24 @@
+.breadcrumb {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 50px;
+}
+
+:host ::ng-deep .p-breadcrumb {
+  border: none;
+}
+
+:host ::ng-deep .p-breadcrumb .p-menuitem-link {
+  gap: 8px;
+}
+
+:host ::ng-deep p-accordion {
+  margin-top: 15px;
+  width: 70%;
+}
+
+.userbtn {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,65 @@
+.breadcrumb {
+  display: flex; /* Imposta un layout flessibile per il contenitore del breadcrumb */
+  justify-content: flex-start; /* Allinea gli elementi del breadcrumb a sinistra */
+  padding-left: 50px; /* Aggiunge uno spazio a sinistra */
+  margin-bottom: 15px; /* Aggiunge uno spazio inferiore */
+}
+
+:host ::ng-deep .p-breadcrumb {
+  border: none;
+}
+
+:host ::ng-deep .p-breadcrumb .p-menuitem-link {
+  gap: 8px;
+}
+
+:host ::ng-deep .utility-bar {
+  width: 75%; /* Limita la larghezza al 75% del contenitore */
+}
+
+/* Centra la utility bar all'interno del contenitore */
+:host ::ng-deep utility-bar {
+  display: flex;
+  justify-content: center;
+}
+
+/* Stile per la product table */
+:host ::ng-deep .styled-table {
+  width: 75% !important; /* Limita la larghezza della tabella al 75% */
+}
+
+:host ::ng-deep .info-table {
+  width: fit-content !important;
+}
+
+/* Stile per la colonna dell'immagine */
+:host ::ng-deep .styled-table .product-image {
+  width: 15%;
+  text-align: center;
+}
+
+/* Stile per la colonna delle informazioni */
+:host ::ng-deep .styled-table .product-information {
+  width: 60%;
+  text-align: left;
+}
+
+/* Stile per la colonna delle opzioni */
+:host ::ng-deep .styled-table .product-options {
+  width: 25%;
+  text-align: center;
+}
+
+/* Stile personalizzato per il pulsante */
+:host ::ng-deep .styled-table .my-btn1 {
+  width: 80%; /* Imposta la larghezza del pulsante all'80% */
+}
+
+/* Stile per il footer */
+:host ::ng-deep .footer {
+  margin-top: 55px !important;
+}
+
+:host ::ng-deep #utility-selectable-labels {
+  position: fixed;
+}

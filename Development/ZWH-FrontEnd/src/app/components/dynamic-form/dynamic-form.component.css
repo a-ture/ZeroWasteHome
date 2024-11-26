@@ -143,3 +143,19 @@
   min-height: 100px;
   resize: none; /* Permette di ridimensionare solo verticalmente */
 }
+
+/* Nasconde il testo predefinito (gg/mm/aaaa) per evitare sovrapposizione con il placeholder 'Scadenza' */
+input[type='date'] {
+  color: transparent;
+  transition: color 0.2s ease-in-out;
+}
+
+/* Mostra il testo predefinito (gg/mm/aaaa) quando il campo è in focus */
+input[type='date'].focused {
+  color: #000;
+}
+
+/* Mostra il valore della data se il campo ha una data valida (quindi anche quando perde il focus) */
+input[type='date'].valid-date {
+  color: #000;
+}
