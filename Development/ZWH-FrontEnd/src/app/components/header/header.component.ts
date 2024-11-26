@@ -16,13 +16,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [
-    MenubarModule,
-    BadgeModule,
-    AvatarModule,
-    InputTextModule,
-    CommonModule,
-  ],
+  imports: [MenubarModule, BadgeModule, AvatarModule, InputTextModule, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
