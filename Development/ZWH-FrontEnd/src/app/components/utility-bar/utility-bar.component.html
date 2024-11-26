@@ -21,6 +21,10 @@
 
   <!-- Bottoni dinamici -->
   <div class="utility-buttons">
-    <navigationBtn *ngFor="let button of buttons" label="{{ button.label }}"></navigationBtn>
+    <navigationBtn
+      *ngFor="let button of buttons"
+      (click)="button.action ? button.action() : null"
+      label="{{ button.label }}"
+    ></navigationBtn>
   </div>
 </div>
