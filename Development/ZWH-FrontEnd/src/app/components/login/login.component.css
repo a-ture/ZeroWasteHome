@@ -92,14 +92,14 @@
   font-size: 1rem;
   border: none; /* Nessun bordo */
   border-radius: 5px; /* Angoli arrotondati */
-  background-color: #45413C; /* Colore di base */
+  background-color: #45413c; /* Colore di base */
   color: white;
   cursor: pointer; /* Cambia il puntatore al passaggio del mouse */
   transition: background-color 0.3s ease; /* Animazione del colore */
 }
 
 .p-button:hover {
-  background-color: #45413C; /* Colore più scuro al passaggio */
+  background-color: #45413c; /* Colore più scuro al passaggio */
 }
 
 /* Stile del dialog */
@@ -110,7 +110,7 @@
 }
 
 .p-dialog .p-dialog-header {
-  background-color: #45413C !important; /* Header blu */
+  background-color: #45413c !important; /* Header blu */
   color: white !important; /* Testo bianco */
   text-align: center !important;
   font-size: 1.5rem !important; /* Testo grande */
@@ -124,7 +124,7 @@
 }
 
 .p-dialog .p-button-primary {
-  background-color: #45413C !important; /* Colore blu per il pulsante */
+  background-color: #45413c !important; /* Colore blu per il pulsante */
   border: none !important;
   border-radius: 5px !important;
   font-size: 1rem !important;

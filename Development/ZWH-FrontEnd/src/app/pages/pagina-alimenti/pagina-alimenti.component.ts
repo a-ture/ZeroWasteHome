@@ -6,6 +6,7 @@ import { MenuItem } from 'primeng/api';
 import { UtilityBarComponent } from '../../components/utility-bar/utility-bar.component';
 import { productTableComponent } from '../../components/product-table/product-table.component';
 import { FooterComponent } from '../../components/footer/footer.component';
+import { InserisciProdottoModalService } from '../../services/servizio-inserisci-prodotto/inserisci-prodotto-modal.service';
 
 @Component({
   selector: 'app-pagina-alimenti',
@@ -38,7 +39,17 @@ export class PaginaAlimentiComponent {
   tableTitle: string = 'Informazioni sugli Alimenti';
 
   // Proprietà per i buttons relativi alla tabella
-  buttons = [{ label: 'Genera Ricetta' }, { label: 'Genera Lista' }, { label: 'Add aliments' }];
+  buttons = [
+    { label: 'Genera Ricetta' },
+    { label: 'Genera Lista' },
+    { label: 'Add aliments', action: () => this.openInserisciAlimentoModal() },
+  ];
+
+  constructor(private modalService: InserisciProdottoModalService) {}
+
+  openInserisciAlimentoModal() {
+    this.modalService.openModal();
+  }
 
   // Dati per la lista dei prodotti
   productList = [
