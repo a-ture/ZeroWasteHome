@@ -8,9 +8,8 @@ describe('BottoneFormSegnalazioneComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BottoneFormSegnalazioneComponent]
-    })
-    .compileComponents();
+      imports: [BottoneFormSegnalazioneComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BottoneFormSegnalazioneComponent);
     component = fixture.componentInstance;

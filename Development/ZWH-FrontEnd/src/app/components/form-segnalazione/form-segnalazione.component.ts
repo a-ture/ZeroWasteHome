@@ -6,7 +6,7 @@ import { FormSegnalazioneModalService } from '../../services/servizio-form-segna
 @Component({
   selector: 'app-form-segnalazione',
   standalone: true,
-  imports: [navigationBtnComponent, CommonModule ],
+  imports: [navigationBtnComponent, CommonModule],
   templateUrl: './form-segnalazione.component.html',
   styleUrl: './form-segnalazione.component.css',
 })
