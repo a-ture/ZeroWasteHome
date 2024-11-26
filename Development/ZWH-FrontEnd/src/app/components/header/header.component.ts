@@ -12,7 +12,6 @@ import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
-import { PopupSempliceComponent } from '../popup-semplice/popup-semplice.component';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +22,6 @@ import { PopupSempliceComponent } from '../popup-semplice/popup-semplice.compone
     AvatarModule,
     InputTextModule,
     CommonModule,
-    PopupSempliceComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
@@ -98,24 +96,5 @@ export class HeaderComponent implements OnInit {
     this.updateCirclePosition();
     window.addEventListener('resize', () => this.updateCirclePosition());
     window.addEventListener('onload', () => this.setActiveLink(this.activeLink));
-  }
-
-  // Funzione per gestire la navigazione al login
-  navigateToLogin() {
-    // Inserisci la logica per navigare alla pagina di login
-    console.log('Naviga alla pagina di login');
-  }
-
-  // Funzione per gestire la navigazione alla registrazione
-  navigateToRegister() {
-    // Inserisci la logica per navigare alla pagina di registrazione
-    console.log('Naviga alla pagina di registrazione');
-  }
-  @ViewChild(PopupSempliceComponent) popup!: PopupSempliceComponent; // Riferimento al popup
-
-  // Metodo che invoca il popup con un messaggio
-  showPopup(messaggio: string) {
-    this.popup.openPopup(messaggio);
-    this.loggato = 'no';
   }
 }

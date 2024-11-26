@@ -37,14 +37,13 @@
       <div *ngIf="userMenuVisible" class="dropdown-menu">
         <ul>
           <li *ngIf="loggato == 'no'">Login</li>
-          <li *ngIf="loggato == 'no'" (click)="showPopup('coming soon!')">Registrati</li>
+          <li *ngIf="loggato == 'no'">Registrati</li>
           <li *ngIf="loggato == 'si'">Area personale</li>
           <li *ngIf="loggato == 'si'">Condividi ricetta</li>
           <li *ngIf="loggato == 'si'">Segnalazioni</li>
-          <li *ngIf="loggato == 'si'" (click)="showPopup('Logout effettuato!')">logout</li>
+          <li *ngIf="loggato == 'si'">logout</li>
         </ul>
       </div>
     </div>
   </div>
 </nav>
-<app-popup-semplice></app-popup-semplice>
