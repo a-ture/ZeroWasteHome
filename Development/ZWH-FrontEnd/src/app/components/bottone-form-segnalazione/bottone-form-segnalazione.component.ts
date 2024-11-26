@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { navigationBtnComponent } from '../navigationBtn/navigationBtn.component';
-import {
-  InserisciProdottoModalService
-} from '../../services/servizio-inserisci-prodotto/inserisci-prodotto-modal.service';
-import {
-  FormSegnalazioneModalService
-} from '../../services/servizio-form-segnalazione/from-segnalazione-modal.service';
+import { InserisciProdottoModalService } from '../../services/servizio-inserisci-prodotto/inserisci-prodotto-modal.service';
+import { FormSegnalazioneModalService } from '../../services/servizio-form-segnalazione/from-segnalazione-modal.service';
 
 @Component({
   selector: 'app-bottone-form-segnalazione',
