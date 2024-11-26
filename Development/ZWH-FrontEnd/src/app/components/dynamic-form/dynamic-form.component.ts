@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgForOf, NgIf } from '@angular/common';
+import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { userBtnComponent } from '../userBtn/userBtn.component';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -19,6 +19,7 @@ import { navigationBtnComponent } from '../navigationBtn/navigationBtn.component
     FloatLabelModule,
     InputTextModule,
     navigationBtnComponent,
+    NgClass,
   ],
 })
 export class DynamicFormComponent {
@@ -32,7 +33,7 @@ export class DynamicFormComponent {
   @Output() formSubmit = new EventEmitter<any>();
 
   // Stato per gestire l'immagine caricata
-  imagePreview: string | null = 'assets/img/dynamic-form/form-image-placeholder.svg';
+  @Input() imagePreview: string | null = 'https://placehold.jp/3d4070/ffffff/200x200.png';
 
   // per i campi di input e textarea
   focusedField: string | null = null;

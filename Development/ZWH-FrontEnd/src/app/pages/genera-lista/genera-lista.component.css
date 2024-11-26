@@ -1,0 +1,57 @@
+.breadcrumb {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 50px;
+  margin-bottom: 15px;
+}
+:host ::ng-deep .p-breadcrumb {
+  border: none;
+}
+:host ::ng-deep .p-breadcrumb .p-breadcrumb-list li .p-menuitem-link {
+  gap: 8px;
+}
+:host ::ng-deep .utility-bar {
+  width: 70%;
+  margin: 0 auto;
+}
+
+:host ::ng-deep #utility-selectable-labels {
+  position: fixed;
+}
+
+/* Stile per la lista */
+:host ::ng-deep app-shopping-list .list-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px; /* Spaziatura interna per spostare i contenuti a destra */
+  border-bottom: 1px solid #e0e0e0; /* Linea di separazione tra gli elementi */
+}
+:host ::ng-deep app-shopping-list th:nth-child(1),
+:host ::ng-deep app-shopping-list td:nth-child(1) {
+  width: 40%; /* Colonna "Nome Prodotto" */
+  text-align: center;
+}
+
+:host ::ng-deep app-shopping-list th:nth-child(2),
+:host ::ng-deep app-shopping-list td:nth-child(2) {
+  width: 30%; /* Colonna "Quantità" */
+  text-align: center;
+}
+
+:host ::ng-deep app-shopping-list th:nth-child(3),
+:host ::ng-deep app-shopping-list td:nth-child(3) {
+  width: 30%; /* Colonna "Options" */
+  text-align: center;
+}
+:host ::ng-deep app-shopping-list th:first-child {
+  padding-left: 50px; /* Aggiunge padding per spostare "Nome Prodotto" verso destra */
+}
+:host ::ng-deep app-shopping-list .list-item:last-child {
+  border-bottom: none; /* Rimuove il bordo per l'ultima riga */
+}
+:host ::ng-deep app-shopping-list td:nth-child(1) {
+  padding-left: 50px; /* Applica padding solo alla colonna della quantità */
+}
+:host ::ng-deep app-shopping-list td:nth-child(2) {
+  padding-left: 40px; /* Applica padding solo alla colonna della quantità */
+}

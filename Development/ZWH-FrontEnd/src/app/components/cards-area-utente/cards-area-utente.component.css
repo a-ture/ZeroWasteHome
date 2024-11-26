@@ -1,0 +1,91 @@
+/* Contenitore principale per centrare il contenitore delle card */
+.page-container {
+  display: flex;
+  justify-content: center; /* Centra orizzontalmente */
+  align-items: center; /* Centra verticalmente */
+  height: 100vh; /* Altezza totale dello schermo */
+  padding: 0; /* Rimuove padding extra */
+  margin: 0; /* Rimuove margini extra */
+  box-sizing: border-box;
+}
+
+/* Contenitore delle card (griglia) */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(
+    4,
+    minmax(250px, 1fr)
+  ); /* 4 colonne con larghezza minima di 250px */
+  column-gap: 15px; /* Spaziatura orizzontale tra le card */
+  row-gap: 15px; /* Spaziatura verticale tra le righe */
+  width: 90%; /* Riduce il contenitore per avere margini uniformi */
+  max-width: 1200px; /* Imposta una larghezza massima */
+  box-sizing: border-box; /* Include il padding nei calcoli */
+}
+
+/* Singola card */
+.card {
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  width: 100%; /* Card si adatta automaticamente allo spazio della griglia */
+  max-width: 300px; /* Larghezza massima della card */
+  min-height: 200px; /* Altezza minima per rendere le card più alte */
+  display: flex;
+  flex-direction: column; /* Allinea il contenuto verticalmente */
+  justify-content: center; /* Centra il contenuto verticalmente */
+}
+
+/* Effetto hover per le card */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Icona della card */
+.card-icon {
+  font-size: 40px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Titolo della card */
+.card h3 {
+  font-size: 18px;
+  color: #222;
+  margin: 10px 0;
+}
+
+/* Descrizione della card */
+.card p {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Media query per schermi più piccoli */
+@media (max-width: 1024px) {
+  .cards-container {
+    grid-template-columns: repeat(3, minmax(250px, 1fr)); /* 3 card per riga su schermi medi */
+  }
+}
+
+@media (max-width: 768px) {
+  .cards-container {
+    grid-template-columns: repeat(2, minmax(250px, 1fr)); /* 2 card per riga su schermi piccoli */
+  }
+}
+
+@media (max-width: 480px) {
+  .cards-container {
+    grid-template-columns: repeat(
+      1,
+      minmax(250px, 1fr)
+    ); /* 1 card per riga su schermi molto piccoli */
+  }
+}
