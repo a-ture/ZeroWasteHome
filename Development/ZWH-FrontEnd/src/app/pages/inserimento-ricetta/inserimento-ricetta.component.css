@@ -1,0 +1,30 @@
+.breadcrumb {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 50px;
+  margin-bottom: 15px;
+}
+
+:host ::ng-deep .p-breadcrumb {
+  border: none;
+}
+
+:host ::ng-deep .p-breadcrumb .p-menuitem-link {
+  gap: 8px;
+}
+
+:host ::ng-deep #header span {
+  padding: 8px;
+}
+
+:host ::ng-deep #header input {
+  margin-right: 8px;
+}
+
+:host ::ng-deep .p-breadcrumb {
+  border: none;
+}
+
+:host ::ng-deep .footer {
+  margin-top: 55px !important;
+}
