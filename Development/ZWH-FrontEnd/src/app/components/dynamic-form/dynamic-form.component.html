@@ -2,7 +2,7 @@
   <form #form="ngForm" (ngSubmit)="submitForm(form.value)" id="dynamic-form">
     <div id="header">
       <span>{{ page }}</span>
-      <input type="submit" value="Aggiungi" />
+      <input type="submit" [name]="submitText" class="form-control" [(ngModel)]="submitText" />
     </div>
 
     <div id="form-body">

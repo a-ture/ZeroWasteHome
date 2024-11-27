@@ -42,6 +42,7 @@
   text-align: center;
   cursor: pointer;
   font-size: 14px;
+  width: auto;
 }
 
 #dynamic-form > div > div {
@@ -135,7 +136,7 @@
 /* Effetto focus */
 .form-control:focus {
   border-color: #000000;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombra più marcata al focus */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombra piÃ¹ marcata al focus */
 }
 
 /* Altezza specifica per textarea */
@@ -150,7 +151,7 @@ input[type='date'] {
   transition: color 0.2s ease-in-out;
 }
 
-/* Mostra il testo predefinito (gg/mm/aaaa) quando il campo è in focus */
+/* Mostra il testo predefinito (gg/mm/aaaa) quando il campo Ã¨ in focus */
 input[type='date'].focused {
   color: #000;
 }
