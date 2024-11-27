@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { userBtnComponent } from '../userBtn/userBtn.component';
@@ -22,12 +22,14 @@ import { navigationBtnComponent } from '../navigationBtn/navigationBtn.component
     NgClass,
   ],
 })
-export class DynamicFormComponent {
+export class DynamicFormComponent implements OnInit {
   // Ogni oggetto di questo array rappresenta un input del form,
   //                nome campo,      tipo,        valore default
   @Input() fields: { label: string; type: string; value?: string }[] = [];
 
   @Input() page!: string;
+
+  @Input() submitText!: string;
 
   // Evento per emettere i dati raccolti dal form
   @Output() formSubmit = new EventEmitter<any>();
@@ -65,5 +67,11 @@ export class DynamicFormComponent {
   // Metodo per simulare il click del campo input nascosto
   triggerFileInput(fileInput: HTMLInputElement) {
     fileInput.click();
+  }
+
+  ngOnInit() {
+    if (!this.submitText) {
+      this.submitText = 'Aggiungi';
+    }
   }
 }
