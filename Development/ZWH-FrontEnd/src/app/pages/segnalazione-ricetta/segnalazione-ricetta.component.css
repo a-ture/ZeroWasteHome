@@ -1,0 +1,29 @@
+/*css per il breadcrumb*/
+.breadcrumb {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 50px;
+}
+
+:host ::ng-deep .p-breadcrumb {
+  border: none;
+}
+
+:host ::ng-deep .p-breadcrumb .p-menuitem-link {
+  gap: 8px;
+}
+
+/*css per l'utility bar*/
+:host ::ng-deep .utility-bar {
+  width: 70%;
+  margin: 0 auto;
+}
+
+:host ::ng-deep #utility-selectable-labels {
+  position: fixed;
+}
+
+/*css per la product-table*/
+:host ::ng-deep .styled-table[_ngcontent-ng-c351898407] {
+  width: 1000px;
+}
