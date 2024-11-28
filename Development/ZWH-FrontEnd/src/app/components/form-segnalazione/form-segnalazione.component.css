@@ -1,0 +1,80 @@
+/* Overlay che oscura lo sfondo */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Colore semitrasparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+/* Contenuto del pop-up */
+.popup-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+  min-width: 500px;
+  text-align: left;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+/* Stile dell'intestazione */
+.popup-content h2 {
+  margin-bottom: 20px;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* Stile del campo di testo */
+textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+  resize: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Leggera ombra */
+}
+
+/* Stile al passaggio del mouse */
+textarea:hover {
+  border-color: #000000; /* Cambia il colore del bordo */
+  box-shadow: 0 4px 8px rgba(97, 97, 97, 0.2); /* Aumenta l'ombra */
+}
+
+/* Aggiunge un'etichetta sopra la textarea */
+.form-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  font-size: 12px;
+  background-color: white;
+  padding: 0 5px;
+  color: #434343;
+  display: flex;
+}
+
+/* Contenitore per i bottoni */
+.form-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
