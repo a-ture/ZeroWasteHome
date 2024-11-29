@@ -61,6 +61,6 @@ public class UtenteController {
   @PostMapping("/registrazioneUtente")
   public ResponseEntity<Utente> registrazione(@RequestBody @Valid Utente utente) {
     Utente nuovoUtente = registrazioneService.registrazione(utente);
-    return ResponseEntity.status(HttpStatus.CREATED).body(nuovoUtente);
+    return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 }
