@@ -1,0 +1,58 @@
+<div class="profile-container">
+  <div class="user-info">
+    <div class="flex">
+      <label for="Username">Username</label>
+      <input id="Username" [disabled]="!isEditing" type="text" value="{{ username }}" />
+    </div>
+    <div class="flex">
+      <label for="email">Email</label>
+      <input id="email" [disabled]="!isEditing" type="email" value="{{ email }}" />
+    </div>
+    <div class="flex">
+      <label for="nome">Nome</label>
+      <input id="nome" [disabled]="!isEditing" type="text" value="{{ nome }}" />
+    </div>
+    <div class="flex">
+      <label for="cognome">Cognomoe</label>
+      <input id="cognome" [disabled]="!isEditing" type="text" value="{{ cognome }}" />
+    </div>
+    <div class="flex">
+      <label for="dataNascita">Data di nascita</label>
+      <input
+        id="dataNascita"
+        [disabled]="!isEditing"
+        type="text"
+        value="{{ dataNascita }}"
+        placeholder="Data di nascita non inserita"
+      />
+    </div>
+    <div class="flex">
+      <label for="livello-attività">Livello attività</label>
+      <select id="livello-attività" [disabled]="!isEditing">
+        <option value="" disabled>Seleziona livello attività</option>
+        <option value="sedentario">Sedentario</option>
+        <option value="moderato">Moderato</option>
+        <option value="medio">Medio</option>
+        <option value="atleta-agonistico">Atleta agonistico</option>
+      </select>
+    </div>
+    <div class="flex">
+      <label for="fabbisogno">Fabbisogno (kcal)</label>
+      <input
+        id="fabbisogno"
+        [disabled]="!isEditing"
+        type="number"
+        placeholder="Fabbisogno calorico non inserito"
+        value="{{ fabbisogno }}"
+      />
+    </div>
+  </div>
+
+  <div class="user-image parte-destra" [class.editing]="isEditing">
+    <img class="immagine" src="https://via.placeholder.com/150" alt="User Image" />
+    <div class="pulsanti flex">
+      <userBtn label="Salva" class="save-btn" (click)="onSave()"></userBtn>
+      <userBtn label="Modifica" (click)="onEdit()"></userBtn>
+    </div>
+  </div>
+</div>
