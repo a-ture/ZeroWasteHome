@@ -1,5 +1,6 @@
 <div class="profile-container">
   <div class="user-info">
+    <h2>Area utente</h2>
     <div class="flex">
       <label for="Username">Username</label>
       <input id="Username" [disabled]="!isEditing" type="text" value="{{ username }}" />
@@ -35,16 +36,6 @@
         <option value="medio">Medio</option>
         <option value="atleta-agonistico">Atleta agonistico</option>
       </select>
-    </div>
-    <div class="flex">
-      <label for="fabbisogno">Fabbisogno (kcal)</label>
-      <input
-        id="fabbisogno"
-        [disabled]="!isEditing"
-        type="number"
-        placeholder="Fabbisogno calorico non inserito"
-        value="{{ fabbisogno }}"
-      />
     </div>
   </div>
 
