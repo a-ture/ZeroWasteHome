@@ -5,10 +5,9 @@ import it.unisa.zwhbackend.model.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 /**
- * Implementazione del servizio per la gestione della registrazione degli utenti.
- * Fornisce la logica di business per registrare un nuovo utente nel sistema.
+ * Implementazione del servizio per la gestione della registrazione degli utenti. Fornisce la logica
+ * di business per registrare un nuovo utente nel sistema.
  *
  * @author Alessia Ture
  */
@@ -18,8 +17,8 @@ public class GestioneRegistrazioneService implements RegistrazioneService {
   private final UtenteRepository utenteRepository;
 
   /**
-   * Costruttore della classe.
-   * Inietta il repository degli utenti necessario per le operazioni di persistenza.
+   * Costruttore della classe. Inietta il repository degli utenti necessario per le operazioni di
+   * persistenza.
    *
    * @param utenteRepository il repository per la gestione degli utenti
    */
@@ -30,9 +29,9 @@ public class GestioneRegistrazioneService implements RegistrazioneService {
 
   /**
    * Registra un nuovo utente nel sistema.
-   * <p>
-   * Verifica che i dati forniti siano validi e che l'email non sia già presente nel database.
-   * Se le verifiche passano, salva l'utente nel database.
+   *
+   * <p>Verifica che i dati forniti siano validi e che l'email non sia già presente nel database. Se
+   * le verifiche passano, salva l'utente nel database.
    *
    * @param utente l'utente da registrare
    * @return l'utente registrato

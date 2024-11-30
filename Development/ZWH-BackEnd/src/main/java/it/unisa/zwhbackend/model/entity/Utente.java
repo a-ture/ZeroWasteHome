@@ -5,6 +5,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.Getter;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Classe che rappresenta un'entità Utente nel sistema. Mappa la tabella "utente" nel database e
@@ -64,4 +68,10 @@ public class Utente {
    */
   @NotBlank(message = "Il nome è obbligatorio")
   private String name;
+
+  @Getter
+  @ElementCollection
+  @Column(name = "categoria")
+  private List<String> categoria = Arrays.asList("vegano", "gluten-free", "vegetariano");
+
 }
