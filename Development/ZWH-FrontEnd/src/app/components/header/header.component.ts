@@ -1,4 +1,12 @@
-import { ChangeDetectorRef, Component, input, Input, OnInit, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  input,
+  Input,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { MenubarModule } from 'primeng/menubar';
 import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
@@ -82,17 +90,5 @@ export class HeaderComponent implements OnInit {
     this.updateCirclePosition();
     window.addEventListener('resize', () => this.updateCirclePosition());
     window.addEventListener('onload', () => this.setActiveLink(this.activeLink));
-  }
-
-  // Funzione per gestire la navigazione al login
-  navigateToLogin() {
-    // Inserisci la logica per navigare alla pagina di login
-    console.log('Naviga alla pagina di login');
-  }
-
-  // Funzione per gestire la navigazione alla registrazione
-  navigateToRegister() {
-    // Inserisci la logica per navigare alla pagina di registrazione
-    console.log('Naviga alla pagina di registrazione');
   }
 }

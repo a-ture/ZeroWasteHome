@@ -1,0 +1,13 @@
+<app-header barra_ricerca="no" loggato="si"></app-header>
+<breadcrumb-basic-demo class="breadcrumb" [items]="items" [home]="home"></breadcrumb-basic-demo>
+<utility-bar [title]="tableTitle" [buttons]="buttons"></utility-bar>
+<app-shopping-list
+  [items]="[
+    { name: 'Pane', quantita: 1, checked: true },
+    { name: 'Latte', quantita: 2, checked: true },
+    { name: 'Uova', quantita: 3, checked: false },
+    { name: 'Caviale', quantita: 4, checked: false },
+  ]"
+></app-shopping-list>
+
+<app-footer></app-footer>

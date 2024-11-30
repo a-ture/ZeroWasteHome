@@ -2,7 +2,6 @@
   <form #form="ngForm" (ngSubmit)="submitForm(form.value)" id="dynamic-form">
     <div id="header">
       <span>{{ page }}</span>
-      <input type="submit" />
     </div>
 
     <div id="form-body">
@@ -12,7 +11,6 @@
           <!-- Genera input o textarea in base al tipo -->
           <div class="float-label-container">
             <input
-              *ngIf="field.type !== 'textarea'"
               [type]="field.type"
               [name]="field.label"
               [(ngModel)]="field.value"

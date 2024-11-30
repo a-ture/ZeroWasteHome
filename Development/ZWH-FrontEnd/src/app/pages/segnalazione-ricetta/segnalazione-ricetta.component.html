@@ -1,0 +1,33 @@
+<app-header [loggato]="'si'" [barra_ricerca]="'no'"></app-header>
+<breadcrumb-basic-demo class="breadcrumb" [items]="items" [home]="home"></breadcrumb-basic-demo>
+<utility-bar [title]="tableTitle" [buttons]="buttons"></utility-bar>
+<product-table
+  [products]="[
+    {
+      src: 'assets/images/ricetta1.jpg',
+      info: [
+        { name: 'Identificativo Ricetta', val: '01' },
+        { name: 'Nome', val: 'Pizza Margherita' },
+        { name: 'Stato della Segnalazione', val: 'Aperto' },
+      ],
+    },
+    {
+      src: 'assets/images/ricetta2.jpg',
+      info: [
+        { name: 'Identificativo Ricetta', val: '02' },
+        { name: 'Nome', val: 'Spaghetti alla Carbonara' },
+        { name: 'Stato della Segnalazione', val: 'Risolto' },
+      ],
+    },
+    {
+      src: 'assets/images/ricetta3.jpg',
+      info: [
+        { name: 'Identificativo Ricetta', val: '03' },
+        { name: 'Nome', val: 'Tiramisu' },
+        { name: 'Stato della Segnalazione', val: 'Aperto' },
+      ],
+    },
+  ]"
+  [buttuns]="['Visualizza Dettagli']"
+></product-table>
+<app-footer></app-footer>

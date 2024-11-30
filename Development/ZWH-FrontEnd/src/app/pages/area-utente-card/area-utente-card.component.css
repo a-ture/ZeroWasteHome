@@ -1,0 +1,11 @@
+.titolo {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 200px;
+  font-size: 45px;
+  font-family: 'Times New Roman', sans-serif;
+}
+
+:host ::ng-deep .page-container[_ngcontent-ng-c1627640203] {
+  height: 50vh;
+}
