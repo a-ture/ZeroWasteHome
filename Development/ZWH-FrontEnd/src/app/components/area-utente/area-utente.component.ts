@@ -31,7 +31,6 @@ export class AreaUtenteComponent {
   @Input() cognome: string = 'Doe';
   @Input() dataNascita: string = '12/8/2000';
   @Input() livelloAttivita: string = 'medio';
-  @Input() fabbisogno: string = '2000';
   @Input() immagineSrc: string = 'https://via.placeholder.com/150';
   isEditing = false;
 
@@ -48,7 +47,6 @@ export class AreaUtenteComponent {
       cognome: this.cognome,
       age: this.dataNascita,
       livelloAttivita: this.livelloAttivita,
-      fabbisogno: this.fabbisogno,
     });
     // Qui puoi aggiungere la logica per salvare i dati
   }

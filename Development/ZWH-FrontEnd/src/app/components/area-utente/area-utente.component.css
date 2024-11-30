@@ -20,6 +20,12 @@
   padding: 20px 20px 60px 20px;
   width: 70%;
 }
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
 
 label {
   font-weight: bold;
@@ -73,7 +79,7 @@ button:hover {
 .immagine {
   border-radius: 50%;
   width: 60%;
-  margin-top: 20px;
+  margin-top: 80px;
 }
 
 .flex {
