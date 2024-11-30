@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.util.List;
 import lombok.Data;
+import lombok.Getter;
 
 /**
  * Classe che rappresenta un'entità Utente nel sistema. Mappa la tabella "utente" nel database e
@@ -64,4 +66,9 @@ public class Utente {
    */
   @NotBlank(message = "Il nome è obbligatorio")
   private String name;
+
+  @Getter
+  @ElementCollection
+  @Column(name = "categoria")
+  private List<String> categoria;
 }
