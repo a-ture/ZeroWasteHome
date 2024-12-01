@@ -6,7 +6,6 @@ import it.unisa.zwhbackend.model.entity.Utente;
 import it.unisa.zwhbackend.model.repository.PossiedeInFrigoRepository;
 import it.unisa.zwhbackend.model.repository.ProdottoRepository;
 import it.unisa.zwhbackend.model.repository.UtenteRepository;
-
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,12 +116,14 @@ public class ProdottoService {
       // Verifica se esiste già una relazione tra l'utente e il prodotto nel frigo
       System.out.println("Ora controllo che ci sia già una relazione");
       // Recupera tutte le relazioni per utente e prodotto
-      List<PossiedeInFrigo> relazioni = possiedeInFrigoRepository.findByUtenteAndProdotto(utente, prodotto);
+      List<PossiedeInFrigo> relazioni =
+          possiedeInFrigoRepository.findByUtenteAndProdotto(utente, prodotto);
 
       if (relazioni.isEmpty()) {
         // Nessuna relazione trovata, crea una nuova
         System.out.println("Relazione non trovata");
-        PossiedeInFrigo nuovaRelazione = new PossiedeInFrigo(utente, prodotto, quantita, dataScadenza);
+        PossiedeInFrigo nuovaRelazione =
+            new PossiedeInFrigo(utente, prodotto, quantita, dataScadenza);
         possiedeInFrigoRepository.save(nuovaRelazione);
         System.out.println("Relazione creata");
       } else {
@@ -134,7 +135,8 @@ public class ProdottoService {
           if (relazione.getDataScadenza().equals(dataScadenza)) {
             relazione.setQuantita(relazione.getQuantita() + quantita); // Aggiungi la quantità
             possiedeInFrigoRepository.save(relazione); // Salva la relazione aggiornata
-            System.out.println("Quantità aggiornata per relazione con data di scadenza: " + dataScadenza);
+            System.out.println(
+                "Quantità aggiornata per relazione con data di scadenza: " + dataScadenza);
             relazioneAggiornata = true;
             break; // Esce dal ciclo dopo aver aggiornato la relazione
           }
@@ -143,7 +145,8 @@ public class ProdottoService {
         // Se nessuna relazione è stata aggiornata (nessuna corrispondenza con la data di scadenza),
         // crea una nuova relazione
         if (!relazioneAggiornata) {
-          PossiedeInFrigo nuovaRelazione = new PossiedeInFrigo(utente, prodotto, quantita, dataScadenza);
+          PossiedeInFrigo nuovaRelazione =
+              new PossiedeInFrigo(utente, prodotto, quantita, dataScadenza);
           possiedeInFrigoRepository.save(nuovaRelazione); // Salva la nuova relazione
           System.out.println("Relazione creata con data di scadenza diversa.");
         }

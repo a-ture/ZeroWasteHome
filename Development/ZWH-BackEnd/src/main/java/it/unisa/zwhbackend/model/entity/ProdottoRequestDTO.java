@@ -1,9 +1,6 @@
 package it.unisa.zwhbackend.model.entity;
 
 // Importazioni per la validazione dei campi
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Pattern;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Data Transfer Object (DTO) che rappresenta un oggetto di richiesta per un prodotto.
@@ -22,7 +19,6 @@ public class ProdottoRequestDTO {
    * <p>Questo campo deve contenere un codice numerico con una lunghezza massima di 8 caratteri. La
    * validazione è eseguita tramite {@code @Pattern} che impone la regex: {@code ^[0-9]{1,8}$}.
    */
-
   private String codiceBarre; // Variabile per memorizzare il codice a barre del prodotto
 
   /**
@@ -32,7 +28,6 @@ public class ProdottoRequestDTO {
    * caratteri. La validazione è eseguita tramite {@code @Pattern} che impone la regex: {@code
    * ^[a-zA-Z]{1,50}$}.
    */
-
   private String nomeProdotto; // Variabile per memorizzare il nome del prodotto
 
   /**
@@ -42,7 +37,6 @@ public class ProdottoRequestDTO {
    * validazione è eseguita tramite {@code @Pattern} che impone la regex: {@code
    * ^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$}.
    */
-
   private String dataScadenza; // Variabile per memorizzare la data di scadenza del prodotto
 
   /**
@@ -59,7 +53,10 @@ public class ProdottoRequestDTO {
    * <p>Questo campo deve contenere un valore numerico positivo maggiore di zero. La validazione è
    * eseguita tramite {@code @Min} che impone un valore minimo di 1.
    */
-  private Long idUtente; // Variabile per avere un corretto riferimento all'utente che inserisci il prodotto in frigo
+  private Long
+      idUtente; // Variabile per avere un corretto riferimento all'utente che inserisci il prodotto
+
+  // in frigo
 
   // Getter e Setter per l'id dell'utente
   public Long getIdUtente() {
