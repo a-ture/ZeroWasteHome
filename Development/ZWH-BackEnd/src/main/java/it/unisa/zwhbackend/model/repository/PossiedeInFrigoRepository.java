@@ -3,9 +3,7 @@ package it.unisa.zwhbackend.model.repository;
 import it.unisa.zwhbackend.model.entity.PossiedeInFrigo;
 import it.unisa.zwhbackend.model.entity.Prodotto;
 import it.unisa.zwhbackend.model.entity.Utente;
-
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

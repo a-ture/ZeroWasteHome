@@ -2,10 +2,9 @@ package it.unisa.zwhbackend.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Objects;
-
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 /**
@@ -49,19 +48,20 @@ public class PossiedeInFrigo {
   @ManyToOne
   @JoinColumn(name = "prodotto_id", nullable = false)
   private Prodotto prodotto;
+
   /**
    * Data di scadenza del prodotto.
    *
    * <p>Questo campo è obbligatorio e deve rispettare il formato "gg/mm/aa". Annota il campo con
    * {@code @Pattern} per validare il formato della data.
    */
-
   @Id
   @Column(name = "data_scadenza")
   @Pattern(
-          regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$",
-          message = "La Data deve essere del formato gg/mm/aa.")
+      regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$",
+      message = "La Data deve essere del formato gg/mm/aa.")
   private String dataScadenza;
+
   /**
    * Quantità di prodotto presente nel frigo.
    *
@@ -71,7 +71,6 @@ public class PossiedeInFrigo {
    */
   @Min(value = 1, message = "La Quantità deve essere un numero positivo maggiore di zero.")
   private int quantita;
-
 
   /**
    * Costruttore vuoto.
@@ -122,6 +121,7 @@ public class PossiedeInFrigo {
      * <p>Deve corrispondere al formato {@code gg/MM/yyyy}.
      */
     private String dataScadenza;
+
     /**
      * Costruttore vuoto.
      *
@@ -140,7 +140,7 @@ public class PossiedeInFrigo {
      * @param prodotto il prodotto posseduto dall'utente
      * @param dataScadenza data di scadenza del prodotto
      */
-    public PossiedeInFrigoId(Utente utente, Prodotto prodotto , String dataScadenza) {
+    public PossiedeInFrigoId(Utente utente, Prodotto prodotto, String dataScadenza) {
       this.utente = utente;
       this.prodotto = prodotto;
       this.dataScadenza = dataScadenza;

@@ -90,7 +90,12 @@ public class ProdottoController {
           bindingResult.getAllErrors(),
           HttpStatus.BAD_REQUEST); // Restituisce un errore di validazione
     }
-    System.out.println("----------------------------\n Prodotto in inserimento \n -Nome: " + prodottoRequestDTO.getNomeProdotto() + "\n -Id Utente: " + prodottoRequestDTO.getIdUtente() + "\n--------------------");
+    System.out.println(
+        "----------------------------\n Prodotto in inserimento \n -Nome: "
+            + prodottoRequestDTO.getNomeProdotto()
+            + "\n -Id Utente: "
+            + prodottoRequestDTO.getIdUtente()
+            + "\n--------------------");
     try {
       // Aggiungi il prodotto al frigo utilizzando i dati del DTO
       Prodotto prodotto =
@@ -98,8 +103,8 @@ public class ProdottoController {
               prodottoRequestDTO.getNomeProdotto(),
               prodottoRequestDTO.getDataScadenza(),
               prodottoRequestDTO.getCodiceBarre(),
-              prodottoRequestDTO.getQuantità()
-              ,prodottoRequestDTO.getIdUtente());
+              prodottoRequestDTO.getQuantità(),
+              prodottoRequestDTO.getIdUtente());
       return new ResponseEntity<>(
           prodotto, HttpStatus.OK); // Restituisce il prodotto aggiunto con successo
     } catch (IllegalArgumentException e) {
