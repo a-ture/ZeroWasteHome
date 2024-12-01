@@ -1,9 +1,12 @@
 package it.unisa.zwhbackend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Data;
 
 /**
@@ -21,7 +24,6 @@ import lombok.Data;
 @Data
 @Table(name = "utente")
 public class Utente {
-
   /**
    * Identificatore univoco dell'utente.
    *
@@ -64,4 +66,9 @@ public class Utente {
    */
   @NotBlank(message = "Il nome è obbligatorio")
   private String name;
+
+  // Lista di prodotti in frigo
+  @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore // Escludi dalla serializzazione
+  private List<PossiedeInFrigo> prodottiInFrigo = new ArrayList<>();
 }
