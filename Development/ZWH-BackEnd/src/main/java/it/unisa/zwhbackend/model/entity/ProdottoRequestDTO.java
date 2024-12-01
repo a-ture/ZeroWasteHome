@@ -3,6 +3,7 @@ package it.unisa.zwhbackend.model.entity;
 // Importazioni per la validazione dei campi
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Data Transfer Object (DTO) che rappresenta un oggetto di richiesta per un prodotto.
@@ -21,11 +22,7 @@ public class ProdottoRequestDTO {
    * <p>Questo campo deve contenere un codice numerico con una lunghezza massima di 8 caratteri. La
    * validazione è eseguita tramite {@code @Pattern} che impone la regex: {@code ^[0-9]{1,8}$}.
    */
-  @Pattern(
-      regexp =
-          "^[0-9]{1,8}$", // La regex impone che il campo contenga solo numeri da 1 a 8 caratteri
-      message =
-          "Il codice deve avere una lunghezza massima di 8 caratteri e deve contenere solo cifre.")
+
   private String codiceBarre; // Variabile per memorizzare il codice a barre del prodotto
 
   /**
@@ -35,12 +32,7 @@ public class ProdottoRequestDTO {
    * caratteri. La validazione è eseguita tramite {@code @Pattern} che impone la regex: {@code
    * ^[a-zA-Z]{1,50}$}.
    */
-  @Pattern(
-      regexp =
-          "^[a-zA-Z]{1,50}$", // La regex impone che il nome prodotto contenga solo lettere da 1 a
-      // 50 caratteri
-      message =
-          "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
+
   private String nomeProdotto; // Variabile per memorizzare il nome del prodotto
 
   /**
@@ -50,10 +42,7 @@ public class ProdottoRequestDTO {
    * validazione è eseguita tramite {@code @Pattern} che impone la regex: {@code
    * ^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$}.
    */
-  @Pattern(
-      regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$", // La regex impone il formato
-      // gg/mm/aaaa
-      message = "La Data deve essere del formato gg/mm/aa.")
+
   private String dataScadenza; // Variabile per memorizzare la data di scadenza del prodotto
 
   /**
@@ -62,8 +51,20 @@ public class ProdottoRequestDTO {
    * <p>Questo campo deve contenere un valore numerico positivo maggiore di zero. La validazione è
    * eseguita tramite {@code @Min} che impone un valore minimo di 1.
    */
-  @Min(value = 1, message = "La Quantità deve essere un numero positivo maggiore di zero.")
   private int quantità; // Variabile per memorizzare la quantità del prodotto
+
+  /**
+   * ID utente.
+   *
+   * <p>Questo campo deve contenere un valore numerico positivo maggiore di zero. La validazione è
+   * eseguita tramite {@code @Min} che impone un valore minimo di 1.
+   */
+  private Long idUtente; // Variabile per avere un corretto riferimento all'utente che inserisci il prodotto in frigo
+
+  // Getter e Setter per l'id dell'utente
+  public Long getIdUtente() {
+    return idUtente;
+  }
 
   // Getter e Setter per il campo codiceBarre
   public String getCodiceBarre() {

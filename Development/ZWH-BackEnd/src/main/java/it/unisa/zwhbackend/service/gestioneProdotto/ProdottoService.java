@@ -78,11 +78,12 @@ public class ProdottoService {
    * @param dataScadenza la data di scadenza del prodotto
    * @param codiceBarre il codice a barre del prodotto
    * @param quantita la quantità del prodotto da aggiungere
+   * @param idUtente l'id utente associato al "frigo"
    * @return il prodotto (sia nuovo che trovato)
    * @throws RuntimeException se si verifica un errore durante l'aggiunta del prodotto al frigo
    */
   public Prodotto aggiungiProdottoFrigo(
-      String nomeProdotto, String dataScadenza, String codiceBarre, int quantita) {
+      String nomeProdotto, String dataScadenza, String codiceBarre, int quantita, Long idUtente) {
     try {
       System.out.println("Iniziamo...");
 
@@ -104,7 +105,9 @@ public class ProdottoService {
 
       // Recupera l'utente con ID 1
       // Per il momento recupero sempre lo stesso utente , questa dinamica dovrà cambiare
-      Optional<Utente> utenteOptional = utenteRepository.findById(1L);
+      System.out.println("ID Utente: " + idUtente); // Verifica il valore di idUtente
+
+      Optional<Utente> utenteOptional = utenteRepository.findById(idUtente);
       if (utenteOptional.isEmpty()) {
         throw new IllegalStateException(
             "Utente con ID 1 non trovato"); // Lancia un'eccezione se l'utente non è trovato
