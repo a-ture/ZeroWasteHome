@@ -59,7 +59,7 @@ public class PossiedeInFrigo {
   @Id
   @Column(name = "data_scadenza")
   @Pattern(
-          regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{2}$",
+          regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$",
           message = "La Data deve essere del formato gg/mm/aa.")
   private String dataScadenza;
   /**
