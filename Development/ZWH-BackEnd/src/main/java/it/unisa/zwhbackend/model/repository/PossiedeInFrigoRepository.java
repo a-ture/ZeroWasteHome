@@ -3,6 +3,8 @@ package it.unisa.zwhbackend.model.repository;
 import it.unisa.zwhbackend.model.entity.PossiedeInFrigo;
 import it.unisa.zwhbackend.model.entity.Prodotto;
 import it.unisa.zwhbackend.model.entity.Utente;
+
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -30,5 +32,5 @@ public interface PossiedeInFrigoRepository
    * @param prodotto il prodotto da cercare
    * @return un {@code Optional<PossiedeInFrigo>} che contiene la relazione se esiste
    */
-  Optional<PossiedeInFrigo> findByUtenteAndProdotto(Utente utente, Prodotto prodotto);
+  List<PossiedeInFrigo> findByUtenteAndProdotto(Utente utente, Prodotto prodotto);
 }

@@ -6,6 +6,8 @@ import it.unisa.zwhbackend.model.entity.Utente;
 import it.unisa.zwhbackend.model.repository.PossiedeInFrigoRepository;
 import it.unisa.zwhbackend.model.repository.ProdottoRepository;
 import it.unisa.zwhbackend.model.repository.UtenteRepository;
+
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,7 +60,7 @@ public class ProdottoService {
    */
   public Prodotto inserisciProdotto(String nomeProdotto, String dataScadenza, String codiceBarre) {
     // Crea una nuova istanza di Prodotto
-    Prodotto prodotto = new Prodotto(nomeProdotto, dataScadenza, codiceBarre);
+    Prodotto prodotto = new Prodotto(nomeProdotto, codiceBarre);
     System.out.println(prodotto); // Log per il prodotto creato
     System.out.println("-----------Prodotto creato");
     return prodottoRepository.save(prodotto); // Salva il prodotto nel database
@@ -111,25 +113,37 @@ public class ProdottoService {
 
       // Verifica se esiste già una relazione tra l'utente e il prodotto nel frigo
       System.out.println("Ora controllo che ci sia già una relazione");
-      Optional<PossiedeInFrigo> relazioneOptional =
-          possiedeInFrigoRepository.findByUtenteAndProdotto(utente, prodotto);
-      System.out.println("----fatto");
+      // Recupera tutte le relazioni per utente e prodotto
+      List<PossiedeInFrigo> relazioni = possiedeInFrigoRepository.findByUtenteAndProdotto(utente, prodotto);
 
-      if (relazioneOptional.isPresent()) {
-        // Se la relazione esiste, aggiorna la quantità
-        System.out.println("Relazione trovata");
-
-        PossiedeInFrigo relazione = relazioneOptional.get();
-        relazione.setQuantita(
-            relazione.getQuantita() + quantita); // Aggiunge la quantità alla relazione esistente
-        possiedeInFrigoRepository.save(relazione); // Salva la relazione aggiornata
-        System.out.println("Quantità aggiornata");
-      } else {
+      if (relazioni.isEmpty()) {
+        // Nessuna relazione trovata, crea una nuova
         System.out.println("Relazione non trovata");
-        // Se la relazione non esiste, crea una nuova relazione
-        PossiedeInFrigo nuovaRelazione = new PossiedeInFrigo(utente, prodotto, quantita);
-        possiedeInFrigoRepository.save(nuovaRelazione); // Salva la nuova relazione
+        PossiedeInFrigo nuovaRelazione = new PossiedeInFrigo(utente, prodotto, quantita, dataScadenza);
+        possiedeInFrigoRepository.save(nuovaRelazione);
         System.out.println("Relazione creata");
+      } else {
+        boolean relazioneAggiornata = false;
+
+        // Itera su tutte le relazioni esistenti e confronta la data di scadenza
+        for (PossiedeInFrigo relazione : relazioni) {
+          // Se la data di scadenza coincide, aggiorna la quantità
+          if (relazione.getDataScadenza().equals(dataScadenza)) {
+            relazione.setQuantita(relazione.getQuantita() + quantita); // Aggiungi la quantità
+            possiedeInFrigoRepository.save(relazione); // Salva la relazione aggiornata
+            System.out.println("Quantità aggiornata per relazione con data di scadenza: " + dataScadenza);
+            relazioneAggiornata = true;
+            break; // Esce dal ciclo dopo aver aggiornato la relazione
+          }
+        }
+
+        // Se nessuna relazione è stata aggiornata (nessuna corrispondenza con la data di scadenza),
+        // crea una nuova relazione
+        if (!relazioneAggiornata) {
+          PossiedeInFrigo nuovaRelazione = new PossiedeInFrigo(utente, prodotto, quantita, dataScadenza);
+          possiedeInFrigoRepository.save(nuovaRelazione); // Salva la nuova relazione
+          System.out.println("Relazione creata con data di scadenza diversa.");
+        }
       }
 
       return prodotto; // Ritorna il prodotto (sia nuovo che trovato)
