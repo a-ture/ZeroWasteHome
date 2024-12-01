@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Objects;
+
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 /**
@@ -47,7 +49,19 @@ public class PossiedeInFrigo {
   @ManyToOne
   @JoinColumn(name = "prodotto_id", nullable = false)
   private Prodotto prodotto;
+  /**
+   * Data di scadenza del prodotto.
+   *
+   * <p>Questo campo è obbligatorio e deve rispettare il formato "gg/mm/aa". Annota il campo con
+   * {@code @Pattern} per validare il formato della data.
+   */
 
+  @Id
+  @Column(name = "data_scadenza")
+  @Pattern(
+          regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{2}$",
+          message = "La Data deve essere del formato gg/mm/aa.")
+  private String dataScadenza;
   /**
    * Quantità di prodotto presente nel frigo.
    *
@@ -57,6 +71,7 @@ public class PossiedeInFrigo {
    */
   @Min(value = 1, message = "La Quantità deve essere un numero positivo maggiore di zero.")
   private int quantita;
+
 
   /**
    * Costruttore vuoto.
@@ -75,11 +90,13 @@ public class PossiedeInFrigo {
    * @param utente l'utente associato al prodotto
    * @param prodotto il prodotto posseduto dall'utente
    * @param quantita la quantità del prodotto nel frigo
+   * @param dataScadenza la quantità del prodotto nel frigo
    */
-  public PossiedeInFrigo(Utente utente, Prodotto prodotto, Integer quantita) {
+  public PossiedeInFrigo(Utente utente, Prodotto prodotto, Integer quantita, String dataScadenza) {
     this.utente = utente;
     this.prodotto = prodotto;
     this.quantita = quantita;
+    this.dataScadenza = dataScadenza;
   }
 
   /** Classe per rappresentare la chiave primaria composta */
@@ -100,6 +117,12 @@ public class PossiedeInFrigo {
     private Prodotto prodotto;
 
     /**
+     * Riferimento alla data di scadenza del prodotto.
+     *
+     * <p>Deve corrispondere al formato {@code gg/MM/yyyy}.
+     */
+    private String dataScadenza;
+    /**
      * Costruttore vuoto.
      *
      * <p>Necessario per il funzionamento della JPA, permette di creare una nuova istanza senza
@@ -115,10 +138,12 @@ public class PossiedeInFrigo {
      *
      * @param utente l'utente associato al prodotto
      * @param prodotto il prodotto posseduto dall'utente
+     * @param dataScadenza data di scadenza del prodotto
      */
-    public PossiedeInFrigoId(Utente utente, Prodotto prodotto) {
+    public PossiedeInFrigoId(Utente utente, Prodotto prodotto , String dataScadenza) {
       this.utente = utente;
       this.prodotto = prodotto;
+      this.dataScadenza = dataScadenza;
     }
 
     /**

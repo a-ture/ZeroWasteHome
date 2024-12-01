@@ -54,18 +54,6 @@ public class Prodotto {
   private String name;
 
   /**
-   * Data di scadenza del prodotto.
-   *
-   * <p>Questo campo è obbligatorio e deve rispettare il formato "gg/mm/aa". Annota il campo con
-   * {@code @Pattern} per validare il formato della data.
-   */
-  @Column(name = "data_scadenza")
-  @Pattern(
-      regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{2}$",
-      message = "La Data deve essere del formato gg/mm/aa.")
-  private String dataScadenza;
-
-  /**
    * Categoria del prodotto.
    *
    * <p>Questo campo è una lista di stringhe che rappresentano le categorie a cui il prodotto
@@ -91,12 +79,10 @@ public class Prodotto {
    * data di scadenza e codice a barre. La lista delle categorie viene inizializzata come vuota.
    *
    * @param nomeProdotto il nome del prodotto
-   * @param dataScadenza la data di scadenza del prodotto
    * @param codiceBarre il codice a barre del prodotto
    */
-  public Prodotto(String nomeProdotto, String dataScadenza, String codiceBarre) {
+  public Prodotto(String nomeProdotto, String codiceBarre) {
     this.name = nomeProdotto;
-    this.dataScadenza = dataScadenza;
     this.codiceBarre = codiceBarre;
     this.categoria = new ArrayList<>();
   }
