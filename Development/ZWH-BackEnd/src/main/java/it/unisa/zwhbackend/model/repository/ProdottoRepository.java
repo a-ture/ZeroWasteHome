@@ -1,6 +1,7 @@
 package it.unisa.zwhbackend.model.repository;
 
 import it.unisa.zwhbackend.model.entity.Prodotto;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -27,4 +28,17 @@ public interface ProdottoRepository extends JpaRepository<Prodotto, Long> {
    * @return un {@code Optional<Prodotto>} che contiene il prodotto se esiste
    */
   Optional<Prodotto> findByCodiceBarre(String codiceBarre);
+
+  /**
+   * Trova i prodotti il cui nome contiene una determinata stringa, ignorando la distinzione tra
+   * maiuscole e minuscole.
+   *
+   * <p>Questo metodo restituisce una lista di prodotti il cui nome contiene, in modo parziale o
+   * completo, la stringa specificata, ignorando le differenze tra maiuscole e minuscole. È utile
+   * per implementare ricerche flessibili basate sul nome dei prodotti.
+   *
+   * @param name la stringa da cercare nel nome dei prodotti
+   * @return una lista di {@code Prodotto} che soddisfano il criterio di ricerca
+   */
+  List<Prodotto> findByNameContainingIgnoreCase(String name);
 }
