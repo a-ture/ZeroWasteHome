@@ -1,13 +1,9 @@
 package it.unisa.zwhbackend.service.GCCR;
 
-import it.unisa.zwhbackend.model.entity.ListaBloccati;
 import it.unisa.zwhbackend.model.entity.Ricetta;
-import it.unisa.zwhbackend.model.entity.Utente;
-import it.unisa.zwhbackend.model.repository.ListaBloccatiRepository;
 import it.unisa.zwhbackend.model.repository.RicettaRepository;
 import it.unisa.zwhbackend.model.repository.UtenteRepository;
 import jakarta.persistence.EntityNotFoundException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +21,12 @@ public class GestioneRicetteService implements RicettaService {
 
   private final RicettaRepository ricettaRepository;
   private final UtenteRepository utenteRepository;
-  private final ListaBloccatiRepository listaBloccatiRepository;
 
   @Autowired
   public GestioneRicetteService(
-      RicettaRepository ricettaRepository,
-      UtenteRepository utenteRepository,
-      ListaBloccatiRepository listaBloccatiRepository) {
+      RicettaRepository ricettaRepository, UtenteRepository utenteRepository) {
     this.ricettaRepository = ricettaRepository;
     this.utenteRepository = utenteRepository;
-    this.listaBloccatiRepository = listaBloccatiRepository;
   }
 
   /**
@@ -96,17 +88,5 @@ public class GestioneRicetteService implements RicettaService {
   @Override
   public void eliminaRicetta(Long id) {
     ricettaRepository.deleteById(id);
-  }
-
-  /**
-   * Blocca l'autore della ricetta, aggiungendo l'utente alla lista dei bloccati.
-   *
-   * @param autore l'utente da bloccare
-   */
-  public void bloccaAutore(Utente autore) {
-    ListaBloccati listaBloccato = new ListaBloccati();
-    listaBloccato.setIdUtente(autore.getId());
-    listaBloccato.setDataBlocco(LocalDate.now());
-    listaBloccatiRepository.save(listaBloccato); // Salva l'utente nella lista dei bloccati
   }
 }
