@@ -1,37 +1,48 @@
 package it.unisa.zwhbackend.service.GCCR;
 
+import it.unisa.zwhbackend.model.entity.ListaBloccati;
 import it.unisa.zwhbackend.model.entity.Ricetta;
+import it.unisa.zwhbackend.model.entity.Utente;
+import it.unisa.zwhbackend.model.repository.ListaBloccatiRepository;
 import it.unisa.zwhbackend.model.repository.RicettaRepository;
+import it.unisa.zwhbackend.model.repository.UtenteRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * Implementazione del servizio per la gestione delle ricette.
+ * Servizio per la gestione delle ricette nel sistema.
  *
- * <p>Fornisce i metodi per aggiungere, ottenere, aggiornare ed eliminare ricette.
- *
- * @author Anna Tagliamonte
+ * <p>Contiene la logica di business per la creazione, lettura, aggiornamento e eliminazione delle
+ * ricette. Inoltre, gestisce il blocco degli utenti in caso di segnalazione delle ricette.
+ * Autore:Anna Tagliamonte
  */
 @Service
 public class GestioneRicetteService implements RicettaService {
 
   private final RicettaRepository ricettaRepository;
+  private final UtenteRepository utenteRepository;
+  private final ListaBloccatiRepository listaBloccatiRepository;
 
-  /**
-   * Costruttore della classe.
-   *
-   * <p>Inietta il repository necessario per le operazioni di persistenza.
-   *
-   * @param ricettaRepository il repository per la gestione delle ricette
-   */
   @Autowired
-  public GestioneRicetteService(RicettaRepository ricettaRepository) {
+  public GestioneRicetteService(
+      RicettaRepository ricettaRepository,
+      UtenteRepository utenteRepository,
+      ListaBloccatiRepository listaBloccatiRepository) {
     this.ricettaRepository = ricettaRepository;
+    this.utenteRepository = utenteRepository;
+    this.listaBloccatiRepository = listaBloccatiRepository;
   }
 
+  /**
+   * Aggiunge una nuova ricetta al sistema.
+   *
+   * @param ricetta la ricetta da aggiungere
+   * @return la ricetta appena aggiunta
+   */
   @Override
   public Ricetta aggiungiRicetta(Ricetta ricetta) {
     return ricettaRepository.save(ricetta);
@@ -42,6 +53,7 @@ public class GestioneRicetteService implements RicettaService {
    *
    * @return un elenco di tutte le ricette
    */
+  @Override
   public List<Ricetta> getAllRicette() {
     return ricettaRepository.findAll();
   }
@@ -50,45 +62,51 @@ public class GestioneRicetteService implements RicettaService {
    * Restituisce una ricetta specifica dato il suo ID.
    *
    * @param id l'ID della ricetta da recuperare
-   * @return un oggetto Optional che contiene la ricetta se esiste
+   * @return una ricetta se esiste
    */
+  @Override
   public Optional<Ricetta> getRicettaById(Long id) {
     return ricettaRepository.findById(id);
   }
 
   /**
-   * Aggiorna i dettagli di una ricetta esistente.
+   * Aggiorna una ricetta esistente.
    *
    * @param id l'ID della ricetta da aggiornare
    * @param nuovaRicetta i nuovi dettagli della ricetta
    * @return la ricetta aggiornata
-   * @throws EntityNotFoundException se la ricetta con l'ID specificato non esiste
    */
+  @Override
   public Ricetta aggiornaRicetta(Long id, Ricetta nuovaRicetta) {
-    return ricettaRepository
-        .findById(id)
-        .map(
-            ricettaEsistente -> {
-              ricettaEsistente.setNome(nuovaRicetta.getNome());
-              ricettaEsistente.setIngredienti(nuovaRicetta.getIngredienti());
-              ricettaEsistente.setIstruzioni(nuovaRicetta.getIstruzioni());
-              ricettaEsistente.setCategoria(nuovaRicetta.getCategoria());
-              ricettaEsistente.setImg(nuovaRicetta.getImg());
-              return ricettaRepository.save(ricettaEsistente);
-            })
-        .orElseThrow(() -> new EntityNotFoundException("Ricetta con ID " + id + " non trovata"));
+    Ricetta ricettaEsistente =
+        ricettaRepository
+            .findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Ricetta non trovata"));
+    ricettaEsistente.setNome(nuovaRicetta.getNome());
+    ricettaEsistente.setIstruzioni(nuovaRicetta.getIstruzioni());
+    ricettaEsistente.setCategoria(nuovaRicetta.getCategoria());
+    return ricettaRepository.save(ricettaEsistente);
   }
 
   /**
    * Elimina una ricetta specifica dato il suo ID.
    *
    * @param id l'ID della ricetta da eliminare
-   * @throws EntityNotFoundException se la ricetta con l'ID specificato non esiste
    */
+  @Override
   public void eliminaRicetta(Long id) {
-    if (!ricettaRepository.existsById(id)) {
-      throw new EntityNotFoundException("Ricetta con ID " + id + " non trovata");
-    }
     ricettaRepository.deleteById(id);
+  }
+
+  /**
+   * Blocca l'autore della ricetta, aggiungendo l'utente alla lista dei bloccati.
+   *
+   * @param autore l'utente da bloccare
+   */
+  public void bloccaAutore(Utente autore) {
+    ListaBloccati listaBloccato = new ListaBloccati();
+    listaBloccato.setIdUtente(autore.getId());
+    listaBloccato.setDataBlocco(LocalDate.now());
+    listaBloccatiRepository.save(listaBloccato); // Salva l'utente nella lista dei bloccati
   }
 }

@@ -15,9 +15,7 @@ import lombok.Data;
  * <p>Annota l'entità con {@code @Entity} per indicare che è una classe JPA. Usa {@code @Table} per
  * specificare il nome della tabella nel database. Usa {@code @Data} di Lombok per generare
  * automaticamente i metodi getter, setter, toString, equals e hashCode. Include regole di
- * validazione per i campi con le annotazioni di Jakarta Validation.
- *
- * @author Anna Tagliamonte
+ * validazione per i campi con le annotazioni di Jakarta Validation. Autore: Anna Tagliamonte
  */
 @Entity
 @Data
@@ -91,4 +89,18 @@ public class Ricetta {
       regexp = ".*\\.(jpg|png)$",
       message = "Formato immagine non supportato. Carica un file in formato JPG o PNG")
   private String img;
+
+  /**
+   * Autore della ricetta.
+   *
+   * <p>Questo campo rappresenta una relazione molti-a-uno con l'entità {@code Utente}. La colonna
+   * "utente_id" nel database memorizza il riferimento all'utente autore della ricetta.
+   *
+   * <p>In altre parole, ogni ricetta è scritta da un solo utente (autore), ma un utente può
+   * scrivere più ricette. La relazione {@code ManyToOne} implica che molte ricette possano
+   * appartenere allo stesso utente.
+   */
+  @ManyToOne
+  @JoinColumn(name = "utente_id", nullable = false)
+  private Utente autore; // La relazione ManyToOne con l'entità Utente
 }

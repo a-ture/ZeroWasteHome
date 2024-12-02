@@ -18,10 +18,8 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Controller REST per la gestione delle ricette.
  *
- * <p>Fornisce endpoint per creare, ottenere, modificare ed eliminare ricette. Usa il servizio
- * {@link GestioneRicetteService} per eseguire le operazioni.
- *
- * @author Anna Tagliamonte
+ * <p>Fornisce endpoint per aggiungere, ottenere, modificare ed eliminare ricette. Utilizza il
+ * servizio {@link GestioneRicetteService} per eseguire le operazioni. Autore: Anna Tagliamonte
  */
 @RestController
 @RequestMapping("/api/ricette")
@@ -30,9 +28,7 @@ public class GestioneRicetteController {
   private final GestioneRicetteService gestioneRicetteService;
 
   /**
-   * Costruttore della classe.
-   *
-   * <p>Inietta automaticamente l'istanza del servizio {@link GestioneRicetteService}.
+   * Costruttore della classe. Inietta automaticamente il servizio {@link GestioneRicetteService}.
    *
    * @param gestioneRicetteService il servizio per la gestione delle ricette
    */
@@ -193,6 +189,9 @@ public class GestioneRicetteController {
   /**
    * Endpoint per eliminare una ricetta tramite il suo ID.
    *
+   * <p>In questo endpoint, quando una ricetta viene eliminata, l'autore viene bloccato e aggiunto
+   * alla lista dei bloccati.
+   *
    * @param id l'ID della ricetta da eliminare
    * @return una risposta con stato 204 No Content se l'eliminazione è avvenuta con successo
    */
@@ -209,7 +208,18 @@ public class GestioneRicetteController {
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> eliminaRicetta(@PathVariable Long id) {
     try {
+      // Ottieni la ricetta da eliminare
+      Ricetta ricettaDaEliminare =
+          gestioneRicetteService
+              .getRicettaById(id)
+              .orElseThrow(() -> new EntityNotFoundException("Ricetta non trovata"));
+
+      // Blocca l'autore della ricetta
+      gestioneRicetteService.bloccaAutore(ricettaDaEliminare.getAutore());
+
+      // Elimina la ricetta
       gestioneRicetteService.eliminaRicetta(id);
+
       return ResponseEntity.noContent().build();
     } catch (EntityNotFoundException e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
