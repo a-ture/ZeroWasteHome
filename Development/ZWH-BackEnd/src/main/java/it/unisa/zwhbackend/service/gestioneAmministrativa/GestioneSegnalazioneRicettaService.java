@@ -1,95 +1,120 @@
 package it.unisa.zwhbackend.service.gestioneAmministrativa;
 
-import it.unisa.zwhbackend.model.entity.GestoreCommunity;
-import it.unisa.zwhbackend.model.entity.Ricetta;
-import it.unisa.zwhbackend.model.entity.SegnalazioneRicetta;
+import it.unisa.zwhbackend.model.entity.*;
 import it.unisa.zwhbackend.model.enums.StatoSegnalazione;
-import it.unisa.zwhbackend.model.repository.GestoreCommunityRepository;
-import it.unisa.zwhbackend.model.repository.RicettaRepository;
-import it.unisa.zwhbackend.model.repository.SegnalazioneRicettaRepository;
+import it.unisa.zwhbackend.model.repository.*;
+import java.time.LocalDate;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 /**
  * Servizio per gestire la risoluzione delle segnalazioni nel sistema.
  *
- * <p>Questa classe implementa la logica di business per risolvere una segnalazione, aggiornando il
- * suo stato e persistendo i cambiamenti nel database.
+ * <p>Questo servizio implementa la logica di business per la gestione delle segnalazioni, come il
+ * blocco degli utenti, l'aggiornamento dello stato delle segnalazioni e la rimozione delle ricette
+ * segnalate.
  *
  * @author Giovanni Balzano
  */
 @Service
 public class GestioneSegnalazioneRicettaService implements SegnalazioneRicettaService {
 
+  // Repository per interagire con le entità del database
   private final SegnalazioneRicettaRepository segnalazioneRicettaRepository;
   private final RicettaRepository ricettaRepository;
   private final GestoreCommunityRepository gestoreRepository;
+  private final UtenteRepository utenteRepository;
+  private final ListaBloccatiRepository listaBloccatiRepository;
 
   /**
-   * Costruttore per iniettare i repository necessari per la gestione delle segnalazioni delle
-   * ricette.
+   * Costruttore per iniettare le dipendenze necessarie.
    *
-   * <p>Il repository delle segnalazioni viene utilizzato per accedere e modificare i dati delle
-   * segnalazioni nel database. Il repository delle ricette consente di interagire con i dati delle
-   * ricette, mentre il repository dei gestori della community gestisce le informazioni relative
-   * agli utenti della piattaforma.
-   *
-   * @param segnalazioneRicettaRepository il repository per la gestione delle segnalazioni delle
-   *     ricette
-   * @param ricettaRepository il repository per la gestione delle ricette
-   * @param gestoreRepository il repository per la gestione dei gestori della community
+   * @param segnalazioneRicettaRepository Repository per gestire le segnalazioni
+   * @param ricettaRepository Repository per gestire le ricette
+   * @param gestoreRepository Repository per gestire i gestori
+   * @param utenteRepository Repository per gestire gli utenti
+   * @param listaBloccatiRepository Repository per gestire la lista degli utenti bloccati
    */
   public GestioneSegnalazioneRicettaService(
       SegnalazioneRicettaRepository segnalazioneRicettaRepository,
       RicettaRepository ricettaRepository,
-      GestoreCommunityRepository gestoreRepository) {
+      GestoreCommunityRepository gestoreRepository,
+      UtenteRepository utenteRepository,
+      ListaBloccatiRepository listaBloccatiRepository) {
     this.segnalazioneRicettaRepository = segnalazioneRicettaRepository;
     this.ricettaRepository = ricettaRepository;
     this.gestoreRepository = gestoreRepository;
+    this.utenteRepository = utenteRepository;
+    this.listaBloccatiRepository = listaBloccatiRepository;
   }
 
   /**
-   * Risolve una segnalazione, aggiornando il suo stato e persistendo il cambiamento nel database.
+   * Risolve una segnalazione nel sistema.
    *
-   * <p>Se la segnalazione esiste, lo stato viene aggiornato a "RISOLTO" e la segnalazione viene
-   * salvata nuovamente. Se la segnalazione non viene trovata, viene restituito un messaggio di
-   * errore.
+   * <p>Blocca l'autore della ricetta, aggiorna lo stato della segnalazione, disassocia la ricetta e
+   * la elimina.
    *
-   * @param segnalazioneId l'ID della segnalazione da risolvere
-   * @return un messaggio che indica se l'operazione è stata completata con successo o se ci sono
-   *     errori
+   * @param segnalazioneId ID della segnalazione da risolvere
+   * @param gestore_id ID del gestore che risolve la segnalazione
+   * @return Un messaggio che indica il risultato dell'operazione
    */
   @Override
   public String risolviSegnalazione(Long segnalazioneId, Long gestore_id) {
-    // Recupera la segnalazioneRicetta dal repository tramite il suo ID
-    Optional<SegnalazioneRicetta> optionalSegnalazione =
-        segnalazioneRicettaRepository.findById(segnalazioneId);
-    Optional<Ricetta> optionalRicetta = null;
-    Optional<GestoreCommunity> optionalGestoreCommunity = gestoreRepository.findById(gestore_id);
-    // Verifica se la segnalazioneRicetta esiste nel database
-    if (optionalSegnalazione.isEmpty()) {
-      return "SegnalazioneRicetta non trovata."; // Restituisce un errore se la segnalazioneRicetta
-      // non esiste
+    try {
+      // Recupera la segnalazione dalla repository
+      Optional<SegnalazioneRicetta> optionalSegnalazione =
+          segnalazioneRicettaRepository.findById(segnalazioneId);
+      if (optionalSegnalazione.isEmpty()) {
+        return "SegnalazioneRicetta non trovata."; // Se la segnalazione non è trovata
+      }
+
+      // Recupera il gestore dalla repository tramite l'ID
+      Optional<GestoreCommunity> optionalGestoreCommunity = gestoreRepository.findById(gestore_id);
+      if (optionalGestoreCommunity.isEmpty()) {
+        return "Gestore non trovato."; // Restituisce un errore se il gestore non è trovato
+      }
+
+      // Ottieni la segnalazione e il gestore
+      SegnalazioneRicetta segnalazioneRicetta = optionalSegnalazione.get();
+      GestoreCommunity gestoreCommunity = optionalGestoreCommunity.get();
+
+      // Verifica se la ricetta associata alla segnalazione esiste
+      Optional<Ricetta> optionalRicetta =
+          ricettaRepository.findById(segnalazioneRicetta.getRicettaAssociato().getId());
+      if (optionalRicetta.isEmpty()) {
+        return "Ricetta non trovata con ID: " + segnalazioneRicetta.getRicettaAssociato().getId();
+      }
+
+      Ricetta ricetta = optionalRicetta.get();
+
+      // Ottieni l'autore della ricetta
+      Utente autore = ricetta.getAutore();
+      if (autore == null) {
+        return "Autore non trovato per la ricetta."; // Se non esiste l'autore
+      }
+
+      // Aggiungi l'utente alla lista dei bloccati
+      ListaBloccati bloccato = new ListaBloccati();
+      bloccato.setUtente(autore);
+      bloccato.setDataBlocco(LocalDate.now());
+      listaBloccatiRepository.save(bloccato);
+
+      // Aggiorna lo stato della segnalazione a "RISOLTO"
+      segnalazioneRicetta.setStato(StatoSegnalazione.RISOLTO);
+      segnalazioneRicetta.setGestoreAssociato(gestoreCommunity);
+
+      // Disassocia la ricetta dalla segnalazione
+      segnalazioneRicetta.setRicettaAssociato(null);
+      segnalazioneRicettaRepository.save(segnalazioneRicetta); // Salva la segnalazione aggiornata
+
+      // Elimina la ricetta
+      ricettaRepository.delete(ricetta); // Elimina la ricetta
+
+      return "Segnalazione risolta con successo. Autore bloccato e ricetta eliminata.";
+    } catch (Exception e) {
+      System.err.println("Errore durante la risoluzione della segnalazione: " + e.getMessage());
+      e.printStackTrace();
+      return "Errore interno del server: " + e.getMessage(); // Restituisce un errore 500
     }
-    if (optionalGestoreCommunity.isEmpty()) {
-      return "Gestore non trovato."; // Restituisce un errore se il gestore non esiste
-    }
-
-    // Ottiene la segnalazioneRicetta
-    SegnalazioneRicetta segnalazioneRicetta = optionalSegnalazione.get();
-    GestoreCommunity gestoreCommunity = optionalGestoreCommunity.get();
-    optionalRicetta = ricettaRepository.findById(segnalazioneRicetta.getId());
-    Ricetta ricetta = optionalRicetta.get();
-
-    // Aggiorna lo stato della segnalazioneRicetta a "RISOLTO"
-    segnalazioneRicetta.setStato(StatoSegnalazione.RISOLTO); // Imposta lo stato a "RISOLTO"
-    segnalazioneRicetta.setGestoreAssociato(gestoreCommunity);
-    ricettaRepository.delete(ricetta);
-    // Salva la segnalazioneRicetta aggiornata nel database
-    segnalazioneRicettaRepository.save(
-        segnalazioneRicetta); // Questo eseguirà un'operazione di update sull'entità
-
-    // Restituisce un messaggio di successo
-    return "SegnalazioneRicetta risolta con successo. Autore bloccato.";
   }
 }

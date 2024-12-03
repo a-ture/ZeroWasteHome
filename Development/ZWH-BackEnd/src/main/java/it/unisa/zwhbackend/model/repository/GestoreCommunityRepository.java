@@ -10,6 +10,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Giovanni Balzano
  */
-public interface GestoreCommunityRepository extends JpaRepository<GestoreCommunity, Long> {
-  // costruttore vuoto
-}
+public interface GestoreCommunityRepository extends JpaRepository<GestoreCommunity, Long> {}

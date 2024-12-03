@@ -18,7 +18,6 @@ public interface SegnalazioneRicettaService {
    * l'aggiornamento del suo stato e altre operazioni correlate (es. bloccare l'autore).
    *
    * @param segnalazioneId l'ID della segnalazione da risolvere
-   * @param gestore_id l'ID del gestore che sta risolvendo la segnalazione
    * @return un messaggio che indica se l'operazione è stata completata con successo o se ci sono
    *     errori
    */
