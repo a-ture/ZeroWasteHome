@@ -102,6 +102,9 @@ public class Ricetta {
   @JoinColumn(name = "utente_id", nullable = false)
   private Utente autore; // La relazione ManyToOne con l'entità Utente
 
+  @OneToMany(mappedBy = "ricettaAssociato", cascade = CascadeType.PERSIST, orphanRemoval = false)
+  private List<SegnalazioneRicetta> segnalazioniRicetta;
+
   public Long getId() {
     return id;
   }

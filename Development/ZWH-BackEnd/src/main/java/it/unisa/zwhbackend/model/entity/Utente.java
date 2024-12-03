@@ -117,4 +117,22 @@ public class Utente {
   public void setProdottiInFrigo(List<PossiedeInFrigo> prodottiInFrigo) {
     this.prodottiInFrigo = prodottiInFrigo;
   }
+
+  /**
+   * Relazione uno-a-molti con l'entità Ricetta.
+   *
+   * <p>Un utente può essere autore di più ricette. La relazione è mappata dal campo "autore" nella
+   * classe Ricetta.
+   */
+  @OneToMany(mappedBy = "autore", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
+  private List<Ricetta> ricette = new ArrayList<>();
+
+  /**
+   * Relazione uno-a-molti con l'entità ListaBloccati. Un utente può essere associato a più voci
+   * nella lista dei bloccati.
+   */
+  @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
+  private List<ListaBloccati> listaBloccati = new ArrayList<>();
 }
