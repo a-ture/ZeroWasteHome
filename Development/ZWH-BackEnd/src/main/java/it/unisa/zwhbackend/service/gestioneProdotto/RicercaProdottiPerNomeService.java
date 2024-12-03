@@ -1,4 +1,4 @@
-package it.unisa.zwhbackend.service.gestioneProdotti;
+package it.unisa.zwhbackend.service.gestioneProdotto;
 
 import it.unisa.zwhbackend.model.entity.Prodotto;
 import java.util.List;
