@@ -23,10 +23,11 @@ public class GestioneRegistrazioneService implements RegistrazioneService {
    * persistenza.
    *
    * @param utenteRepository il repository per la gestione degli utenti
+   * @param passwordEncoder l'encoder per la gestione delle password degli utenti
    */
   @Autowired
   public GestioneRegistrazioneService(
-      UtenteRepository utenteRepository, PasswordEncoder passwordEncoder) {
+          UtenteRepository utenteRepository, PasswordEncoder passwordEncoder) {
     this.utenteRepository = utenteRepository;
     this.passwordEncoder = passwordEncoder;
   }

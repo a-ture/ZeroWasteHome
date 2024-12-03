@@ -3,7 +3,6 @@ package it.unisa.zwhbackend.model.entity;
 import it.unisa.zwhbackend.model.enums.StatoSegnalazione;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
 
 /**
  * Classe che rappresenta una segnalazione di una ricetta nel sistema.
@@ -16,7 +15,6 @@ import lombok.Data;
  * @author Giovanni Balzano
  */
 @Entity
-@Data
 @Table(name = "segnalazione_ricetta")
 public class SegnalazioneRicetta {
 
@@ -73,4 +71,46 @@ public class SegnalazioneRicetta {
   @ManyToOne
   @JoinColumn(name = "gestore_id")
   private GestoreCommunity gestoreAssociato;
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public @NotBlank(message = "Il contenuto della segnalazione è obbligatorio") String
+      getContenuto() {
+    return contenuto;
+  }
+
+  public void setContenuto(
+      @NotBlank(message = "Il contenuto della segnalazione è obbligatorio") String contenuto) {
+    this.contenuto = contenuto;
+  }
+
+  public Long getIdRicetta() {
+    return idRicetta;
+  }
+
+  public void setIdRicetta(Long idRicetta) {
+    this.idRicetta = idRicetta;
+  }
+
+  public StatoSegnalazione getStato() {
+    return stato;
+  }
+
+  public void setStato(StatoSegnalazione stato) {
+    this.stato = stato;
+  }
+
+  public GestoreCommunity getGestoreAssociato() {
+    return gestoreAssociato;
+  }
+
+  public void setGestoreAssociato(GestoreCommunity gestoreAssociato) {
+    this.gestoreAssociato = gestoreAssociato;
+  }
 }
