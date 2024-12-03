@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Objects;
-import lombok.Data;
 
 /**
  * Classe che rappresenta la relazione tra un utente e i prodotti nel suo frigo. Mappa la tabella
@@ -20,7 +19,6 @@ import lombok.Data;
  * @author Marco Meglio
  */
 @Entity
-@Data
 @Table(name = "possiede_in_frigo")
 @IdClass(PossiedeInFrigo.PossiedeInFrigoId.class) // Specifica la chiave primaria composta
 public class PossiedeInFrigo {
@@ -78,7 +76,7 @@ public class PossiedeInFrigo {
    * <p>Necessario per il funzionamento della JPA, permette di creare una nuova istanza senza
    * parametri.
    */
-  public PossiedeInFrigo() {}
+  public PossiedeInFrigo() { }
 
   /**
    * Costruttore con parametri.
@@ -96,6 +94,47 @@ public class PossiedeInFrigo {
     this.prodotto = prodotto;
     this.quantita = quantita;
     this.dataScadenza = dataScadenza;
+  }
+
+  public Prodotto getProdotto() {
+    return prodotto;
+  }
+
+  public void setProdotto(Prodotto prodotto) {
+    this.prodotto = prodotto;
+  }
+
+  public Utente getUtente() {
+    return utente;
+  }
+
+  public void setUtente(Utente utente) {
+    this.utente = utente;
+  }
+
+  public @Pattern(
+      regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$",
+      message = "La Data deve essere del formato gg/mm/aa.") String getDataScadenza() {
+    return dataScadenza;
+  }
+
+  public void setDataScadenza(
+      @Pattern(
+              regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$",
+              message = "La Data deve essere del formato gg/mm/aa.")
+          String dataScadenza) {
+    this.dataScadenza = dataScadenza;
+  }
+
+  @Min(value = 1, message = "La Quantità deve essere un numero positivo maggiore di zero.")
+  public int getQuantita() {
+    return quantita;
+  }
+
+  public void setQuantita(
+      @Min(value = 1, message = "La Quantità deve essere un numero positivo maggiore di zero.")
+          int quantita) {
+    this.quantita = quantita;
   }
 
   /** Classe per rappresentare la chiave primaria composta */
@@ -128,7 +167,7 @@ public class PossiedeInFrigo {
      * <p>Necessario per il funzionamento della JPA, permette di creare una nuova istanza senza
      * parametri.
      */
-    public PossiedeInFrigoId() {}
+    public PossiedeInFrigoId() { }
 
     /**
      * Costruttore con parametri.
@@ -143,6 +182,30 @@ public class PossiedeInFrigo {
     public PossiedeInFrigoId(Utente utente, Prodotto prodotto, String dataScadenza) {
       this.utente = utente;
       this.prodotto = prodotto;
+      this.dataScadenza = dataScadenza;
+    }
+
+    public Utente getUtente() {
+      return utente;
+    }
+
+    public void setUtente(Utente utente) {
+      this.utente = utente;
+    }
+
+    public Prodotto getProdotto() {
+      return prodotto;
+    }
+
+    public void setProdotto(Prodotto prodotto) {
+      this.prodotto = prodotto;
+    }
+
+    public String getDataScadenza() {
+      return dataScadenza;
+    }
+
+    public void setDataScadenza(String dataScadenza) {
       this.dataScadenza = dataScadenza;
     }
 

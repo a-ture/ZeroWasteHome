@@ -214,9 +214,6 @@ public class GestioneRicetteController {
               .getRicettaById(id)
               .orElseThrow(() -> new EntityNotFoundException("Ricetta non trovata"));
 
-      // Blocca l'autore della ricetta
-      gestioneRicetteService.bloccaAutore(ricettaDaEliminare.getAutore());
-
       // Elimina la ricetta
       gestioneRicetteService.eliminaRicetta(id);
 

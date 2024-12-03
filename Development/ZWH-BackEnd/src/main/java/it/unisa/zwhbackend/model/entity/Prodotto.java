@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Data;
 
 /**
  * Classe che rappresenta un prodotto nel sistema. Mappa la tabella "prodotto" nel database e
@@ -19,7 +18,6 @@ import lombok.Data;
  * @author Marco Meglio
  */
 @Entity
-@Data
 @Table(name = "prodotto")
 @JsonIgnoreProperties({
   "utentiPossessori"
@@ -70,7 +68,7 @@ public class Prodotto {
    * <p>Necessario per il funzionamento di JPA, permette di creare una nuova istanza senza
    * parametri.
    */
-  public Prodotto() {}
+  public Prodotto() { }
 
   /**
    * Costruttore con parametri.
@@ -95,4 +93,54 @@ public class Prodotto {
    */
   @OneToMany(mappedBy = "prodotto", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<PossiedeInFrigo> utentiPossessori = new ArrayList<>();
+
+  public List<PossiedeInFrigo> getUtentiPossessori() {
+    return utentiPossessori;
+  }
+
+  public void setUtentiPossessori(List<PossiedeInFrigo> utentiPossessori) {
+    this.utentiPossessori = utentiPossessori;
+  }
+
+  public List<String> getCategoria() {
+    return categoria;
+  }
+
+  public void setCategoria(List<String> categoria) {
+    this.categoria = categoria;
+  }
+
+  public @Pattern(
+      regexp = "^[a-zA-Z]{1,50}$",
+      message =
+          "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
+  String getName() {
+    return name;
+  }
+
+  public void setName(
+      @Pattern(
+              regexp = "^[a-zA-Z]{1,50}$",
+              message =
+                  "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
+          String name) {
+    this.name = name;
+  }
+
+  public @Pattern(
+      regexp = "^[0-9]{1,8}$",
+      message =
+          "Il codice deve avere una lunghezza massima di 8 caratteri e deve contenere solo cifre.")
+  String getCodiceBarre() {
+    return codiceBarre;
+  }
+
+  public void setCodiceBarre(
+      @Pattern(
+              regexp = "^[0-9]{1,8}$",
+              message =
+                  "Il codice deve avere una lunghezza massima di 8 caratteri e deve contenere solo cifre.")
+          String codiceBarre) {
+    this.codiceBarre = codiceBarre;
+  }
 }

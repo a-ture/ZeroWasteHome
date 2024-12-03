@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import java.util.List;
-import lombok.Data;
 
 /**
  * Classe che rappresenta un gestore della community.
@@ -17,7 +16,6 @@ import lombok.Data;
  * @author Giovanni Balzano
  */
 @Entity
-@Data
 @Table(name = "gestore_community")
 public class GestoreCommunity {
 
@@ -67,4 +65,35 @@ public class GestoreCommunity {
    */
   @OneToMany(mappedBy = "gestoreAssociato", cascade = CascadeType.ALL)
   private List<SegnalazioneRicetta> segnalazioniGestite;
+
+  public @NotBlank(message = "L'email è obbligatoria") @Email(message = "Inserisci un'email valida")
+  String getEmail() {
+    return email;
+  }
+
+  public void setEmail(
+      @NotBlank(message = "L'email è obbligatoria") @Email(message = "Inserisci un'email valida")
+          String email) {
+    this.email = email;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public @NotBlank(message = "Il nome è obbligatorio") String getNome() {
+    return nome;
+  }
+
+  public void setNome(@NotBlank(message = "Il nome è obbligatorio") String nome) {
+    this.nome = nome;
+  }
+
+  public List<SegnalazioneRicetta> getSegnalazioniGestite() {
+    return segnalazioniGestite;
+  }
+
+  public void setSegnalazioniGestite(List<SegnalazioneRicetta> segnalazioniGestite) {
+    this.segnalazioniGestite = segnalazioniGestite;
+  }
 }
