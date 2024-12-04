@@ -7,24 +7,23 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Classe che rappresenta la relazione tra un utente e i prodotti nel suo frigo. Mappa la tabella
- * "possiede_in_frigo" nel database e include le regole di validazione per i campi.
+ * Classe che rappresenta la relazione tra un utente e i prodotti nella sua dispensa. Mappa la
+ * tabella "possiede_in_dispensa" nel database e include le regole di validazione per i campi.
  *
  * <p>Annota l'entità con {@code @Entity} per indicare che è una classe JPA. Usa {@code @Table} per
  * specificare il nome della tabella nel database. La chiave primaria della tabella è composta da
- * due campi: {@code utente} e {@code prodotto}, definita nella classe {@code PossiedeInFrigoId}.
+ * due campi: {@code utente} e {@code prodotto}, definita nella classe {@code PossiedeInDispensaId}.
  * Usa {@code @Data} di Lombok per generare automaticamente i metodi getter, setter, toString,
  * equals e hashCode.
  *
- * @author Marco Meglio
+ * <p>* @author Ferdinando
  */
 @Entity
-@Table(name = "possiede_in_frigo")
-@IdClass(PossiedeInFrigo.PossiedeInFrigoId.class) // Specifica la chiave primaria composta
-public class PossiedeInFrigo {
-
+@Table(name = "possiede_in_dispensa")
+@IdClass(PossiedeInDispensa.PossiedeInDispensaId.class) // Specifica la chiave primaria composta
+public class PossiedeInDispensa {
   /**
-   * Riferimento all'utente associato al prodotto nel frigo.
+   * Riferimento all'utente associato al prodotto nella dispensa.
    *
    * <p>Questo campo è una chiave esterna che collega l'entità {@code Utente}. Annota il campo con
    * {@code @ManyToOne} per indicare una relazione molti-a-uno con {@code Utente}. Usa
@@ -36,7 +35,7 @@ public class PossiedeInFrigo {
   private Utente utente;
 
   /**
-   * Riferimento al prodotto posseduto dall'utente nel frigo.
+   * Riferimento al prodotto posseduto dall'utente nella dispensa.
    *
    * <p>Questo campo è una chiave esterna che collega l'entità {@code Prodotto}. Annota il campo con
    * {@code @ManyToOne} per indicare una relazione molti-a-uno con {@code Prodotto}. Usa
@@ -61,9 +60,9 @@ public class PossiedeInFrigo {
   private String dataScadenza;
 
   /**
-   * Quantità di prodotto presente nel frigo.
+   * Quantità di prodotto presente nella dispensa.
    *
-   * <p>Questo campo rappresenta la quantità del prodotto posseduto dall'utente nel frigo. È
+   * <p>Questo campo rappresenta la quantità del prodotto posseduto dall'utente nella dispensa. È
    * obbligatorio e deve essere un numero positivo maggiore di zero. Usa {@code @Min} per validare
    * che il valore sia maggiore di zero.
    */
@@ -76,34 +75,27 @@ public class PossiedeInFrigo {
    * <p>Necessario per il funzionamento della JPA, permette di creare una nuova istanza senza
    * parametri.
    */
-  public PossiedeInFrigo() {
+  public PossiedeInDispensa() {
     // costruttore vuoto
   }
 
   /**
    * Costruttore con parametri.
    *
-   * <p>Permette di creare una nuova istanza di {@code PossiedeInFrigo} con i dati specificati per
-   * utente, prodotto e quantità.
+   * <p>Permette di creare una nuova istanza di {@code PossiedeInDispensa} con i dati specificati
+   * per utente, prodotto e quantità.
    *
    * @param utente l'utente associato al prodotto
    * @param prodotto il prodotto posseduto dall'utente
-   * @param quantita la quantità del prodotto nel frigo
-   * @param dataScadenza la quantità del prodotto nel frigo
+   * @param quantita la quantità del prodotto nella dispensa
+   * @param dataScadenza la quantità del prodotto nella dispensa
    */
-  public PossiedeInFrigo(Utente utente, Prodotto prodotto, Integer quantita, String dataScadenza) {
+  public PossiedeInDispensa(
+      Utente utente, Prodotto prodotto, Integer quantita, String dataScadenza) {
     this.utente = utente;
     this.prodotto = prodotto;
     this.quantita = quantita;
     this.dataScadenza = dataScadenza;
-  }
-
-  public Prodotto getProdotto() {
-    return prodotto;
-  }
-
-  public void setProdotto(Prodotto prodotto) {
-    this.prodotto = prodotto;
   }
 
   public Utente getUtente() {
@@ -114,45 +106,44 @@ public class PossiedeInFrigo {
     this.utente = utente;
   }
 
-  public @Pattern(
-      regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$",
-      message = "La Data deve essere del formato gg/mm/aa.") String getDataScadenza() {
+  public Prodotto getProdotto() {
+    return prodotto;
+  }
+
+  public void setProdotto(Prodotto prodotto) {
+    this.prodotto = prodotto;
+  }
+
+  public String getDataScadenza() {
     return dataScadenza;
   }
 
-  public void setDataScadenza(
-      @Pattern(
-              regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$",
-              message = "La Data deve essere del formato gg/mm/aa.")
-          String dataScadenza) {
+  public void setDataScadenza(String dataScadenza) {
     this.dataScadenza = dataScadenza;
   }
 
-  @Min(value = 1, message = "La Quantità deve essere un numero positivo maggiore di zero.")
   public int getQuantita() {
     return quantita;
   }
 
-  public void setQuantita(
-      @Min(value = 1, message = "La Quantità deve essere un numero positivo maggiore di zero.")
-          int quantita) {
+  public void setQuantita(int quantita) {
     this.quantita = quantita;
   }
 
   /** Classe per rappresentare la chiave primaria composta */
-  public static class PossiedeInFrigoId implements Serializable {
+  public static class PossiedeInDispensaId implements Serializable {
 
     /**
-     * Riferimento all'utente associato al prodotto nel frigo.
+     * Riferimento all'utente associato al prodotto nella dispensa.
      *
-     * <p>Deve corrispondere a {@code utente} in {@code PossiedeInFrigo}.
+     * <p>Deve corrispondere a {@code utente} in {@code PossiedeInDispensa}.
      */
     private Utente utente;
 
     /**
-     * Riferimento al prodotto posseduto dall'utente nel frigo.
+     * Riferimento al prodotto posseduto dall'utente nella dispensa.
      *
-     * <p>Deve corrispondere a {@code prodotto} in {@code PossiedeInFrigo}.
+     * <p>Deve corrispondere a {@code prodotto} in {@code PossiedeInDispensa}.
      */
     private Prodotto prodotto;
 
@@ -169,7 +160,7 @@ public class PossiedeInFrigo {
      * <p>Necessario per il funzionamento della JPA, permette di creare una nuova istanza senza
      * parametri.
      */
-    public PossiedeInFrigoId() {
+    public PossiedeInDispensaId() {
       // costruttore vuoto
     }
 
@@ -183,7 +174,7 @@ public class PossiedeInFrigo {
      * @param prodotto il prodotto posseduto dall'utente
      * @param dataScadenza data di scadenza del prodotto
      */
-    public PossiedeInFrigoId(Utente utente, Prodotto prodotto, String dataScadenza) {
+    public PossiedeInDispensaId(Utente utente, Prodotto prodotto, String dataScadenza) {
       this.utente = utente;
       this.prodotto = prodotto;
       this.dataScadenza = dataScadenza;
@@ -224,7 +215,7 @@ public class PossiedeInFrigo {
     public boolean equals(Object o) {
       if (this == o) return true;
       if (o == null || getClass() != o.getClass()) return false;
-      PossiedeInFrigoId that = (PossiedeInFrigoId) o;
+      PossiedeInDispensaId that = (PossiedeInDispensaId) o;
       return Objects.equals(utente, that.utente) && Objects.equals(prodotto, that.prodotto);
     }
 

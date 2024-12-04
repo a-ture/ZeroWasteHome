@@ -7,8 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Data;
-import lombok.Getter;
 
 /**
  * Classe che rappresenta un'entità Utente nel sistema. Mappa la tabella "utente" nel database e
@@ -22,7 +20,6 @@ import lombok.Getter;
  * @author Alessia Ture
  */
 @Entity
-@Data
 @Table(name = "utente")
 public class Utente {
   /**
@@ -73,4 +70,51 @@ public class Utente {
   @JsonIgnore // Escludi dalla serializzazione
   private List<PossiedeInFrigo> prodottiInFrigo = new ArrayList<>();
 
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public @NotBlank(message = "L'email è obbligatoria") @Email(message = "Inserisci un'email valida")
+  String getEmail() {
+    return email;
+  }
+
+  public void setEmail(
+      @NotBlank(message = "L'email è obbligatoria") @Email(message = "Inserisci un'email valida")
+          String email) {
+    this.email = email;
+  }
+
+  public @NotBlank(message = "La password è obbligatoria") @Size(
+      min = 6,
+      message = "La password deve avere almeno 6 caratteri") String getPassword() {
+    return password;
+  }
+
+  public void setPassword(
+      @NotBlank(message = "La password è obbligatoria")
+          @Size(min = 6, message = "La password deve avere almeno 6 caratteri")
+          String password) {
+    this.password = password;
+  }
+
+  public @NotBlank(message = "Il nome è obbligatorio") String getName() {
+    return name;
+  }
+
+  public void setName(@NotBlank(message = "Il nome è obbligatorio") String name) {
+    this.name = name;
+  }
+
+  public List<PossiedeInFrigo> getProdottiInFrigo() {
+    return prodottiInFrigo;
+  }
+
+  public void setProdottiInFrigo(List<PossiedeInFrigo> prodottiInFrigo) {
+    this.prodottiInFrigo = prodottiInFrigo;
+  }
 }

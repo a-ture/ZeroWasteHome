@@ -9,6 +9,7 @@ import it.unisa.zwhbackend.model.entity.Prodotto;
 import it.unisa.zwhbackend.model.entity.ProdottoRequestDTO;
 import it.unisa.zwhbackend.service.gestioneProdotto.ProdottoService;
 import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -113,6 +114,57 @@ public class ProdottoController {
     } catch (Exception e) {
       return new ResponseEntity<>( // Restituisce un errore 500 in caso di errore imprevisto
           null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  /**
+   * Visualizza i prodotti nella dispensa di un utente.
+   *
+   * <p>Questo endpoint consente di ottenere tutti i prodotti presenti nella dispensa dell'utente
+   * con l'ID specificato. La risposta conterrà la lista dei prodotti nella dispensa.
+   *
+   * @param idUtente l'ID dell'utente di cui visualizzare i prodotti nella dispensa
+   * @return una risposta HTTP con la lista dei prodotti nella dispensa
+   */
+  @Operation(
+      summary = "Visualizza i prodotti nella dispensa") // Descrizione dell'operazione per Swagger
+  @ApiResponses( // Definisce le risposte API per diversi casi
+      value = {
+        @ApiResponse(
+            responseCode = "200", // Codice di risposta per successo
+            description = "Prodotti visualizzati con successo nella dispensa",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = Prodotto.class))),
+        @ApiResponse(
+            responseCode = "404", // Codice di risposta per utente non trovato
+            description = "Utente non trovato",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(example = "{ \"messaggio\": \"Utente non trovato\" }"))),
+        @ApiResponse(
+            responseCode = "500", // Codice di risposta per errore interno
+            description = "Errore interno del server",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(example = "{ \"messaggio\": \"Errore imprevisto\" }")))
+      })
+  @GetMapping(
+      "/dispensa/{idUtente}") // Mappa le richieste GET per visualizzare i prodotti nella dispensa
+  public ResponseEntity<?> visualizzaProdottiDispensa(@PathVariable Long idUtente) {
+    try {
+      // Ottieni la lista dei prodotti nella dispensa dell'utente
+      List<Prodotto> prodottiDispensa = prodottoService.visualizzaProdottiDispensa(idUtente);
+      return new ResponseEntity<>(
+          prodottiDispensa, HttpStatus.OK); // Restituisce i prodotti con successo
+    } catch (Exception e) {
+      return new ResponseEntity<>(
+          null,
+          HttpStatus
+              .INTERNAL_SERVER_ERROR); // Restituisce un errore 500 in caso di errore imprevisto
     }
   }
 }

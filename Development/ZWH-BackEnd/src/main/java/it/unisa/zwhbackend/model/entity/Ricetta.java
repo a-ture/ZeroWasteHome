@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.List;
-import lombok.Data;
 
 /**
  * Classe che rappresenta una ricetta nel sistema. Mappa la tabella "ricetta" nel database e include
@@ -15,12 +14,9 @@ import lombok.Data;
  * <p>Annota l'entità con {@code @Entity} per indicare che è una classe JPA. Usa {@code @Table} per
  * specificare il nome della tabella nel database. Usa {@code @Data} di Lombok per generare
  * automaticamente i metodi getter, setter, toString, equals e hashCode. Include regole di
- * validazione per i campi con le annotazioni di Jakarta Validation.
- *
- * @author Anna Tagliamonte
+ * validazione per i campi con le annotazioni di Jakarta Validation. Autore: Anna Tagliamonte
  */
 @Entity
-@Data
 @Table(name = "ricetta")
 public class Ricetta {
 
@@ -91,4 +87,95 @@ public class Ricetta {
       regexp = ".*\\.(jpg|png)$",
       message = "Formato immagine non supportato. Carica un file in formato JPG o PNG")
   private String img;
+
+  /**
+   * Autore della ricetta.
+   *
+   * <p>Questo campo rappresenta una relazione molti-a-uno con l'entità {@code Utente}. La colonna
+   * "utente_id" nel database memorizza il riferimento all'utente autore della ricetta.
+   *
+   * <p>In altre parole, ogni ricetta è scritta da un solo utente (autore), ma un utente può
+   * scrivere più ricette. La relazione {@code ManyToOne} implica che molte ricette possano
+   * appartenere allo stesso utente.
+   */
+  @ManyToOne
+  @JoinColumn(name = "utente_id", nullable = false)
+  private Utente autore; // La relazione ManyToOne con l'entità Utente
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public @NotBlank(message = "Il campo 'Nome della ricetta' è obbligatorio") @Size(
+      min = 1,
+      max = 100,
+      message = "Il nome della ricetta deve essere tra 1 e 100 caratteri") String getNome() {
+    return nome;
+  }
+
+  public void setNome(
+      @NotBlank(message = "Il campo 'Nome della ricetta' è obbligatorio")
+          @Size(
+              min = 1,
+              max = 100,
+              message = "Il nome della ricetta deve essere tra 1 e 100 caratteri")
+          String nome) {
+    this.nome = nome;
+  }
+
+  public List<String> getIngredienti() {
+    return ingredienti;
+  }
+
+  public void setIngredienti(List<String> ingredienti) {
+    this.ingredienti = ingredienti;
+  }
+
+  public @NotBlank(message = "Il campo 'Istruzioni' è obbligatorio") @Size(
+      max = 5000,
+      message = "Le istruzioni non possono superare i 5000 caratteri") String getIstruzioni() {
+    return istruzioni;
+  }
+
+  public void setIstruzioni(
+      @NotBlank(message = "Il campo 'Istruzioni' è obbligatorio")
+          @Size(max = 5000, message = "Le istruzioni non possono superare i 5000 caratteri")
+          String istruzioni) {
+    this.istruzioni = istruzioni;
+  }
+
+  public CategoriaRicetta getCategoria() {
+    return categoria;
+  }
+
+  public void setCategoria(CategoriaRicetta categoria) {
+    this.categoria = categoria;
+  }
+
+  public @Pattern(
+      regexp = ".*\\.(jpg|png)$",
+      message = "Formato immagine non supportato. Carica un file in formato JPG o PNG") String
+      getImg() {
+    return img;
+  }
+
+  public void setImg(
+      @Pattern(
+              regexp = ".*\\.(jpg|png)$",
+              message = "Formato immagine non supportato. Carica un file in formato JPG o PNG")
+          String img) {
+    this.img = img;
+  }
+
+  public Utente getAutore() {
+    return autore;
+  }
+
+  public void setAutore(Utente autore) {
+    this.autore = autore;
+  }
 }

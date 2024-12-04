@@ -1,11 +1,14 @@
 package it.unisa.zwhbackend.service.gestioneProdotto;
 
+import it.unisa.zwhbackend.model.entity.PossiedeInDispensa;
 import it.unisa.zwhbackend.model.entity.PossiedeInFrigo;
 import it.unisa.zwhbackend.model.entity.Prodotto;
 import it.unisa.zwhbackend.model.entity.Utente;
+import it.unisa.zwhbackend.model.repository.PossiedeInDispensaRepository;
 import it.unisa.zwhbackend.model.repository.PossiedeInFrigoRepository;
 import it.unisa.zwhbackend.model.repository.ProdottoRepository;
 import it.unisa.zwhbackend.model.repository.UtenteRepository;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,7 @@ public class ProdottoService {
   // Dichiarazione dei repository utilizzati per interagire con il database
   private final ProdottoRepository prodottoRepository;
   private final PossiedeInFrigoRepository possiedeInFrigoRepository;
+  private final PossiedeInDispensaRepository possiedeInDispensaRepository;
   private final UtenteRepository utenteRepository;
 
   /**
@@ -34,15 +38,18 @@ public class ProdottoService {
    *
    * @param prodottoRepository il repository per i prodotti
    * @param possiedeInFrigoRepository il repository per la relazione tra prodotto e utente
+   * @param possiedeInDispensaRepository il repository per la relazione tra prodotto e utente
    * @param utenteRepository il repository per gli utenti
    */
   @Autowired
   public ProdottoService(
       ProdottoRepository prodottoRepository,
       PossiedeInFrigoRepository possiedeInFrigoRepository,
+      PossiedeInDispensaRepository possiedeInDispensaRepository,
       UtenteRepository utenteRepository) {
     this.prodottoRepository = prodottoRepository;
     this.possiedeInFrigoRepository = possiedeInFrigoRepository;
+    this.possiedeInDispensaRepository = possiedeInDispensaRepository;
     this.utenteRepository = utenteRepository;
   }
 
@@ -160,6 +167,44 @@ public class ProdottoService {
       throw new RuntimeException(
           "Errore durante l'aggiunta del prodotto al frigo",
           e); // Rilancia l'eccezione per permettere una gestione superiore
+    }
+  }
+
+  /**
+   * Restituisce tutti i prodotti presenti nella dispensa di un utente.
+   *
+   * <p>Questo metodo recupera tutte le relazioni {@link PossiedeInDispensa} per un utente
+   * specificato e restituisce i prodotti associati a quelle relazioni.
+   *
+   * @param idUtente l'id dell'utente di cui visualizzare i prodotti nella dispensa
+   * @return una lista di {@link Prodotto} presenti nella dispensa dell'utente
+   * @throws RuntimeException se si verifica un errore durante il recupero dei dati
+   */
+  public List<Prodotto> visualizzaProdottiDispensa(Long idUtente) {
+    try {
+      // Recupera l'utente con l'id specificato
+      Optional<Utente> utenteOptional = utenteRepository.findById(idUtente);
+      if (utenteOptional.isEmpty()) {
+        throw new IllegalStateException("Utente con ID " + idUtente + " non trovato");
+      }
+      Utente utente = utenteOptional.get();
+
+      // Recupera tutte le relazioni tra l'utente e i prodotti nella dispensa
+      List<PossiedeInDispensa> relazioni = possiedeInDispensaRepository.findByUtente(utente);
+
+      // Estrae i prodotti dalle relazioni
+      List<Prodotto> prodottiInDispensa = new ArrayList<>();
+      for (PossiedeInDispensa relazione : relazioni) {
+        prodottiInDispensa.add(relazione.getProdotto()); // Aggiunge il prodotto alla lista
+      }
+
+      return prodottiInDispensa; // Ritorna la lista dei prodotti
+    } catch (Exception e) {
+      // Gestisce eventuali errori
+      System.err.println(
+          "Errore durante il recupero dei prodotti dalla dispensa: " + e.getMessage());
+      e.printStackTrace();
+      throw new RuntimeException("Errore durante il recupero dei prodotti dalla dispensa", e);
     }
   }
 }

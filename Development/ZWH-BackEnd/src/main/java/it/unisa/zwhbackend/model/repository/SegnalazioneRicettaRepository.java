@@ -10,4 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Giovanni Balzano
  */
-public interface SegnalazioneRicettaRepository extends JpaRepository<SegnalazioneRicetta, Long> {}
+public interface SegnalazioneRicettaRepository extends JpaRepository<SegnalazioneRicetta, Long> {
+  // costruttore vuoto
+}
