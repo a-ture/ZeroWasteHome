@@ -52,7 +52,7 @@ public class Utente {
    * vincoli del database.
    */
   @NotBlank(message = "La password è obbligatoria")
-  @Size(min = 6, message = "La password deve avere almeno 6 caratteri")
+  @Size(min = 8, message = "La password deve avere almeno 8 caratteri")
   @Column(nullable = false)
   private String password;
 
@@ -90,14 +90,14 @@ public class Utente {
   }
 
   public @NotBlank(message = "La password è obbligatoria") @Size(
-      min = 6,
-      message = "La password deve avere almeno 6 caratteri") String getPassword() {
+      min = 8,
+      message = "La password deve avere almeno 8 caratteri") String getPassword() {
     return password;
   }
 
   public void setPassword(
       @NotBlank(message = "La password è obbligatoria")
-          @Size(min = 6, message = "La password deve avere almeno 6 caratteri")
+          @Size(min = 8, message = "La password deve avere almeno 8 caratteri")
           String password) {
     this.password = password;
   }
