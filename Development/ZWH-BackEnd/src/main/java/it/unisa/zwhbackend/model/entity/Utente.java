@@ -135,4 +135,28 @@ public class Utente {
   @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonIgnore
   private List<ListaBloccati> listaBloccati = new ArrayList<>();
+
+  // Aggiunto il campo numeroSegnalazioni per contare il numero di segnalazioni
+  @Column(nullable = false)
+  private int numeroSegnalazioni = 0; // Inizializzato a 0
+
+  // Nuovo campo per il blocco dell'utente
+  @Column(nullable = false)
+  private Boolean bloccato = false; // Indica se l'utente è bloccato o meno
+
+  public int getNumeroSegnalazioni() {
+    return numeroSegnalazioni;
+  }
+
+  public void setNumeroSegnalazioni(int numeroSegnalazioni) {
+    this.numeroSegnalazioni = numeroSegnalazioni;
+  }
+
+  public Boolean getBloccato() {
+    return bloccato;
+  }
+
+  public void setBloccato(Boolean bloccato) {
+    this.bloccato = bloccato;
+  }
 }

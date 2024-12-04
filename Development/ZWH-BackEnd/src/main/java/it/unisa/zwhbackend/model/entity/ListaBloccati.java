@@ -44,6 +44,22 @@ public class ListaBloccati {
   private Utente
       utente; // La proprietà 'utente' fa riferimento all'entità Utente associata a questo blocco
 
+  @Column(nullable = false, length = 500)
+  private String motivoBlocco;
+
+  /**
+   * Metodo getter per il motivo del blocco.
+   *
+   * @return la motivazione del blocco
+   */
+  public String getMotivoBlocco() {
+    return motivoBlocco;
+  }
+
+  public void setMotivoBlocco(String motivoBlocco) {
+    this.motivoBlocco = motivoBlocco;
+  }
+
   /**
    * Metodo getter per l'ID del blocco.
    *
