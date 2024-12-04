@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller per gestire le segnalazioni di pagamento. Fornisce l'endpoint per risolvere le
- * segnalazioni di pagamento.
+ * segnalazioni di pagamento e per prenderle in carico.
  *
- * <p>Questa classe espone un'API REST per risolvere le segnalazioni di pagamento, permettendo ai
- * gestori di risolvere i problemi relativi ai pagamenti tramite l'ID della segnalazione e l'ID del
- * gestore che risolve il problema.
+ * <p>Questa classe espone un'API REST per risolvere le segnalazioni di pagamento e per permettere
+ * ai gestori di prendere in carico i problemi relativi ai pagamenti tramite l'ID della segnalazione
+ * e l'ID del gestore.
  *
  * @author Benito Farina
  */
@@ -51,6 +51,7 @@ public class SegnalazionePagamentoController {
    *
    * @param idSegnalazione l'ID della segnalazione di pagamento da risolvere
    * @param gestoreId l'ID del gestore che risolve la segnalazione
+   * @param dettagliRisoluzione dettagli relativi alla risoluzione della segnalazione
    * @return una {@link ResponseEntity} contenente la segnalazione risolta o un errore
    */
   @Operation(summary = "Risolvi una segnalazione")
@@ -64,31 +65,71 @@ public class SegnalazionePagamentoController {
       })
   @PatchMapping("/risolvi/{idSegnalazione}")
   public ResponseEntity<SegnalazionePagamento> risolvereSegnalazione(
-      @PathVariable Long idSegnalazione, @RequestParam Long gestoreId) { // L'ID del gestore
+      @PathVariable Long idSegnalazione,
+      @RequestParam Long gestoreId,
+      @RequestParam String dettagliRisoluzione) {
     try {
-      // Recupera il gestore per ID
-      Optional<GestorePagamento> optionalGestorePagamento =
-          gestorePagamentoRepository.findById(gestoreId);
 
-      // Verifica se il gestore è stato trovato
-      if (optionalGestorePagamento.isEmpty()) {
+      // Recupera il gestore di pagamento dalla repository
+      Optional<GestorePagamento> optionalGestore = gestorePagamentoRepository.findById(gestoreId);
+
+      // Se il gestore non è trovato, restituisce errore 400
+      if (optionalGestore.isEmpty()) {
         return ResponseEntity.status(400).body(null); // Gestore non trovato
       }
 
-      // Risolve la segnalazione chiamando il servizio
+      // Tenta di risolvere la segnalazione, aggiornando il suo stato
       Optional<SegnalazionePagamento> segnalazione =
-          gestioneSegnalazionePagamentoService.RisolviSegnalazione(
-              idSegnalazione, optionalGestorePagamento.get());
+          gestioneSegnalazionePagamentoService.aggiornaStatoSegnalazione(
+              idSegnalazione, optionalGestore.get(), dettagliRisoluzione);
 
-      // Se la segnalazione non è stata trovata o non è risolvibile, restituisce un errore
+      // Se la segnalazione non è stata aggiornata, restituisce errore 500
       if (segnalazione.isEmpty()) {
-        return ResponseEntity.status(500).body(null); // Errore durante la risoluzione
+        return ResponseEntity.status(500).body(null); // Errore durante l'aggiornamento dello stato
       }
 
-      // Restituisce la segnalazione risolta
+      // Restituisce la segnalazione aggiornata
       return ResponseEntity.ok(segnalazione.get());
     } catch (Exception e) {
+      // In caso di errore generico, restituisce errore 400
       return ResponseEntity.status(400).body(null); // In caso di errore generico
     }
+  }
+
+  /**
+   * Permette a un gestore di prendere in carico una segnalazione di pagamento.
+   *
+   * <p>Questo endpoint consente a un gestore di prendere in carico una segnalazione di pagamento
+   * fornendo l'ID della segnalazione e l'ID del gestore. L'ID del gestore viene usato per associare
+   * la segnalazione al gestore che si fa carico del problema.
+   *
+   * @param idSegnalazione l'ID della segnalazione di pagamento da prendere in carico
+   * @param gestoreId l'ID del gestore che prende in carico la segnalazione
+   * @return una {@link ResponseEntity} contenente la segnalazione aggiornata o un errore
+   */
+  @PatchMapping("/prendiInCarico/{idSegnalazione}")
+  public ResponseEntity<SegnalazionePagamento> prendiInCaricoSegnalazione(
+      @PathVariable Long idSegnalazione, @RequestParam Long gestoreId) {
+
+    // Recupera il gestore di pagamento dalla repository
+    Optional<GestorePagamento> optionalGestore = gestorePagamentoRepository.findById(gestoreId);
+
+    // Se il gestore non è trovato, restituisce errore 400
+    if (optionalGestore.isEmpty()) {
+      return ResponseEntity.status(400).body(null); // Gestore non trovato
+    }
+
+    // Tenta di prendere in carico la segnalazione, aggiornando il suo stato
+    Optional<SegnalazionePagamento> segnalazione =
+        gestioneSegnalazionePagamentoService.aggiornaStatoSegnalazione(
+            idSegnalazione, optionalGestore.get(), null);
+
+    // Se la segnalazione non è stata aggiornata, restituisce errore 500
+    if (segnalazione.isEmpty()) {
+      return ResponseEntity.status(500).body(null); // Errore durante l'aggiornamento dello stato
+    }
+
+    // Restituisce la segnalazione aggiornata
+    return ResponseEntity.ok(segnalazione.get());
   }
 }

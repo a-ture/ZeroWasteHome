@@ -27,5 +27,9 @@ public interface SegnalazionePagamentoService {
    * @return un {@link Optional} contenente la segnalazione risolta o vuoto se la segnalazione non è
    *     risolvibile
    */
-  public Optional<SegnalazionePagamento> RisolviSegnalazione(Long id, GestorePagamento gestore);
+  public Optional<SegnalazionePagamento> RisolviSegnalazione(
+      Long id, GestorePagamento gestore, String dettagliRisoluzione);
+
+  public Optional<SegnalazionePagamento> aggiornaStatoSegnalazione(
+      Long idSegnalazione, GestorePagamento gestore, String dettagliRisoluzione);
 }
