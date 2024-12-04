@@ -2,9 +2,7 @@ package it.unisa.zwhbackend.model.entity;
 
 import it.unisa.zwhbackend.model.enums.CategoriaRicetta;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import java.util.List;
 
 /**
@@ -14,7 +12,9 @@ import java.util.List;
  * <p>Annota l'entità con {@code @Entity} per indicare che è una classe JPA. Usa {@code @Table} per
  * specificare il nome della tabella nel database. Usa {@code @Data} di Lombok per generare
  * automaticamente i metodi getter, setter, toString, equals e hashCode. Include regole di
- * validazione per i campi con le annotazioni di Jakarta Validation. Autore: Anna Tagliamonte
+ * validazione per i campi con le annotazioni di Jakarta Validation.
+ *
+ * @author Anna Tagliamonte
  */
 @Entity
 @Table(name = "ricetta")
@@ -52,6 +52,8 @@ public class Ricetta {
   @ElementCollection
   @CollectionTable(name = "ingredienti_ricetta", joinColumns = @JoinColumn(name = "ricetta_id"))
   @Column(name = "ingrediente", nullable = false)
+  @NotNull(message = "L'elenco ingredienti non può essere nullo") // Validazione per non null
+  @NotEmpty(message = "L'elenco ingredienti non può essere vuoto") // Validazione per non vuoto
   private List<String> ingredienti;
 
   /**
@@ -73,6 +75,7 @@ public class Ricetta {
    * {@code @Enumerated} con {@code EnumType.STRING} per memorizzare i valori enumerati come
    * stringhe nel database.
    */
+  @NotNull(message = "Seleziona una categoria valida per la ricetta")
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
   private CategoriaRicetta categoria;
@@ -102,8 +105,7 @@ public class Ricetta {
   @JoinColumn(name = "utente_id", nullable = false)
   private Utente autore; // La relazione ManyToOne con l'entità Utente
 
-  @OneToMany(mappedBy = "ricettaAssociato", cascade = CascadeType.PERSIST, orphanRemoval = false)
-  private List<SegnalazioneRicetta> segnalazioniRicetta;
+  // Getter e Setter
 
   public Long getId() {
     return id;
@@ -113,20 +115,11 @@ public class Ricetta {
     this.id = id;
   }
 
-  public @NotBlank(message = "Il campo 'Nome della ricetta' è obbligatorio") @Size(
-      min = 1,
-      max = 100,
-      message = "Il nome della ricetta deve essere tra 1 e 100 caratteri") String getNome() {
+  public String getNome() {
     return nome;
   }
 
-  public void setNome(
-      @NotBlank(message = "Il campo 'Nome della ricetta' è obbligatorio")
-          @Size(
-              min = 1,
-              max = 100,
-              message = "Il nome della ricetta deve essere tra 1 e 100 caratteri")
-          String nome) {
+  public void setNome(String nome) {
     this.nome = nome;
   }
 
@@ -138,16 +131,11 @@ public class Ricetta {
     this.ingredienti = ingredienti;
   }
 
-  public @NotBlank(message = "Il campo 'Istruzioni' è obbligatorio") @Size(
-      max = 5000,
-      message = "Le istruzioni non possono superare i 5000 caratteri") String getIstruzioni() {
+  public String getIstruzioni() {
     return istruzioni;
   }
 
-  public void setIstruzioni(
-      @NotBlank(message = "Il campo 'Istruzioni' è obbligatorio")
-          @Size(max = 5000, message = "Le istruzioni non possono superare i 5000 caratteri")
-          String istruzioni) {
+  public void setIstruzioni(String istruzioni) {
     this.istruzioni = istruzioni;
   }
 
@@ -159,18 +147,11 @@ public class Ricetta {
     this.categoria = categoria;
   }
 
-  public @Pattern(
-      regexp = ".*\\.(jpg|png)$",
-      message = "Formato immagine non supportato. Carica un file in formato JPG o PNG") String
-      getImg() {
+  public String getImg() {
     return img;
   }
 
-  public void setImg(
-      @Pattern(
-              regexp = ".*\\.(jpg|png)$",
-              message = "Formato immagine non supportato. Carica un file in formato JPG o PNG")
-          String img) {
+  public void setImg(String img) {
     this.img = img;
   }
 

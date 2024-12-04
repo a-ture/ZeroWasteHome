@@ -14,7 +14,8 @@ import org.springframework.stereotype.Service;
  *
  * <p>Contiene la logica di business per la creazione, lettura, aggiornamento e eliminazione delle
  * ricette. Inoltre, gestisce il blocco degli utenti in caso di segnalazione delle ricette.
- * Autore:Anna Tagliamonte
+ *
+ * @author Anna Tagliamonte
  */
 @Service
 public class GestioneRicetteService implements RicettaService {

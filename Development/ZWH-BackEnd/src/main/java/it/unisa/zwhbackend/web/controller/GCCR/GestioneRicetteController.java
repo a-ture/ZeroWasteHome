@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
  * Controller REST per la gestione delle ricette.
  *
  * <p>Fornisce endpoint per aggiungere, ottenere, modificare ed eliminare ricette. Utilizza il
- * servizio {@link GestioneRicetteService} per eseguire le operazioni. Autore: Anna Tagliamonte
+ * servizio {@link GestioneRicetteService} per eseguire le operazioni.
+ *
+ * @author Anna Tagliamonte
  */
 @RestController
 @RequestMapping("/api/ricette")

@@ -8,7 +8,9 @@ import java.util.Optional;
  * Interfaccia per la gestione delle ricette.
  *
  * <p>Definisce i metodi necessari per la creazione, lettura, aggiornamento ed eliminazione delle
- * ricette. Autore: Anna Tagliamonte
+ * ricette.
+ *
+ * @author Anna Tagliamonte
  */
 public interface RicettaService {
 
