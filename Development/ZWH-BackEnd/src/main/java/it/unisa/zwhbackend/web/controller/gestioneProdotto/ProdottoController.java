@@ -9,12 +9,10 @@ import it.unisa.zwhbackend.model.entity.Prodotto;
 import it.unisa.zwhbackend.model.entity.ProdottoRequestDTO;
 import it.unisa.zwhbackend.service.gestioneProdotto.ProdottoService;
 import jakarta.validation.Valid;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -88,38 +86,39 @@ public class ProdottoController {
       })
   @PostMapping("/aggiungi-prodotto/") // Mappa le richieste POST per aggiungere il prodotto
   public ResponseEntity<?> aggiungiProdottoFrigo(
-          @RequestBody @Valid ProdottoRequestDTO prodottoRequestDTO,
-          BindingResult bindingResult) {
+      @RequestBody @Valid ProdottoRequestDTO prodottoRequestDTO, BindingResult bindingResult) {
 
-      // Gestione della validazione
-      if (bindingResult.hasErrors()) {
-          List<Map<String, String>> errors = bindingResult.getFieldErrors().stream()
-                  .map(fieldError -> {
-                      Map<String, String> error = new HashMap<>();
-                      error.put("field", fieldError.getField());
-                      error.put("rejectedValue", String.valueOf(fieldError.getRejectedValue()));
-                      error.put("message", fieldError.getDefaultMessage());
-                      return error;
+    // Gestione della validazione
+    if (bindingResult.hasErrors()) {
+      List<Map<String, String>> errors =
+          bindingResult.getFieldErrors().stream()
+              .map(
+                  fieldError -> {
+                    Map<String, String> error = new HashMap<>();
+                    error.put("field", fieldError.getField());
+                    error.put("rejectedValue", String.valueOf(fieldError.getRejectedValue()));
+                    error.put("message", fieldError.getDefaultMessage());
+                    return error;
                   })
-                  .collect(Collectors.toList());
-          return new ResponseEntity<>(errors, HttpStatus.UNPROCESSABLE_ENTITY); // 422
-      }
+              .collect(Collectors.toList());
+      return new ResponseEntity<>(errors, HttpStatus.UNPROCESSABLE_ENTITY); // 422
+    }
 
-      try {
-          // Logica principale
-          Prodotto prodotto = prodottoService.aggiungiProdottoFrigo(
-                  prodottoRequestDTO.getNomeProdotto(),
-                  prodottoRequestDTO.getDataScadenza(),
-                  prodottoRequestDTO.getCodiceBarre(),
-                  prodottoRequestDTO.getQuantità(),
-                  prodottoRequestDTO.getIdUtente());
-          return new ResponseEntity<>(prodotto, HttpStatus.OK); // 200 OK
+    try {
+      // Logica principale
+      Prodotto prodotto =
+          prodottoService.aggiungiProdottoFrigo(
+              prodottoRequestDTO.getNomeProdotto(),
+              prodottoRequestDTO.getDataScadenza(),
+              prodottoRequestDTO.getCodiceBarre(),
+              prodottoRequestDTO.getQuantità(),
+              prodottoRequestDTO.getIdUtente());
+      return new ResponseEntity<>(prodotto, HttpStatus.OK); // 200 OK
 
-      } catch (IllegalStateException e) {
-          // Errore relativo allo stato del sistema (es. utente non trovato)
-          return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.BAD_REQUEST); // 400
-
-      }
+    } catch (IllegalStateException e) {
+      // Errore relativo allo stato del sistema (es. utente non trovato)
+      return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.BAD_REQUEST); // 400
+    }
   }
 
   /**
