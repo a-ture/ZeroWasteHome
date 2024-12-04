@@ -39,6 +39,7 @@ public class SegnalazioniRicetteController {
    * aggiorna lo stato della segnalazione con l'ID fornito e la segnalazione viene risolta.
    *
    * @param id l'ID della segnalazione da risolvere
+   * @param gestore_id l'ID del gestore che risolve la segnalazione
    * @return una {@link ResponseEntity} con un messaggio di successo o errore
    */
   @PatchMapping("/{id}")
@@ -51,7 +52,6 @@ public class SegnalazioniRicetteController {
       // il messaggio
       return ResponseEntity.ok(response);
     }
-
     // Se c'è stato un errore, restituisce una risposta HTTP 400 Bad Request con il messaggio di
     // errore
     return ResponseEntity.badRequest().body(response);
