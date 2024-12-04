@@ -43,9 +43,10 @@ public class SegnalazioniRicetteController {
    * @return una {@link ResponseEntity} con un messaggio di successo o errore
    */
   @PatchMapping("/{id}")
-  public ResponseEntity<String> risolviSegnalazione(@PathVariable Long id, Long gestore_id) {
+  public ResponseEntity<String> risolviSegnalazione(
+      @PathVariable Long id, Long gestore_id, String motivoBlocco) {
     // Chiama il servizio per risolvere la segnalazione con l'ID fornito
-    String response = segnalazioneRicettaService.risolviSegnalazione(id, gestore_id);
+    String response = segnalazioneRicettaService.risolviSegnalazione(id, gestore_id, motivoBlocco);
     // Verifica se la risposta contiene la parola "successo"
     if (response.contains("successo")) {
       // Se la segnalazione è stata risolta con successo, restituisce una risposta HTTP 200 OK con

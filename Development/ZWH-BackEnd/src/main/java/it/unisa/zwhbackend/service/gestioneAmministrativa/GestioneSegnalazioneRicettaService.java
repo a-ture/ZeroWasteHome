@@ -4,7 +4,7 @@ import it.unisa.zwhbackend.model.entity.*;
 import it.unisa.zwhbackend.model.enums.StatoSegnalazione;
 import it.unisa.zwhbackend.model.repository.*;
 import java.time.LocalDate;
-import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,102 +19,173 @@ import org.springframework.stereotype.Service;
 @Service
 public class GestioneSegnalazioneRicettaService implements SegnalazioneRicettaService {
 
-  // Repository per interagire con le entità del database
-  private final SegnalazioneRicettaRepository segnalazioneRicettaRepository;
-  private final RicettaRepository ricettaRepository;
-  private final GestoreCommunityRepository gestoreRepository;
-  private final UtenteRepository utenteRepository;
-  private final ListaBloccatiRepository listaBloccatiRepository;
+  @Autowired
+  private SegnalazioneRicettaRepository
+      segnalazioneRicettaRepository; // Repository per le segnalazioni
+
+  @Autowired
+  private GestoreCommunityRepository gestoreRepository; // Repository per i gestori della community
+
+  @Autowired private RicettaRepository ricettaRepository; // Repository per le ricette
+
+  @Autowired
+  private ListaBloccatiRepository listaBloccatiRepository; // Repository per i blocchi utenti
+
+  @Autowired private UtenteRepository utenteRepository; // Repository per gli utenti
 
   /**
-   * Costruttore per iniettare le dipendenze necessarie.
+   * Risolve una segnalazione associata a una ricetta.
    *
-   * @param segnalazioneRicettaRepository Repository per gestire le segnalazioni
-   * @param ricettaRepository Repository per gestire le ricette
-   * @param gestoreRepository Repository per gestire i gestori
-   * @param utenteRepository Repository per gestire gli utenti
-   * @param listaBloccatiRepository Repository per gestire la lista degli utenti bloccati
-   */
-  public GestioneSegnalazioneRicettaService(
-      SegnalazioneRicettaRepository segnalazioneRicettaRepository,
-      RicettaRepository ricettaRepository,
-      GestoreCommunityRepository gestoreRepository,
-      UtenteRepository utenteRepository,
-      ListaBloccatiRepository listaBloccatiRepository) {
-    this.segnalazioneRicettaRepository = segnalazioneRicettaRepository;
-    this.ricettaRepository = ricettaRepository;
-    this.gestoreRepository = gestoreRepository;
-    this.utenteRepository = utenteRepository;
-    this.listaBloccatiRepository = listaBloccatiRepository;
-  }
-
-  /**
-   * Risolve una segnalazione nel sistema.
-   *
-   * <p>Blocca l'autore della ricetta, aggiorna lo stato della segnalazione, disassocia la ricetta e
-   * la elimina.
-   *
-   * @param segnalazioneId ID della segnalazione da risolvere
+   * @param segnalazioneId ID della segnalazione
    * @param gestore_id ID del gestore che risolve la segnalazione
-   * @return Un messaggio che indica il risultato dell'operazione
+   * @param motivoBlocco Motivo del blocco se l'utente viene bloccato
+   * @return Un messaggio che descrive l'esito dell'operazione
    */
   @Override
-  public String risolviSegnalazione(Long segnalazioneId, Long gestore_id) {
+  public String risolviSegnalazione(Long segnalazioneId, Long gestore_id, String motivoBlocco) {
+    // Validazione del motivo del blocco
+    String validazioneMotivo = validaMotivoBlocco(motivoBlocco);
+    if (!validazioneMotivo.isEmpty()) {
+      return validazioneMotivo; // Restituisce un messaggio di errore se il motivo del blocco non è
+      // valido
+    }
+
     try {
-      // Recupera la segnalazione dalla repository
-      Optional<SegnalazioneRicetta> optionalSegnalazione =
-          segnalazioneRicettaRepository.findById(segnalazioneId);
-      if (optionalSegnalazione.isEmpty()) {
-        return "SegnalazioneRicetta non trovata."; // Se la segnalazione non è trovata
-      }
-
-      // Recupera il gestore dalla repository tramite l'ID
-      Optional<GestoreCommunity> optionalGestoreCommunity = gestoreRepository.findById(gestore_id);
-      if (optionalGestoreCommunity.isEmpty()) {
-        return "Gestore non trovato."; // Restituisce un errore se il gestore non è trovato
-      }
-
-      // Ottieni la segnalazione e il gestore
-      SegnalazioneRicetta segnalazioneRicetta = optionalSegnalazione.get();
-      GestoreCommunity gestoreCommunity = optionalGestoreCommunity.get();
-
-      // Verifica se la ricetta associata alla segnalazione esiste
-      Optional<Ricetta> optionalRicetta =
-          ricettaRepository.findById(segnalazioneRicetta.getRicettaAssociato().getId());
-      if (optionalRicetta.isEmpty()) {
-        return "Ricetta non trovata con ID: " + segnalazioneRicetta.getRicettaAssociato().getId();
-      }
-
-      Ricetta ricetta = optionalRicetta.get();
+      // Recupera la segnalazione, il gestore e la ricetta associata
+      SegnalazioneRicetta segnalazioneRicetta = getSegnalazioneRicetta(segnalazioneId);
+      GestoreCommunity gestoreCommunity = getGestore(gestore_id);
+      Ricetta ricetta = getRicettaAssociata(segnalazioneRicetta);
 
       // Ottieni l'autore della ricetta
       Utente autore = ricetta.getAutore();
       if (autore == null) {
-        return "Autore non trovato per la ricetta."; // Se non esiste l'autore
+        return "Autore non trovato per la ricetta."; // Errore se l'autore non è trovato
       }
 
-      // Aggiungi l'utente alla lista dei bloccati
-      ListaBloccati bloccato = new ListaBloccati();
-      bloccato.setUtente(autore);
-      bloccato.setDataBlocco(LocalDate.now());
-      listaBloccatiRepository.save(bloccato);
+      // Controlla il numero di segnalazioni dell'utente
+      int numeroSegnalazioni = autore.getNumeroSegnalazioni();
+      boolean isPrimaViolazione = numeroSegnalazioni < 2; // Se l'utente ha meno di 2 segnalazioni
 
-      // Aggiorna lo stato della segnalazione a "RISOLTO"
-      segnalazioneRicetta.setStato(StatoSegnalazione.RISOLTO);
-      segnalazioneRicetta.setGestoreAssociato(gestoreCommunity);
+      // Incrementa il contatore delle segnalazioni
+      autore.setNumeroSegnalazioni(numeroSegnalazioni + 1);
+      utenteRepository.save(autore); // Salva l'utente con il nuovo numero di segnalazioni
 
-      // Disassocia la ricetta dalla segnalazione
-      segnalazioneRicetta.setRicettaAssociato(null);
-      segnalazioneRicettaRepository.save(segnalazioneRicetta); // Salva la segnalazione aggiornata
+      // Se l'utente ha già ricevuto 2 segnalazioni, deve essere bloccato
+      if (!isPrimaViolazione) {
+        bloccaUtente(autore, motivoBlocco); // Blocco dell'utente
+      }
 
-      // Elimina la ricetta
-      ricettaRepository.delete(ricetta); // Elimina la ricetta
+      // Elimina la ricetta e aggiorna lo stato della segnalazione
+      eliminaRicetta(segnalazioneRicetta, ricetta, gestoreCommunity);
 
-      return "Segnalazione risolta con successo. Autore bloccato e ricetta eliminata.";
+      // Restituisce il messaggio di esito finale
+      if (isPrimaViolazione) {
+        return "L'utente è alla prima violazione e non viene bloccato, ma la ricetta è stata eliminata.";
+      } else {
+        return "Segnalazione risolta con successo. Autore bloccato e ricetta eliminata. Motivazione: "
+            + motivoBlocco;
+      }
+
     } catch (Exception e) {
       System.err.println("Errore durante la risoluzione della segnalazione: " + e.getMessage());
       e.printStackTrace();
-      return "Errore interno del server: " + e.getMessage(); // Restituisce un errore 500
+      return "Errore interno del server: " + e.getMessage();
     }
+  }
+
+  /**
+   * Validazione del motivo del blocco.
+   *
+   * @param motivoBlocco Motivo del blocco
+   * @return Un messaggio di errore se il motivo non è valido, altrimenti una stringa vuota
+   */
+  private String validaMotivoBlocco(String motivoBlocco) {
+    if (motivoBlocco == null || motivoBlocco.isBlank()) {
+      return "Il motivo del blocco è obbligatorio."; // Controllo se il motivo è vuoto
+    }
+    if (motivoBlocco.length() > 500) {
+      return "Il motivo del blocco non può superare i 500 caratteri."; // Controllo lunghezza del
+      // motivo
+    }
+    return ""; // Se il motivo è valido, ritorna una stringa vuota
+  }
+
+  /**
+   * Recupera la segnalazione associata all'ID.
+   *
+   * @param segnalazioneId ID della segnalazione
+   * @return La segnalazione trovata
+   * @throws RuntimeException Se la segnalazione non esiste
+   */
+  private SegnalazioneRicetta getSegnalazioneRicetta(Long segnalazioneId) {
+    return segnalazioneRicettaRepository
+        .findById(segnalazioneId)
+        .orElseThrow(() -> new RuntimeException("SegnalazioneRicetta non trovata."));
+  }
+
+  /**
+   * Recupera il gestore associato all'ID.
+   *
+   * @param gestoreId ID del gestore
+   * @return Il gestore trovato
+   * @throws RuntimeException Se il gestore non esiste
+   */
+  private GestoreCommunity getGestore(Long gestoreId) {
+    return gestoreRepository
+        .findById(gestoreId)
+        .orElseThrow(() -> new RuntimeException("Gestore non trovato."));
+  }
+
+  /**
+   * Recupera la ricetta associata alla segnalazione.
+   *
+   * @param segnalazioneRicetta La segnalazione
+   * @return La ricetta associata
+   * @throws RuntimeException Se la ricetta non esiste
+   */
+  private Ricetta getRicettaAssociata(SegnalazioneRicetta segnalazioneRicetta) {
+    return ricettaRepository
+        .findById(segnalazioneRicetta.getRicettaAssociato().getId())
+        .orElseThrow(() -> new RuntimeException("Ricetta non trovata."));
+  }
+
+  /**
+   * Elimina la ricetta e aggiorna lo stato della segnalazione.
+   *
+   * @param segnalazioneRicetta La segnalazione da risolvere
+   * @param ricetta La ricetta da eliminare
+   * @param gestore Il gestore che risolve la segnalazione
+   */
+  private void eliminaRicetta(
+      SegnalazioneRicetta segnalazioneRicetta, Ricetta ricetta, GestoreCommunity gestore) {
+    // Imposta lo stato della segnalazione a RISOLTO
+    segnalazioneRicetta.setStato(StatoSegnalazione.RISOLTO);
+    segnalazioneRicetta.setGestoreAssociato(gestore); // Associa il gestore
+    segnalazioneRicetta.setRicettaAssociato(null); // Rimuove la ricetta associata
+    segnalazioneRicettaRepository.save(segnalazioneRicetta); // Salva la segnalazione aggiornata
+
+    // Elimina la ricetta dal sistema
+    ricettaRepository.delete(ricetta);
+  }
+
+  /**
+   * Blocca l'utente e aggiunge la motivazione nella lista dei bloccati.
+   *
+   * @param autore L'utente da bloccare
+   * @param motivoBlocco Motivo per cui l'utente è bloccato
+   */
+  private void bloccaUtente(Utente autore, String motivoBlocco) {
+    // Imposta il campo 'bloccato' su true
+    autore.setBloccato(true); // Questo aggiorna lo stato 'bloccato'
+
+    // Salva l'utente con lo stato aggiornato
+    utenteRepository.save(autore);
+
+    // Crea un nuovo record nella lista dei bloccati
+    ListaBloccati bloccato = new ListaBloccati();
+    bloccato.setUtente(autore);
+    bloccato.setDataBlocco(LocalDate.now()); // Imposta la data di blocco
+    bloccato.setMotivoBlocco(motivoBlocco); // Imposta il motivo di blocco
+    listaBloccatiRepository.save(bloccato); // Salva nella lista dei bloccati
   }
 }

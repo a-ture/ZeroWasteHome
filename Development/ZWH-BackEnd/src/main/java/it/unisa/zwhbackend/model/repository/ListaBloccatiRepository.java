@@ -1,6 +1,8 @@
 package it.unisa.zwhbackend.model.repository;
 
 import it.unisa.zwhbackend.model.entity.ListaBloccati;
+import it.unisa.zwhbackend.model.entity.Utente;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,4 +16,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Giovanni Balzano
  */
-public interface ListaBloccatiRepository extends JpaRepository<ListaBloccati, Long> {}
+public interface ListaBloccatiRepository extends JpaRepository<ListaBloccati, Long> {
+
+  // Trova tutti i blocchi per un determinato utente
+  List<ListaBloccati> findByUtente(Utente utente);
+}
