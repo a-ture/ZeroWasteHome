@@ -73,19 +73,29 @@ public class GestioneProdottoService implements ProdottoService {
     /**
      * Aggiunge un prodotto al frigo di un utente.
      *
-     * <p>Questo metodo verifica se il prodotto esiste già nel sistema. Se il prodotto non esiste, lo
-     * crea. Successivamente, viene verificata la relazione tra l'utente e il prodotto nel frigo. Se
-     * la relazione esiste, viene aggiornata la quantità, altrimenti viene creata una nuova relazione
-     * {@link PossiedeInFrigo}.
+     * <p>Questo metodo gestisce l'aggiunta di un prodotto al frigo di un utente specifico. Se il
+     * prodotto non esiste già nel sistema, viene creato e salvato. Se la relazione tra il prodotto e
+     * l'utente esiste già, la quantità viene aggiornata; altrimenti, viene creata una nuova relazione.
+     *
+     * <p>Le validazioni includono:
+     * <ul>
+     *   <li>Il codice a barre deve essere un numero intero di massimo 8 cifre</li>
+     *   <li>Il nome del prodotto deve contenere solo lettere (massimo 50 caratteri)</li>
+     *   <li>La data di scadenza deve essere nel formato "gg/mm/aaaa"</li>
+     *   <li>La quantità deve essere un numero positivo maggiore di zero</li>
+     * </ul>
      *
      * @param nomeProdotto il nome del prodotto
-     * @param dataScadenza la data di scadenza del prodotto
-     * @param codiceBarre il codice a barre del prodotto
+     * @param dataScadenza la data di scadenza del prodotto (es. "01/01/2024")
+     * @param codiceBarre il codice a barre del prodotto (es. "12345678")
      * @param quantita la quantità del prodotto da aggiungere
-     * @param idUtente l'id utente associato al "frigo"
-     * @return il prodotto (sia nuovo che trovato)
-     * @throws RuntimeException se si verifica un errore durante l'aggiunta del prodotto al frigo
+     * @param idUtente l'id dell'utente a cui il prodotto sarà aggiunto
+     * @return il prodotto (nuovo o esistente) associato all'utente
+     * @throws IllegalArgumentException se uno dei parametri non è valido
+     * @throws IllegalStateException se l'utente specificato non è trovato
+     * @throws RuntimeException in caso di errore non gestito durante l'aggiunta
      */
+
     public Prodotto aggiungiProdottoFrigo(
             String nomeProdotto, String dataScadenza, String codiceBarre, int quantita, Long idUtente) {
         // Validazione dei campi
