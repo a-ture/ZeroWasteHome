@@ -26,20 +26,23 @@ public class GestioneSegnalazioneRicettaService implements SegnalazioneRicettaSe
   private final GestoreCommunityRepository gestoreRepository;
 
   /**
-   * Costruttore per iniettare i repository necessari per la gestione delle segnalazioni delle ricette.
+   * Costruttore per iniettare i repository necessari per la gestione delle segnalazioni delle
+   * ricette.
    *
-   * <p>Il repository delle segnalazioni viene utilizzato per accedere e modificare i dati delle segnalazioni nel
-   * database. Il repository delle ricette consente di interagire con i dati delle ricette, mentre il repository dei
-   * gestori della community gestisce le informazioni relative agli utenti della piattaforma.
+   * <p>Il repository delle segnalazioni viene utilizzato per accedere e modificare i dati delle
+   * segnalazioni nel database. Il repository delle ricette consente di interagire con i dati delle
+   * ricette, mentre il repository dei gestori della community gestisce le informazioni relative
+   * agli utenti della piattaforma.
    *
-   * @param segnalazioneRicettaRepository il repository per la gestione delle segnalazioni delle ricette
+   * @param segnalazioneRicettaRepository il repository per la gestione delle segnalazioni delle
+   *     ricette
    * @param ricettaRepository il repository per la gestione delle ricette
    * @param gestoreRepository il repository per la gestione dei gestori della community
    */
   public GestioneSegnalazioneRicettaService(
-          SegnalazioneRicettaRepository segnalazioneRicettaRepository,
-          RicettaRepository ricettaRepository,
-          GestoreCommunityRepository gestoreRepository) {
+      SegnalazioneRicettaRepository segnalazioneRicettaRepository,
+      RicettaRepository ricettaRepository,
+      GestoreCommunityRepository gestoreRepository) {
     this.segnalazioneRicettaRepository = segnalazioneRicettaRepository;
     this.ricettaRepository = ricettaRepository;
     this.gestoreRepository = gestoreRepository;

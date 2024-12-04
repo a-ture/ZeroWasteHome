@@ -68,7 +68,9 @@ public class Prodotto {
    * <p>Necessario per il funzionamento di JPA, permette di creare una nuova istanza senza
    * parametri.
    */
-  public Prodotto() { }
+  public Prodotto() {
+    // costruttore vuoto
+  }
 
   /**
    * Costruttore con parametri.
