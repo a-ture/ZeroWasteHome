@@ -84,6 +84,15 @@ public class SegnalazionePagamento {
    */
   private LocalDateTime dataRisoluzione; // Data della risoluzione (se applicabile)
 
+  /**
+   * Dettagli aggiuntivi riguardanti la risoluzione della segnalazione.
+   *
+   * <p>Campo facoltativo che fornisce una descrizione più dettagliata della risoluzione della
+   * segnalazione.
+   */
+  @Column(length = 500)
+  private String dettagliRisoluzione;
+
   public SegnalazionePagamento() {}
 
   public SegnalazionePagamento(
@@ -93,7 +102,8 @@ public class SegnalazionePagamento {
       LocalDateTime dataCreazione,
       LocalDateTime dataRisoluzione,
       StatoSegnalazione stato,
-      String descrizioneProblema) {
+      String descrizioneProblema,
+      String dettagliRisoluzione) {
     this.id = id;
     this.utente = utente;
     this.gestorePagamento = gestorePagamento;
@@ -101,6 +111,7 @@ public class SegnalazionePagamento {
     this.dataRisoluzione = dataRisoluzione;
     this.stato = stato;
     this.descrizioneProblema = descrizioneProblema;
+    this.dettagliRisoluzione = dettagliRisoluzione;
   }
 
   public Long getId() {
@@ -157,5 +168,13 @@ public class SegnalazionePagamento {
 
   public void setDataRisoluzione(LocalDateTime dataRisoluzione) {
     this.dataRisoluzione = dataRisoluzione;
+  }
+
+  public String getDettagliRisoluzione() {
+    return dettagliRisoluzione;
+  }
+
+  public void setDettagliRisoluzione(String dettagliRisoluzione) {
+    this.dettagliRisoluzione = dettagliRisoluzione;
   }
 }
