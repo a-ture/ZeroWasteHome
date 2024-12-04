@@ -26,7 +26,6 @@ public interface PossiedeInDispensaRepository
    * prodotto nella sua dispensa.
    *
    * @param utente l'utente da cercare
-   * @param prodotto il prodotto da cercare
    * @return un {@code Optional<PossiedeInDispensa>} che contiene la relazione se esiste
    */
   List<PossiedeInDispensa> findByUtente(Utente utente);

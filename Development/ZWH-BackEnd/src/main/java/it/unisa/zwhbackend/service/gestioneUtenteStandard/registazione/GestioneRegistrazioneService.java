@@ -27,7 +27,7 @@ public class GestioneRegistrazioneService implements RegistrazioneService {
    */
   @Autowired
   public GestioneRegistrazioneService(
-          UtenteRepository utenteRepository, PasswordEncoder passwordEncoder) {
+      UtenteRepository utenteRepository, PasswordEncoder passwordEncoder) {
     this.utenteRepository = utenteRepository;
     this.passwordEncoder = passwordEncoder;
   }

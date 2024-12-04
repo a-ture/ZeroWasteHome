@@ -38,6 +38,7 @@ public class ProdottoService {
    *
    * @param prodottoRepository il repository per i prodotti
    * @param possiedeInFrigoRepository il repository per la relazione tra prodotto e utente
+   * @param possiedeInDispensaRepository il repository per la relazione tra prodotto e utente
    * @param utenteRepository il repository per gli utenti
    */
   @Autowired

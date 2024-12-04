@@ -76,7 +76,9 @@ public class PossiedeInFrigo {
    * <p>Necessario per il funzionamento della JPA, permette di creare una nuova istanza senza
    * parametri.
    */
-  public PossiedeInFrigo() { }
+  public PossiedeInFrigo() {
+    // costruttore vuoto
+  }
 
   /**
    * Costruttore con parametri.
@@ -167,7 +169,9 @@ public class PossiedeInFrigo {
      * <p>Necessario per il funzionamento della JPA, permette di creare una nuova istanza senza
      * parametri.
      */
-    public PossiedeInFrigoId() { }
+    public PossiedeInFrigoId() {
+      // costruttore vuoto
+    }
 
     /**
      * Costruttore con parametri.

@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Objects;
-import lombok.Data;
 
 /**
  * Classe che rappresenta la relazione tra un utente e i prodotti nella sua dispensa. Mappa la
@@ -20,7 +19,6 @@ import lombok.Data;
  * <p>* @author Ferdinando
  */
 @Entity
-@Data
 @Table(name = "possiede_in_dispensa")
 @IdClass(PossiedeInDispensa.PossiedeInDispensaId.class) // Specifica la chiave primaria composta
 public class PossiedeInDispensa {
@@ -77,7 +75,9 @@ public class PossiedeInDispensa {
    * <p>Necessario per il funzionamento della JPA, permette di creare una nuova istanza senza
    * parametri.
    */
-  public PossiedeInDispensa() {}
+  public PossiedeInDispensa() {
+    // costruttore vuoto
+  }
 
   /**
    * Costruttore con parametri.
@@ -96,6 +96,38 @@ public class PossiedeInDispensa {
     this.prodotto = prodotto;
     this.quantita = quantita;
     this.dataScadenza = dataScadenza;
+  }
+
+  public Utente getUtente() {
+    return utente;
+  }
+
+  public void setUtente(Utente utente) {
+    this.utente = utente;
+  }
+
+  public Prodotto getProdotto() {
+    return prodotto;
+  }
+
+  public void setProdotto(Prodotto prodotto) {
+    this.prodotto = prodotto;
+  }
+
+  public String getDataScadenza() {
+    return dataScadenza;
+  }
+
+  public void setDataScadenza(String dataScadenza) {
+    this.dataScadenza = dataScadenza;
+  }
+
+  public int getQuantita() {
+    return quantita;
+  }
+
+  public void setQuantita(int quantita) {
+    this.quantita = quantita;
   }
 
   /** Classe per rappresentare la chiave primaria composta */
@@ -128,7 +160,9 @@ public class PossiedeInDispensa {
      * <p>Necessario per il funzionamento della JPA, permette di creare una nuova istanza senza
      * parametri.
      */
-    public PossiedeInDispensaId() {}
+    public PossiedeInDispensaId() {
+      // costruttore vuoto
+    }
 
     /**
      * Costruttore con parametri.
@@ -143,6 +177,30 @@ public class PossiedeInDispensa {
     public PossiedeInDispensaId(Utente utente, Prodotto prodotto, String dataScadenza) {
       this.utente = utente;
       this.prodotto = prodotto;
+      this.dataScadenza = dataScadenza;
+    }
+
+    public Utente getUtente() {
+      return utente;
+    }
+
+    public void setUtente(Utente utente) {
+      this.utente = utente;
+    }
+
+    public Prodotto getProdotto() {
+      return prodotto;
+    }
+
+    public void setProdotto(Prodotto prodotto) {
+      this.prodotto = prodotto;
+    }
+
+    public String getDataScadenza() {
+      return dataScadenza;
+    }
+
+    public void setDataScadenza(String dataScadenza) {
       this.dataScadenza = dataScadenza;
     }
 
