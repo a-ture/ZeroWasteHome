@@ -3,6 +3,7 @@ package it.unisa.zwhbackend.service.gestioneUtenteStandard.autenticazione;
 import it.unisa.zwhbackend.model.entity.Utente;
 import it.unisa.zwhbackend.model.repository.UtenteRepository;
 import it.unisa.zwhbackend.security.JwtManualProvider;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -67,6 +68,6 @@ public class GestioneAutenticazioneService implements AutenticazioneService {
     }
 
     // Se le credenziali sono valide, genera un token JWT per l'utente
-    return jwtProvider.generateToken(utente.getEmail());
+    return jwtProvider.generateToken(utente.getEmail(), List.of("UTENTE"));
   }
 }
