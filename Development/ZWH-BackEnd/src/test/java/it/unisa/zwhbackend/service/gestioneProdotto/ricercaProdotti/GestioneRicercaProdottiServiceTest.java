@@ -1,4 +1,4 @@
-package it.unisa.zwhbackend.service.gestioneProdotto.ricercaPerNome;
+package it.unisa.zwhbackend.service.gestioneProdotto.ricercaProdotti;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -12,17 +12,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Classe di test per il servizio {@link GestioneRicercaProdottiPerNomeService}. Questa classe
- * verifica il comportamento della ricerca dei prodotti per nome in vari scenari, come risultati
- * validi, assenza di risultati o gestione di input non validi. Utilizza Mockito per simulare le
- * dipendenze.
+ * Classe di test per il servizio {@link GestioneRicercaProdottiService}. Questa classe verifica il
+ * comportamento della ricerca dei prodotti per nome in vari scenari, come risultati validi, assenza
+ * di risultati o gestione di input non validi. Utilizza Mockito per simulare le dipendenze.
  *
  * @author Alessandra Trotta
  */
-class GestioneRicercaProdottiPerNomeServiceTest {
+class GestioneRicercaProdottiServiceTest {
 
   private ProdottoRepository prodottoRepository;
-  private GestioneRicercaProdottiPerNomeService gestioneRicercaProdottiPerNomeService;
+  private GestioneRicercaProdottiService gestioneRicercaProdottiPerNomeService;
 
   /**
    * Configura l'ambiente di test prima di ogni esecuzione. Crea un mock per il repository dei
@@ -31,8 +30,7 @@ class GestioneRicercaProdottiPerNomeServiceTest {
   @BeforeEach
   void setUp() {
     prodottoRepository = mock(ProdottoRepository.class);
-    gestioneRicercaProdottiPerNomeService =
-        new GestioneRicercaProdottiPerNomeService(prodottoRepository);
+    gestioneRicercaProdottiPerNomeService = new GestioneRicercaProdottiService(prodottoRepository);
   }
 
   /**

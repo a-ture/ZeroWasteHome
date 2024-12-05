@@ -1,4 +1,4 @@
-package it.unisa.zwhbackend.service.gestioneProdotto.ricercaPerNome;
+package it.unisa.zwhbackend.service.gestioneProdotto.ricercaProdotti;
 
 import it.unisa.zwhbackend.model.entity.Prodotto;
 import it.unisa.zwhbackend.model.repository.ProdottoRepository;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author Alessandra Trotta
  */
 @Service
-public class GestioneRicercaProdottiPerNomeService implements RicercaProdottiPerNomeService {
+public class GestioneRicercaProdottiService implements RicercaProdottiService {
 
   private final ProdottoRepository prodottoRepository;
 
@@ -24,7 +24,7 @@ public class GestioneRicercaProdottiPerNomeService implements RicercaProdottiPer
    *
    * @param prodottoRepository il repository per la gestione dei prodotti
    */
-  public GestioneRicercaProdottiPerNomeService(ProdottoRepository prodottoRepository) {
+  public GestioneRicercaProdottiService(ProdottoRepository prodottoRepository) {
     this.prodottoRepository = prodottoRepository;
   }
 

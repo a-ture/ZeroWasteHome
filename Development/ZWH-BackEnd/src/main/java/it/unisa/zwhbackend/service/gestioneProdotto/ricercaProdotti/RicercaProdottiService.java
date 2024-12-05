@@ -1,4 +1,4 @@
-package it.unisa.zwhbackend.service.gestioneProdotto.ricercaPerNome;
+package it.unisa.zwhbackend.service.gestioneProdotto.ricercaProdotti;
 
 import it.unisa.zwhbackend.model.entity.Prodotto;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Alessandra Trotta
  */
-public interface RicercaProdottiPerNomeService {
+public interface RicercaProdottiService {
 
   /**
    * Cerca i prodotti in base a un criterio di corrispondenza parziale sul nome.
