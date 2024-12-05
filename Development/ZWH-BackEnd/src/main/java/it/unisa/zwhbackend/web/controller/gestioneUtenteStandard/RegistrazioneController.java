@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/utenti")
-public class UtenteController {
+public class RegistrazioneController {
 
   private final RegistrazioneService registrazioneService;
 
   @Autowired
-  public UtenteController(RegistrazioneService registrazioneService) {
+  public RegistrazioneController(RegistrazioneService registrazioneService) {
     this.registrazioneService = registrazioneService;
   }
 

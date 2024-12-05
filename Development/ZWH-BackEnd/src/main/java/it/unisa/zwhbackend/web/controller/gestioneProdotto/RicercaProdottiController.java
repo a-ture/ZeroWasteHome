@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.unisa.zwhbackend.model.entity.Prodotto;
-import it.unisa.zwhbackend.service.gestioneProdotto.ricercaPerNome.GestioneRicercaProdottiPerNomeService;
+import it.unisa.zwhbackend.service.gestioneProdotto.ricercaProdotti.GestioneRicercaProdottiService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/prodotti")
-public class RicercaProdottiPerNomeController {
+public class RicercaProdottiController {
 
-  private final GestioneRicercaProdottiPerNomeService ricercaProdottiService;
+  private final GestioneRicercaProdottiService ricercaProdottiService;
 
   /**
    * Costruttore della classe. Inietta il servizio per la gestione della logica di ricerca dei
@@ -32,8 +32,7 @@ public class RicercaProdottiPerNomeController {
    *
    * @param ricercaProdottiService il servizio per la ricerca dei prodotti
    */
-  public RicercaProdottiPerNomeController(
-      GestioneRicercaProdottiPerNomeService ricercaProdottiService) {
+  public RicercaProdottiController(GestioneRicercaProdottiService ricercaProdottiService) {
     this.ricercaProdottiService = ricercaProdottiService;
   }
 
