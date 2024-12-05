@@ -3,6 +3,7 @@
   box-sizing: border-box;
 }
 .navbar {
+  font-family: 'Times New Roman';
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -24,7 +25,7 @@
 }
 .logo {
   width: auto;
-  height: 90px;
+  height: 80px;
 }
 
 .navbar-title {
@@ -73,6 +74,7 @@ input {
 }
 
 .navbar-links li a {
+  font-family: 'Times New Roman';
   z-index: 3;
   text-decoration: none;
   font-weight: bold;
@@ -80,8 +82,8 @@ input {
   padding: 10px;
   display: inline-block;
   position: relative;
-  width: 8vw;
-  height: 6vw;
+  width: 7vw;
+  height: 7vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -95,14 +97,14 @@ input {
 .moving-circle {
   z-index: 2;
   position: absolute;
-  bottom: 0%;
+  bottom: -4%;
   left: 0;
-  width: 15vw;
+  width: 14vw;
   height: 30vw;
   background-color: white;
-  border-radius: 40%;
+  border-radius: 50%;
   transform: translateX(0px) translateY(-100%);
-  transition: transform 0.3s ease;
+  transition: transform 0.5s ease;
   transform-origin: center;
   pointer-events: none;
   display: none;
@@ -120,7 +122,7 @@ input {
   border-radius: 50%;
 }
 .user-icon {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   color: white;
 }
 
