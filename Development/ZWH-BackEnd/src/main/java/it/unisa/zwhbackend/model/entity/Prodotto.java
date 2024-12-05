@@ -120,6 +120,10 @@ public class Prodotto {
     return name;
   }
 
+  public String getNome() {
+    return name;
+  }
+
   public void setName(
       @Pattern(
               regexp = "^[a-zA-Z]{1,50}$",
