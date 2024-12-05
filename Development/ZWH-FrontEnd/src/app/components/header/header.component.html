@@ -15,13 +15,13 @@
     <!-- Link di navigazione con effetto selezione -->
     <ul class="navbar-links">
       <li (click)="setActiveLink('alimenti')" [class.active]="activeLink === 'alimenti'">
-        <a href="#">Alimenti</a>
+        <a routerLink="/alimenti">Alimenti</a>
       </li>
       <li (click)="setActiveLink('community')" [class.active]="activeLink === 'community'">
-        <a href="#">Community</a>
+        <a routerLink="/community">Community</a>
       </li>
       <li (click)="setActiveLink('donazioni')" [class.active]="activeLink === 'donazioni'">
-        <a href="#">Donazioni</a>
+        <a routerLink="/donazioni">Donazioni</a>
       </li>
       <!-- Cerchio che si sposta -->
       <span

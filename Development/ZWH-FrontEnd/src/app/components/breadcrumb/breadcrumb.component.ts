@@ -1,32 +1,24 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { BreadcrumbsService } from '../../services/servizio-breadcrumb/breadcrumbs.service';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 @Component({
-  selector: 'breadcrumb-basic-demo',
+  selector: 'app-breadcrumb',
   templateUrl: './breadcrumb.component.html',
+  styleUrls: ['./breadcrumb.component.scss'],
   standalone: true,
-  imports: [BreadcrumbModule], // Importa BreadcrumbModule per il componente breadcrumb
+  imports: [BreadcrumbModule],
 })
-export class BreadcrumbBasicDemo implements OnInit {
-  @Input() items: MenuItem[] | undefined; // Elementi del breadcrumb
-  @Input() home: MenuItem | undefined; // Icona e link per la home
+export class BreadcrumbComponent implements OnInit {
+  home: MenuItem = { icon: 'pi pi-home', label: 'Home', routerLink: '/home' };
+  items: MenuItem[] = [];
 
-  ngOnInit() {
-    // Inizializza le voci del breadcrumb
-    if (!this.items) {
-      this.items = [
-        { label: 'Pagina1', routerLink: '/pagina1' },
-        { label: 'Pagina2', routerLink: '/pagina2' },
-        { label: 'Pagina3', routerLink: '/pagina3' },
-      ];
-    }
+  constructor(private service: BreadcrumbsService) {}
 
-    // Configura il pulsante Home
-    if (!this.home) {
-      this.home = { icon: 'pi pi-home', routerLink: '/' };
-    }
+  ngOnInit(): void {
+    this.service.items.subscribe((arr: MenuItem[]) => {
+      this.items = [...arr]; // Forza Angular a rilevare il cambiamento
+    });
   }
 }
-
-export class BreadcrumbComponent {}

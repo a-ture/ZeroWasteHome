@@ -1,34 +1,29 @@
-import { Component } from '@angular/core';
-import { BreadcrumbBasicDemo } from '../../components/breadcrumb/breadcrumb.component';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { DynamicFormComponent } from '../../components/dynamic-form/dynamic-form.component';
-import { MenuItem } from 'primeng/api';
 import { UtilityBarComponent } from '../../components/utility-bar/utility-bar.component';
 import { productTableComponent } from '../../components/product-table/product-table.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { InserisciProdottoModalService } from '../../services/servizio-inserisci-prodotto/inserisci-prodotto-modal.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pagina-alimenti',
   standalone: true,
   imports: [
-    BreadcrumbBasicDemo,
     HeaderComponent,
     DynamicFormComponent,
     UtilityBarComponent,
     productTableComponent,
     FooterComponent,
+    BreadcrumbComponent,
   ],
   templateUrl: './pagina-alimenti.component.html',
   styleUrl: './pagina-alimenti.component.css',
 })
 export class PaginaAlimentiComponent {
-  // Proprietà per le voci del breadcrumb
-  items: MenuItem[] = [{ label: 'Alimenti Frigo', routerLink: '/' }];
-
-  // Proprietà per il pulsante Home
-  home: MenuItem = { label: 'Home', routerLink: '/' };
-
   // Proprietà per le label selezionabili
   labels = [
     { title: 'Frigo', showVerticalLine: true },
@@ -37,18 +32,31 @@ export class PaginaAlimentiComponent {
 
   // Proprietà per il titolo della tabella
   tableTitle: string = 'Informazioni sugli Alimenti';
+  activeLabel: string = 'Frigo'; // Etichetta attiva di default
 
   // Proprietà per i buttons relativi alla tabella
   buttons = [
-    { label: 'Genera Ricetta' },
-    { label: 'Genera Lista' },
+    {
+      label: 'Genera Ricetta',
+      action: () => this.router.navigate(['alimenti/inserimento-ricetta']),
+    },
+    { label: 'Genera Lista', action: () => this.router.navigate(['alimenti/genera-lista']) },
     { label: 'Add aliments', action: () => this.openInserisciAlimentoModal() },
   ];
 
-  constructor(private modalService: InserisciProdottoModalService) {}
+  constructor(
+    private modalService: InserisciProdottoModalService,
+    private router: Router,
+  ) {}
 
-  openInserisciAlimentoModal() {
-    this.modalService.openModal();
+  openInserisciAlimentoModal(): void {
+    const route =
+      this.activeLabel === 'Frigo'
+        ? 'alimenti/inserimento-prodotto-frigo'
+        : 'alimenti/inserimento-prodotto-dispensa';
+
+    console.log('Opening modal with route:', route); // Debug
+    this.modalService.openModal(route);
   }
 
   // Dati per la lista dei prodotti
@@ -74,9 +82,8 @@ export class PaginaAlimentiComponent {
   // Proprietà per i buttons relativi ad ogni prodotto
   buttonList = ['Visualizza', 'Modifica', 'Elimina'];
 
-  onLabelChange(newLabel: string) {
-    this.items = [
-      { label: newLabel === 'Frigo' ? 'Alimenti Frigo' : 'Alimenti Dispensa', routerLink: '/' },
-    ];
+  onLabelChange(label: string): void {
+    this.activeLabel = label;
+    console.log('Active Label:', this.activeLabel); // Debug
   }
 }

@@ -1,3 +1,18 @@
+.breadcrumb {
+  display: flex; /* Imposta un layout flessibile per il contenitore del breadcrumb */
+  justify-content: flex-start; /* Allinea gli elementi del breadcrumb a sinistra */
+  padding-left: 50px; /* Aggiunge uno spazio a sinistra */
+  margin-bottom: 15px; /* Aggiunge uno spazio inferiore */
+}
+
+:host ::ng-deep .p-breadcrumb {
+  border: none;
+}
+
+:host ::ng-deep .p-breadcrumb .p-menuitem-link {
+  gap: 8px;
+}
+
 .titolo {
   display: flex;
   justify-content: flex-start;
@@ -7,5 +22,5 @@
 }
 
 :host ::ng-deep .page-container[_ngcontent-ng-c1627640203] {
-  height: 50vh;
+  height: auto;
 }

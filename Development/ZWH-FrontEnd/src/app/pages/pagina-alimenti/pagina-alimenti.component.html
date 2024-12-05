@@ -1,5 +1,5 @@
 <app-header activeLink="alimenti" barra_ricerca="si" loggato="si"></app-header>
-<breadcrumb-basic-demo class="breadcrumb" [items]="items" [home]="home"></breadcrumb-basic-demo>
+<app-breadcrumb class="breadcrumb"></app-breadcrumb>
 <utility-bar
   class="page-utility-bar"
   [labels]="labels"
@@ -7,5 +7,5 @@
   [title]="tableTitle"
   (labelChanged)="onLabelChange($event)"
 ></utility-bar>
-<product-table id="productTable" [products]="productList" [buttuns]="buttonList">></product-table>
+<product-table id="productTable" [products]="productList" [buttuns]="buttonList"></product-table>
 <app-footer></app-footer>
