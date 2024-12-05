@@ -40,6 +40,7 @@ public class SegnalazioniRicetteController {
    *
    * @param id l'ID della segnalazione da risolvere
    * @param gestore_id l'ID del gestore che risolve la segnalazione
+   * @param motivoBlocco il motivo del blocco dell'autore della segnalazione.
    * @return una {@link ResponseEntity} con un messaggio di successo o errore
    */
   @PatchMapping("/{id}")

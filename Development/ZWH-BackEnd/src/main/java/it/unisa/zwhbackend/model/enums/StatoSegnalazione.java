@@ -9,7 +9,13 @@ package it.unisa.zwhbackend.model.enums;
  * @author Giovanni Balzano
  */
 public enum StatoSegnalazione {
-
+  /**
+   * Stato che indica che la segnalazione è stata aperta.
+   *
+   * <p>Questo stato viene utilizzato quando la segnalazione è stata ricevuta e un gestore può
+   * prenderla in carico e lavorare su di essa.
+   */
+  APERTA,
   /**
    * Stato che indica che la segnalazione è in fase di risoluzione.
    *
@@ -23,5 +29,5 @@ public enum StatoSegnalazione {
    *
    * <p>Questo stato viene utilizzato quando la segnalazione è stata trattata e risolta dal gestore.
    */
-  RISOLTO
+  CHIUSA
 }
