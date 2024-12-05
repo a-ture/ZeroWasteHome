@@ -1,27 +1,17 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
-import { BreadcrumbBasicDemo } from '../../components/breadcrumb/breadcrumb.component';
 import { DynamicFormComponent } from '../../components/dynamic-form/dynamic-form.component';
 import { FooterComponent } from '../../components/footer/footer.component';
-import { MenuItem } from 'primeng/api';
+import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-inserimento-prodotto-frigo',
   standalone: true,
-  imports: [HeaderComponent, BreadcrumbBasicDemo, DynamicFormComponent, FooterComponent],
+  imports: [HeaderComponent, DynamicFormComponent, FooterComponent, BreadcrumbComponent],
   templateUrl: './inserimento-prodotto-frigo.component.html',
   styleUrl: './inserimento-prodotto-frigo.component.css',
 })
 export class InserimentoProdottoFrigoComponent {
-  // Proprietà per le voci del breadcrumb
-  items: MenuItem[] = [
-    { label: 'Alimenti Frigo', routerLink: '/' },
-    { label: 'Inserimento Prodotto Frigo', routerLink: '/' },
-  ];
-
-  // Proprietà per il pulsante Home
-  home: MenuItem = { label: 'Home', routerLink: '/' };
-
   productFormFields = [
     { label: 'Nome Prodotto', type: 'text', value: '' },
     { label: 'Quantità', type: 'number' },

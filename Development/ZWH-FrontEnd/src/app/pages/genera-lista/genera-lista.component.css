@@ -13,12 +13,17 @@
 }
 
 :host ::ng-deep .utility-bar {
-  width: 70%;
+  width: 75%;
   margin: 0 auto;
 }
 
 :host ::ng-deep #utility-selectable-labels {
   position: fixed;
+}
+
+/* Stile per la lista */
+:host ::ng-deep .table-container-bordi-rotondi {
+  width: 75% !important;
 }
 
 /* Stile per la lista */
