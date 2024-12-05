@@ -1,9 +1,6 @@
 package it.unisa.zwhbackend.service.gestioneProdotto;
 
-import it.unisa.zwhbackend.model.entity.PossiedeInDispensa;
-import it.unisa.zwhbackend.model.entity.PossiedeInFrigo;
-import it.unisa.zwhbackend.model.entity.Prodotto;
-import it.unisa.zwhbackend.model.entity.Utente;
+import it.unisa.zwhbackend.model.entity.*;
 import it.unisa.zwhbackend.model.repository.PossiedeInDispensaRepository;
 import it.unisa.zwhbackend.model.repository.PossiedeInFrigoRepository;
 import it.unisa.zwhbackend.model.repository.ProdottoRepository;
@@ -102,8 +99,9 @@ public class GestioneProdottoService implements ProdottoService {
     // Validazione dei campi
     validaCodiceBarre(codiceBarre);
     validaNomeProdotto(nomeProdotto);
-    validaDataScadenza(dataScadenza);
     validaQuantita(quantita);
+    validaDataScadenza(dataScadenza);
+
     // Controlla se il prodotto esiste già nel database
     Optional<Prodotto> prodottoOptional = prodottoRepository.findByCodiceBarre(codiceBarre);
     Prodotto prodotto;
@@ -165,6 +163,12 @@ public class GestioneProdottoService implements ProdottoService {
       }
     }
 
+    // restituisce il prodotto che sarebbe dovuto essere inserito
+    if (prodotto == null) {
+      prodotto = new Prodotto(nomeProdotto, codiceBarre);
+    }
+
+    System.out.println(prodotto);
     return prodotto; // Ritorna il prodotto (sia nuovo che trovato)
   }
 
