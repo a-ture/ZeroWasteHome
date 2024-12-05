@@ -38,14 +38,7 @@ public interface ListaSpesaService {
    * dispensa e nel piano giornaliero.
    *
    * @param utente Utente per cui si sta generando la lista.
-   * @param fridgeItems Prodotti nel frigo.
-   * @param pantryItems Prodotti nella dispensa.
-   * @param dailyPlanItems Prodotti nel piano giornaliero.
    * @return La lista della spesa generata.
    */
-  ListaSpesa generateShoppingList(
-      Utente utente,
-      List<Prodotto> fridgeItems,
-      List<Prodotto> pantryItems,
-      List<Prodotto> dailyPlanItems);
+  ListaSpesa generateShoppingList(Utente utente);
 }
