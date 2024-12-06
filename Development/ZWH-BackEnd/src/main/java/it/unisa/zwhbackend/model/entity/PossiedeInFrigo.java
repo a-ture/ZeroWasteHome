@@ -239,4 +239,19 @@ public class PossiedeInFrigo {
       return Objects.hash(utente, prodotto);
     }
   }
+
+  @Override
+  public String toString() {
+    return "PossiedeInFrigo{"
+        + "utente="
+        + utente.getId()
+        + ", prodotto="
+        + prodotto.getName()
+        + ", dataScadenza='"
+        + dataScadenza
+        + '\''
+        + ", quantita="
+        + quantita
+        + '}';
+  }
 }

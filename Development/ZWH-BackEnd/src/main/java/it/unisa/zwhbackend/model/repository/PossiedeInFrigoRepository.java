@@ -31,4 +31,7 @@ public interface PossiedeInFrigoRepository
    * @return un {@code Optional<PossiedeInFrigo>} che contiene la relazione se esiste
    */
   List<PossiedeInFrigo> findByUtenteAndProdotto(Utente utente, Prodotto prodotto);
+
+  /** restituisce tutte le occorrenze della tabella PossiedeInFrigo dato uno userId */
+  List<PossiedeInFrigo> findByUtenteId(long utenteId);
 }

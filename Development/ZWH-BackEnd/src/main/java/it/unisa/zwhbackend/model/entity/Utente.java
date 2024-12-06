@@ -1,5 +1,6 @@
 package it.unisa.zwhbackend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -70,6 +71,19 @@ public class Utente {
   @JsonIgnore // Escludi dalla serializzazione
   private List<PossiedeInFrigo> prodottiInFrigo = new ArrayList<>();
 
+  // Lista di prodotti in dispensa
+  @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore // Escludi dalla serializzazione
+  private List<PossiedeInDispensa> prodottiInDispensa = new ArrayList<>();
+
+  @ElementCollection
+  @Column(name = "categoria")
+  private List<String> categoria;
+
+  @OneToOne(mappedBy = "utente", cascade = CascadeType.ALL)
+  @JsonBackReference
+  private ListaSpesa listaSpesa;
+
   public Long getId() {
     return id;
   }
@@ -110,12 +124,36 @@ public class Utente {
     this.name = name;
   }
 
+  public void setProdottiInDispensa(List<PossiedeInDispensa> prodottiInDispensa) {
+    this.prodottiInDispensa = prodottiInDispensa;
+  }
+
+  public List<PossiedeInDispensa> getProdottiInDispensa() {
+    return prodottiInDispensa;
+  }
+
   public List<PossiedeInFrigo> getProdottiInFrigo() {
     return prodottiInFrigo;
   }
 
   public void setProdottiInFrigo(List<PossiedeInFrigo> prodottiInFrigo) {
     this.prodottiInFrigo = prodottiInFrigo;
+  }
+
+  public ListaSpesa getListaSpesa() {
+    return listaSpesa;
+  }
+
+  public void setListaSpesa(ListaSpesa listaSpesa) {
+    this.listaSpesa = listaSpesa;
+  }
+
+  public List<String> getCategoria() {
+    return categoria;
+  }
+
+  public void setCategoria(List<String> categoria) {
+    this.categoria = categoria;
   }
 
   /**
