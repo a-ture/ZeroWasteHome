@@ -13,6 +13,15 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Test della classe GestioneProdottoService.
+ *
+ * <p>La classe contiene test unitari per i metodi della classe GestioneProdottoService. Ogni test
+ * verifica la corretta gestione dei prodotti nel sistema, in particolare l'aggiunta di un prodotto
+ * nel frigo di un utente, con il controllo delle validazioni dei dati in ingresso.
+ *
+ * @author Marco Meglio
+ */
 class GestioneProdottoServiceTest {
 
   private ProdottoRepository prodottoRepository;
@@ -20,6 +29,10 @@ class GestioneProdottoServiceTest {
   private UtenteRepository utenteRepository;
   private GestioneProdottoService gestioneProdottoService;
 
+  /**
+   * Configura l'ambiente di test prima di ogni test case. Crea i mock per i repository necessari e
+   * l'istanza del servizio.
+   */
   @BeforeEach
   void setUp() {
     prodottoRepository = mock(ProdottoRepository.class);
@@ -33,6 +46,10 @@ class GestioneProdottoServiceTest {
             utenteRepository);
   }
 
+  /**
+   * Verifica che venga lanciata un'eccezione IllegalArgumentException se il codice a barre del
+   * prodotto non è valido (lunghezza maggiore di 8 caratteri).
+   */
   @Test
   void testCodiceBarreNonValido_TC_GCF_IPF_01() {
     IllegalArgumentException exception =
@@ -46,6 +63,10 @@ class GestioneProdottoServiceTest {
         exception.getMessage());
   }
 
+  /**
+   * Verifica che venga lanciata un'eccezione IllegalArgumentException se il nome del prodotto
+   * contiene caratteri non validi (deve contenere solo lettere).
+   */
   @Test
   void testNomeProdottoNonValido_TC_GCF_IPF_02() {
     IllegalArgumentException exception =
@@ -59,6 +80,10 @@ class GestioneProdottoServiceTest {
         exception.getMessage());
   }
 
+  /**
+   * Verifica che venga lanciata un'eccezione IllegalArgumentException se la data di scadenza del
+   * prodotto non è nel formato corretto (gg/mm/aaaa).
+   */
   @Test
   void testDataScadenzaNonValida_TC_GCF_IPF_03() {
     IllegalArgumentException exception =
@@ -70,6 +95,10 @@ class GestioneProdottoServiceTest {
     assertEquals("La Data deve essere del formato gg/mm/aa.", exception.getMessage());
   }
 
+  /**
+   * Verifica che venga lanciata un'eccezione IllegalArgumentException se la quantità di prodotto
+   * inserita è negativa o zero.
+   */
   @Test
   void testQuantitaNonValida_TC_GCF_IPF_04() {
     IllegalArgumentException exception =
@@ -82,6 +111,10 @@ class GestioneProdottoServiceTest {
         "La Quantità deve essere un numero positivo maggiore di zero.", exception.getMessage());
   }
 
+  /**
+   * Testa l'aggiunta di un prodotto valido nel frigo di un utente. Verifica che il prodotto venga
+   * correttamente inserito nel frigo.
+   */
   @Test
   void testAggiungiProdottoFrigo_TC_GCF_IPF_05() {
     String nomeProdotto = "Latte";
