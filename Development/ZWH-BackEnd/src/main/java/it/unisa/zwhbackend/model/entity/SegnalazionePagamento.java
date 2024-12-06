@@ -2,6 +2,7 @@ package it.unisa.zwhbackend.model.entity;
 
 import it.unisa.zwhbackend.model.enums.StatoSegnalazione;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 /**
@@ -90,7 +91,7 @@ public class SegnalazionePagamento {
    * <p>Campo facoltativo che fornisce una descrizione più dettagliata della risoluzione della
    * segnalazione.
    */
-  @Column(length = 500)
+  @Size(max = 500, message = "Descrizione della segnalazione troppo lunga")
   private String dettagliRisoluzione;
 
   public SegnalazionePagamento() {}
