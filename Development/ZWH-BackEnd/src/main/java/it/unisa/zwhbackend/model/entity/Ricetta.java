@@ -105,7 +105,8 @@ public class Ricetta {
   @JoinColumn(name = "utente_id", nullable = false)
   private Utente autore; // La relazione ManyToOne con l'entità Utente
 
-  // Getter e Setter
+  @OneToMany(mappedBy = "ricettaAssociato", cascade = CascadeType.PERSIST, orphanRemoval = false)
+  private List<SegnalazioneRicetta> segnalazioniRicetta;
 
   public Long getId() {
     return id;
@@ -115,11 +116,20 @@ public class Ricetta {
     this.id = id;
   }
 
-  public String getNome() {
+  public @NotBlank(message = "Il campo 'Nome della ricetta' è obbligatorio") @Size(
+      min = 1,
+      max = 100,
+      message = "Il nome della ricetta deve essere tra 1 e 100 caratteri") String getNome() {
     return nome;
   }
 
-  public void setNome(String nome) {
+  public void setNome(
+      @NotBlank(message = "Il campo 'Nome della ricetta' è obbligatorio")
+          @Size(
+              min = 1,
+              max = 100,
+              message = "Il nome della ricetta deve essere tra 1 e 100 caratteri")
+          String nome) {
     this.nome = nome;
   }
 
@@ -131,11 +141,16 @@ public class Ricetta {
     this.ingredienti = ingredienti;
   }
 
-  public String getIstruzioni() {
+  public @NotBlank(message = "Il campo 'Istruzioni' è obbligatorio") @Size(
+      max = 5000,
+      message = "Le istruzioni non possono superare i 5000 caratteri") String getIstruzioni() {
     return istruzioni;
   }
 
-  public void setIstruzioni(String istruzioni) {
+  public void setIstruzioni(
+      @NotBlank(message = "Il campo 'Istruzioni' è obbligatorio")
+          @Size(max = 5000, message = "Le istruzioni non possono superare i 5000 caratteri")
+          String istruzioni) {
     this.istruzioni = istruzioni;
   }
 
@@ -147,11 +162,18 @@ public class Ricetta {
     this.categoria = categoria;
   }
 
-  public String getImg() {
+  public @Pattern(
+      regexp = ".*\\.(jpg|png)$",
+      message = "Formato immagine non supportato. Carica un file in formato JPG o PNG") String
+      getImg() {
     return img;
   }
 
-  public void setImg(String img) {
+  public void setImg(
+      @Pattern(
+              regexp = ".*\\.(jpg|png)$",
+              message = "Formato immagine non supportato. Carica un file in formato JPG o PNG")
+          String img) {
     this.img = img;
   }
 
