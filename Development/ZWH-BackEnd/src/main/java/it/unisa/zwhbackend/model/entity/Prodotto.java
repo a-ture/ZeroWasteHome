@@ -88,6 +88,22 @@ public class Prodotto {
   }
 
   /**
+   * Costruttore con parametri.
+   *
+   * <p>Permette di creare una nuova istanza di {@code Prodotto} con i dati specificati per nome,
+   * codice a barre e categoria.
+   *
+   * @param nomeProdotto il nome del prodotto
+   * @param codiceBarre il codice a barre del prodotto
+   * @param categoria categorie a cui appartiene il prodotto
+   */
+  public Prodotto(String nomeProdotto, String codiceBarre, List<String> categoria) {
+    this.name = nomeProdotto;
+    this.codiceBarre = codiceBarre;
+    this.categoria = categoria;
+  }
+
+  /**
    * Lista di utenti che possiedono il prodotto nel loro frigo.
    *
    * <p>Questa relazione è mappata tramite {@code @OneToMany}, indicando che un prodotto può essere
@@ -148,5 +164,19 @@ public class Prodotto {
                   "Il codice deve avere una lunghezza massima di 8 caratteri e deve contenere solo cifre.")
           String codiceBarre) {
     this.codiceBarre = codiceBarre;
+  }
+
+  @Override
+  public String toString() {
+    return "Prodotto{"
+        + "nome='"
+        + name
+        + '\''
+        + ", codiceBarre='"
+        + codiceBarre
+        + '\''
+        + ", categoria="
+        + categoria
+        + '}';
   }
 }
