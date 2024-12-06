@@ -21,7 +21,9 @@ import org.springframework.boot.test.context.SpringBootTest;
  *
  * <p>Questo test verifica che il servizio `ProdottoService` gestisca correttamente la
  * visualizzazione dei prodotti presenti nella dispensa di un utente.
+ * @author Ferdinando
  */
+
 @SpringBootTest
 class GestioneProdottoDispensaServiceTest {
 
@@ -34,6 +36,9 @@ class GestioneProdottoDispensaServiceTest {
   @BeforeEach
   void setUp() {
     possiedeInDispensaRepository = mock(PossiedeInDispensaRepository.class);
+    utenteRepository = mock(UtenteRepository.class); // Aggiunto
+    prodottoRepository = mock(ProdottoRepository.class); // Aggiunto
+    possiedeInFrigoRepository = mock(PossiedeInFrigoRepository.class); // Aggiunto
 
     gestioneProdottoService =
         new GestioneProdottoService(
