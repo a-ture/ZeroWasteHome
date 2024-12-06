@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * Classe di test per il servizio GestioneRicetteService.
@@ -25,7 +26,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  *
  * @author Anna Tagliamonte
  */
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class GestioneRicetteServiceTest {
 
   private RicettaRepository ricettaRepository;
