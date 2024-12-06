@@ -7,6 +7,7 @@ import it.unisa.zwhbackend.model.repository.ProdottoRepository;
 import it.unisa.zwhbackend.model.repository.UtenteRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -227,12 +228,16 @@ public class GestioneProdottoService implements ProdottoService {
       for (PossiedeInDispensa relazione : relazioni) {
         prodottiInDispensa.add(relazione.getProdotto()); // Aggiunge il prodotto alla lista
       }
-
+      if (prodottiInDispensa.isEmpty()) {
+        throw new NoSuchElementException("Nessun prodotto in Dispensa.");
+      }
       return prodottiInDispensa; // Ritorna la lista dei prodotti
+
+    } catch (NoSuchElementException e) {
+      // Gestisce il caso in cui non ci siano prodotti in dispensa
+      return new ArrayList<>(); // Ritorna una lista vuota in caso di errore specifico
     } catch (Exception e) {
       // Gestisce eventuali errori
-      System.err.println(
-          "Errore durante il recupero dei prodotti dalla dispensa: " + e.getMessage());
       e.printStackTrace();
       throw new RuntimeException("Errore durante il recupero dei prodotti dalla dispensa", e);
     }
