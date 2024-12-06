@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
  * <p>Il servizio interagisce con i repository per eseguire operazioni CRUD sugli oggetti {@link
  * Prodotto}, {@link Utente} e {@link PossiedeInFrigo}.
  *
- * @author Marco Meglio
+ * @author Marco Meglio, Ferdinando Ranieri
  */
 @Service
 public class GestioneProdottoService implements ProdottoService {
