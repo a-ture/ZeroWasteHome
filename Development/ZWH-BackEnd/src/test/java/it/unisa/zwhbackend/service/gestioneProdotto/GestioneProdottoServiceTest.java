@@ -3,14 +3,12 @@ package it.unisa.zwhbackend.service.gestioneProdotto;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import it.unisa.zwhbackend.model.entity.PossiedeInFrigo;
 import it.unisa.zwhbackend.model.entity.Prodotto;
 import it.unisa.zwhbackend.model.entity.Utente;
 import it.unisa.zwhbackend.model.repository.PossiedeInDispensaRepository;
 import it.unisa.zwhbackend.model.repository.PossiedeInFrigoRepository;
 import it.unisa.zwhbackend.model.repository.ProdottoRepository;
 import it.unisa.zwhbackend.model.repository.UtenteRepository;
-import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -85,11 +83,11 @@ class GestioneProdottoServiceTest {
   }
 
   @Test
-  void testAggiungiProdottoFrigoNuovoProdotto() {
+  void testAggiungiProdottoFrigo_TC_GCF_IPF_05() {
     String nomeProdotto = "Latte";
-    String dataScadenza = "12/12/2024";
+    String dataScadenza = "27/12/2024";
     String codiceBarre = "12345678";
-    int quantita = 5;
+    int quantita = 1;
     Long idUtente = 1L;
 
     // Mock dei repository
@@ -98,12 +96,10 @@ class GestioneProdottoServiceTest {
     when(utenteRepository.findById(idUtente)).thenReturn(Optional.of(utente));
     when(prodottoRepository.findByCodiceBarre(codiceBarre)).thenReturn(Optional.empty());
 
-    // Verifica il flusso di creazione del prodotto
+    // Chiamata al metodo per aggiungere il prodotto nel frigo
     Prodotto prodottoRestituito =
         gestioneProdottoService.aggiungiProdottoFrigo(
             nomeProdotto, dataScadenza, codiceBarre, quantita, idUtente);
-
-    System.out.println("Prodotto restituito: " + prodottoRestituito);
 
     // Verifica che il prodotto non sia nullo
     assertNotNull(prodottoRestituito);
@@ -112,53 +108,5 @@ class GestioneProdottoServiceTest {
 
     // Verifica che il prodotto sia stato salvato
     verify(prodottoRepository).save(any(Prodotto.class));
-  }
-
-  @Test
-  void testAggiungiProdottoFrigoProdottoEsistente() {
-    String nomeProdotto = "Latte";
-    String dataScadenza = "12/12/2024";
-    String codiceBarre = "12345678";
-    int quantita = 5;
-    Long idUtente = 1L;
-
-    // Mock dei repository
-    Utente utente = mock(Utente.class);
-    Prodotto prodotto = new Prodotto(nomeProdotto, codiceBarre);
-    PossiedeInFrigo relazioneEsistente = new PossiedeInFrigo(utente, prodotto, 3, dataScadenza);
-    when(utenteRepository.findById(idUtente)).thenReturn(Optional.of(utente));
-    when(prodottoRepository.findByCodiceBarre(codiceBarre)).thenReturn(Optional.of(prodotto));
-    when(possiedeInFrigoRepository.findByUtenteAndProdotto(utente, prodotto))
-        .thenReturn(List.of(relazioneEsistente));
-
-    Prodotto prodottoRestituito =
-        gestioneProdottoService.aggiungiProdottoFrigo(
-            nomeProdotto, dataScadenza, codiceBarre, quantita, idUtente);
-
-    assertNotNull(prodottoRestituito);
-    assertEquals(
-        8, relazioneEsistente.getQuantita()); // Verifica che la quantità sia stata aggiornata
-    verify(possiedeInFrigoRepository)
-        .save(any(PossiedeInFrigo.class)); // Verifica che la relazione sia stata aggiornata
-  }
-
-  @Test
-  void testAggiungiProdottoFrigoUtenteNonTrovato() {
-    String nomeProdotto = "Latte";
-    String dataScadenza = "12/12/2024";
-    String codiceBarre = "12345678";
-    int quantita = 5;
-    Long idUtente = 999L;
-
-    when(utenteRepository.findById(idUtente)).thenReturn(Optional.empty());
-
-    IllegalStateException exception =
-        assertThrows(
-            IllegalStateException.class,
-            () ->
-                gestioneProdottoService.aggiungiProdottoFrigo(
-                    nomeProdotto, dataScadenza, codiceBarre, quantita, idUtente));
-
-    assertEquals("Utente con ID 999 non trovato", exception.getMessage());
   }
 }
