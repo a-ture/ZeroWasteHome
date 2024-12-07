@@ -37,7 +37,7 @@ public class SegnalazionePagamento {
    * tabella "utente".
    */
   @ManyToOne
-  @JoinColumn(name = "utente_id", nullable = false)
+  @JoinColumn(name = "utente_email", nullable = false)
   private Utente utente; // L'utente che ha fatto la segnalazione
 
   /**
@@ -94,7 +94,9 @@ public class SegnalazionePagamento {
   @Size(max = 500, message = "Descrizione della segnalazione troppo lunga")
   private String dettagliRisoluzione;
 
-  public SegnalazionePagamento() {}
+  public SegnalazionePagamento() {
+    // costruttore vuoto
+  }
 
   public SegnalazionePagamento(
       Long id,

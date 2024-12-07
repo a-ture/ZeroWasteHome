@@ -14,24 +14,14 @@ import java.util.List;
  * include le regole di validazione per i campi.
  *
  * <p>Annota l'entità con {@code @Entity} per indicare che è una classe JPA. Usa {@code @Table} per
- * specificare il nome della tabella nel database. Usa {@code @Data} di Lombok per generare
- * automaticamente i metodi getter, setter, toString, equals e hashCode. Include regole di
- * validazione per i campi con le annotazioni di Jakarta Validation.
+ * specificare il nome della tabella nel database. Include regole di validazione per i campi con le
+ * annotazioni di Jakarta Validation.
  *
  * @author Alessia Ture
  */
 @Entity
 @Table(name = "utente")
 public class Utente {
-  /**
-   * Identificatore univoco dell'utente.
-   *
-   * <p>Annota il campo con {@code @Id} per indicare che è la chiave primaria. Usa
-   * {@code @GeneratedValue} con {@code GenerationType.IDENTITY} per l'auto-incremento nel database.
-   */
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
 
   /**
    * Email dell'utente.
@@ -40,6 +30,7 @@ public class Utente {
    * campo con {@code @NotBlank}, {@code @Email} e {@code Column} per definire le regole di
    * validazione e i vincoli del database.
    */
+  @Id
   @NotBlank(message = "L'email è obbligatoria")
   @Email(message = "Inserisci un'email valida")
   @Column(nullable = false, unique = true)
@@ -48,7 +39,7 @@ public class Utente {
   /**
    * Password dell'utente.
    *
-   * <p>Questo campo è obbligatorio e deve avere almeno 6 caratteri. Annota il campo con
+   * <p>Questo campo è obbligatorio e deve avere almeno 8 caratteri. Annota il campo con
    * {@code @NotBlank}, {@code @Size} e {@code Column} per definire le regole di validazione e i
    * vincoli del database.
    */
@@ -84,13 +75,38 @@ public class Utente {
   @JsonBackReference
   private ListaSpesa listaSpesa;
 
-  public Long getId() {
-    return id;
-  }
+  /**
+   * Relazione uno-a-molti con l'entità Ricetta.
+   *
+   * <p>Un utente può essere autore di più ricette. La relazione è mappata dal campo "autore" nella
+   * classe Ricetta.
+   */
+  @OneToMany(mappedBy = "autore", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
+  private List<Ricetta> ricette = new ArrayList<>();
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+  /**
+   * Relazione uno-a-molti con l'entità ListaBloccati. Un utente può essere associato a più voci
+   * nella lista dei bloccati.
+   */
+  @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
+  private List<ListaBloccati> listaBloccati = new ArrayList<>();
+
+  // Conta il numero di volte in cui è stato eliminata una ricetta dell'utente per violazioni delle
+  // linee guida
+  @Column(nullable = false, columnDefinition = "int default 0")
+  private int numeroSegnalazioni;
+
+  // Stabilisce se un utente è bloccato o meno
+  @Column(nullable = false, columnDefinition = "int default 0")
+  private Boolean bloccato = Boolean.FALSE;
+
+  /*  ----------------------------------
+
+  *  GETTERS/SETTERS METHODS
+  *
+  */
 
   public @NotBlank(message = "L'email è obbligatoria") @Email(message = "Inserisci un'email valida")
   String getEmail() {
@@ -124,14 +140,6 @@ public class Utente {
     this.name = name;
   }
 
-  public void setProdottiInDispensa(List<PossiedeInDispensa> prodottiInDispensa) {
-    this.prodottiInDispensa = prodottiInDispensa;
-  }
-
-  public List<PossiedeInDispensa> getProdottiInDispensa() {
-    return prodottiInDispensa;
-  }
-
   public List<PossiedeInFrigo> getProdottiInFrigo() {
     return prodottiInFrigo;
   }
@@ -140,12 +148,12 @@ public class Utente {
     this.prodottiInFrigo = prodottiInFrigo;
   }
 
-  public ListaSpesa getListaSpesa() {
-    return listaSpesa;
+  public List<PossiedeInDispensa> getProdottiInDispensa() {
+    return prodottiInDispensa;
   }
 
-  public void setListaSpesa(ListaSpesa listaSpesa) {
-    this.listaSpesa = listaSpesa;
+  public void setProdottiInDispensa(List<PossiedeInDispensa> prodottiInDispensa) {
+    this.prodottiInDispensa = prodottiInDispensa;
   }
 
   public List<String> getCategoria() {
@@ -156,31 +164,29 @@ public class Utente {
     this.categoria = categoria;
   }
 
-  /**
-   * Relazione uno-a-molti con l'entità Ricetta.
-   *
-   * <p>Un utente può essere autore di più ricette. La relazione è mappata dal campo "autore" nella
-   * classe Ricetta.
-   */
-  @OneToMany(mappedBy = "autore", cascade = CascadeType.ALL, orphanRemoval = true)
-  @JsonIgnore
-  private List<Ricetta> ricette = new ArrayList<>();
+  public ListaSpesa getListaSpesa() {
+    return listaSpesa;
+  }
 
-  /**
-   * Relazione uno-a-molti con l'entità ListaBloccati. Un utente può essere associato a più voci
-   * nella lista dei bloccati.
-   */
-  @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL, orphanRemoval = true)
-  @JsonIgnore
-  private List<ListaBloccati> listaBloccati = new ArrayList<>();
+  public void setListaSpesa(ListaSpesa listaSpesa) {
+    this.listaSpesa = listaSpesa;
+  }
 
-  // Aggiunto il campo numeroSegnalazioni per contare il numero di segnalazioni
-  @Column(nullable = false)
-  private int numeroSegnalazioni = 0; // Inizializzato a 0
+  public List<Ricetta> getRicette() {
+    return ricette;
+  }
 
-  // Nuovo campo per il blocco dell'utente
-  @Column(nullable = false)
-  private Boolean bloccato = false; // Indica se l'utente è bloccato o meno
+  public void setRicette(List<Ricetta> ricette) {
+    this.ricette = ricette;
+  }
+
+  public List<ListaBloccati> getListaBloccati() {
+    return listaBloccati;
+  }
+
+  public void setListaBloccati(List<ListaBloccati> listaBloccati) {
+    this.listaBloccati = listaBloccati;
+  }
 
   public int getNumeroSegnalazioni() {
     return numeroSegnalazioni;

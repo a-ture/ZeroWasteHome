@@ -53,13 +53,13 @@ public class ProdottoRequestDTO {
    * <p>Questo campo deve contenere un valore numerico positivo maggiore di zero. La validazione è
    * eseguita tramite {@code @Min} che impone un valore minimo di 1.
    */
-  private Long
+  private String
       idUtente; // Variabile per avere un corretto riferimento all'utente che inserisci il prodotto
 
   // in frigo
 
   // Getter e Setter per l'id dell'utente
-  public Long getIdUtente() {
+  public String getIdUtente() {
     return idUtente;
   }
 

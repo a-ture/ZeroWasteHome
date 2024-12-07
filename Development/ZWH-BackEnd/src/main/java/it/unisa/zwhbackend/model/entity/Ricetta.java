@@ -95,14 +95,14 @@ public class Ricetta {
    * Autore della ricetta.
    *
    * <p>Questo campo rappresenta una relazione molti-a-uno con l'entità {@code Utente}. La colonna
-   * "utente_id" nel database memorizza il riferimento all'utente autore della ricetta.
+   * "utente_email" nel database memorizza il riferimento all'utente autore della ricetta.
    *
    * <p>In altre parole, ogni ricetta è scritta da un solo utente (autore), ma un utente può
    * scrivere più ricette. La relazione {@code ManyToOne} implica che molte ricette possano
    * appartenere allo stesso utente.
    */
   @ManyToOne
-  @JoinColumn(name = "utente_id", nullable = false)
+  @JoinColumn(name = "utente_email", nullable = false)
   private Utente autore; // La relazione ManyToOne con l'entità Utente
 
   @OneToMany(mappedBy = "ricettaAssociato", cascade = CascadeType.PERSIST, orphanRemoval = false)

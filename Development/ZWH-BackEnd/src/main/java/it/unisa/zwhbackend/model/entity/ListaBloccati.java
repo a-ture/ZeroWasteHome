@@ -39,8 +39,9 @@ public class ListaBloccati {
   /** Relazione molti-a-uno con l'entità Utente. Un blocco è associato a un singolo utente. */
   @ManyToOne // Relazione molti-a-uno con l'entità Utente
   @JoinColumn(
-      name = "utente_id",
-      nullable = false) // Collega questa entità a quella di Utente tramite la colonna 'utente_id'
+      name = "utente_email",
+      nullable =
+          false) // Collega questa entità a quella di Utente tramite la colonna 'utente_email'
   private Utente
       utente; // La proprietà 'utente' fa riferimento all'entità Utente associata a questo blocco
 

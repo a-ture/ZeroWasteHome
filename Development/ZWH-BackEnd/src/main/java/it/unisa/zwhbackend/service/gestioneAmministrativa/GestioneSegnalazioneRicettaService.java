@@ -43,7 +43,7 @@ public class GestioneSegnalazioneRicettaService implements SegnalazioneRicettaSe
    * @return Un messaggio che descrive l'esito dell'operazione
    */
   @Override
-  public String risolviSegnalazione(Long segnalazioneId, Long gestore_id, String motivoBlocco) {
+  public String risolviSegnalazione(Long segnalazioneId, String gestore_id, String motivoBlocco) {
     // Validazione del motivo del blocco
     String validazioneMotivo = validaMotivoBlocco(motivoBlocco);
     if (!validazioneMotivo.isEmpty()) {
@@ -147,10 +147,12 @@ public class GestioneSegnalazioneRicettaService implements SegnalazioneRicettaSe
    * @return Il gestore trovato
    * @throws RuntimeException Se il gestore non esiste
    */
-  private GestoreCommunity getGestore(Long gestoreId) {
-    return gestoreRepository
-        .findById(gestoreId)
-        .orElseThrow(() -> new RuntimeException("Gestore non trovato."));
+  private GestoreCommunity getGestore(String gestoreId) {
+    GestoreCommunity gestore = gestoreRepository.findByEmail(gestoreId);
+    if (gestoreRepository == null) {
+      new RuntimeException("Gestore non trovato.");
+    }
+    return gestore;
   }
 
   /**

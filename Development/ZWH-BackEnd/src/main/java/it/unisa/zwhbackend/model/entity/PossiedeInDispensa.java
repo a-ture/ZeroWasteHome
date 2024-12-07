@@ -31,7 +31,7 @@ public class PossiedeInDispensa {
    */
   @Id
   @ManyToOne
-  @JoinColumn(name = "utente_id", nullable = false)
+  @JoinColumn(name = "utente_email", nullable = false)
   private Utente utente;
 
   /**

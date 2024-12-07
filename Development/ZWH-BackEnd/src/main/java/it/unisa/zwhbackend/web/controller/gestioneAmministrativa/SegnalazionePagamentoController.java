@@ -66,12 +66,13 @@ public class SegnalazionePagamentoController {
   @PatchMapping("/risolvi/{idSegnalazione}")
   public ResponseEntity<SegnalazionePagamento> risolvereSegnalazione(
       @PathVariable Long idSegnalazione,
-      @RequestParam Long gestoreId,
+      @RequestParam String gestoreId,
       @RequestParam String dettagliRisoluzione) {
     try {
 
       // Recupera il gestore di pagamento dalla repository
-      Optional<GestorePagamento> optionalGestore = gestorePagamentoRepository.findById(gestoreId);
+      Optional<GestorePagamento> optionalGestore =
+          gestorePagamentoRepository.findByEmail(gestoreId);
 
       // Se il gestore non è trovato, restituisce errore 400
       if (optionalGestore.isEmpty()) {
@@ -109,10 +110,10 @@ public class SegnalazionePagamentoController {
    */
   @PatchMapping("/prendiInCarico/{idSegnalazione}")
   public ResponseEntity<SegnalazionePagamento> prendiInCaricoSegnalazione(
-      @PathVariable Long idSegnalazione, @RequestParam Long gestoreId) {
+      @PathVariable Long idSegnalazione, @RequestParam String gestoreId) {
 
     // Recupera il gestore di pagamento dalla repository
-    Optional<GestorePagamento> optionalGestore = gestorePagamentoRepository.findById(gestoreId);
+    Optional<GestorePagamento> optionalGestore = gestorePagamentoRepository.findByEmail(gestoreId);
 
     // Se il gestore non è trovato, restituisce errore 400
     if (optionalGestore.isEmpty()) {

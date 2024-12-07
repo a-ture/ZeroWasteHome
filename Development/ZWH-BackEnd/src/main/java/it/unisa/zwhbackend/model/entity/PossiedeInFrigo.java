@@ -32,7 +32,7 @@ public class PossiedeInFrigo {
    */
   @Id
   @ManyToOne
-  @JoinColumn(name = "utente_id", nullable = false)
+  @JoinColumn(name = "utente_email", nullable = false)
   private Utente utente;
 
   /**
@@ -244,7 +244,7 @@ public class PossiedeInFrigo {
   public String toString() {
     return "PossiedeInFrigo{"
         + "utente="
-        + utente.getId()
+        + utente.getEmail()
         + ", prodotto="
         + prodotto.getName()
         + ", dataScadenza='"
