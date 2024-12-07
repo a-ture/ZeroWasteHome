@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import it.unisa.zwhbackend.model.entity.Utente;
 import it.unisa.zwhbackend.model.repository.GestoreCommunityRepository;
+import it.unisa.zwhbackend.model.repository.GestorePagamentoRepository;
 import it.unisa.zwhbackend.model.repository.UtenteRepository;
 import it.unisa.zwhbackend.security.JwtManualProvider;
 import java.util.List;
@@ -23,7 +24,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 class GestioneAutenticazioneServiceTest {
 
   private UtenteRepository utenteRepository;
-  private GestoreCommunityRepository gestoreRepository;
+  private GestoreCommunityRepository gestoreCommunityRepository;
+  private GestorePagamentoRepository gestorePagamentoRepository;
   private PasswordEncoder passwordEncoder;
   private JwtManualProvider jwtProvider;
   private GestioneAutenticazioneService gestioneAutenticazioneService;
@@ -36,7 +38,11 @@ class GestioneAutenticazioneServiceTest {
     jwtProvider = mock(JwtManualProvider.class);
     gestioneAutenticazioneService =
         new GestioneAutenticazioneService(
-            utenteRepository, jwtProvider, passwordEncoder, gestoreRepository);
+            utenteRepository,
+            jwtProvider,
+            passwordEncoder,
+            gestoreCommunityRepository,
+            gestorePagamentoRepository);
   }
 
   /**
