@@ -38,14 +38,26 @@ export class HeaderComponent implements OnInit {
   circleDisplay: string = 'none';
   // Variabile per gestire la visibilità del menu utente
   userMenuVisible: boolean = false;
+  menuVisible: boolean = false;
+  isSmallScreen: boolean = false;
+  isOpen: boolean = false; // Stato per la classe "open"
 
   constructor(private cdr: ChangeDetectorRef) {}
 
   // Funzione per aprire/chiudere il menu utente
   toggleUserMenu() {
-    console.log('Menu cliccato, visibilità menu prima:', this.userMenuVisible);
-    this.userMenuVisible = !this.userMenuVisible;
-    console.log('Visibilità menu dopo:', this.userMenuVisible);
+    if (!this.isSmallScreen) {
+      console.log('Menu cliccato, visibilità menu prima:', this.userMenuVisible);
+      this.userMenuVisible = !this.userMenuVisible;
+      console.log('Visibilità menu dopo:', this.userMenuVisible);
+    }
+  }
+  //per l'animazinìone dell'amburgher
+  toggleOpen() {
+    this.isOpen = !this.isOpen; // Cambia lo stato della classe "open"
+  }
+  toggleMenu(): void {
+    this.menuVisible = !this.menuVisible;
   }
 
   setActiveLink(link: string) {
@@ -54,7 +66,9 @@ export class HeaderComponent implements OnInit {
     //forzo di continuare solo dopo aver rilevato il cambiamento di selezione
     this.cdr.detectChanges();
 
-    this.circleDisplay = 'block';
+    if (!this.isSmallScreen) {
+      this.circleDisplay = 'block';
+    }
 
     //forzo di continuare solo dopo aver rilevato il cambiamento di selezione
     this.cdr.detectChanges();
@@ -63,15 +77,17 @@ export class HeaderComponent implements OnInit {
   }
 
   updateCirclePosition() {
-    const activeElement = document.querySelector('.navbar-links li.active');
-    if (activeElement) {
-      const rect = activeElement.getBoundingClientRect();
-      const navbarRect = document.querySelector('.navbar-links')!.getBoundingClientRect();
-      const movingCircle = document.querySelector('.moving-circle')!.getBoundingClientRect();
+    if (!this.isSmallScreen) {
+      const activeElement = document.querySelector('.navbar-links li.active');
+      if (activeElement) {
+        const rect = activeElement.getBoundingClientRect();
+        const navbarRect = document.querySelector('.navbar-links')!.getBoundingClientRect();
+        const movingCircle = document.querySelector('.moving-circle')!.getBoundingClientRect();
 
-      // Calcola l'offset al centro del link attivo
-      const offset = rect.left - navbarRect.left + rect.width / 2 - movingCircle.width / 2; // 20 è la metà del diametro del cerchio
-      this.circleTransform = `translateX(${offset}px) translateY(0%)`;
+        // Calcola l'offset al centro del link attivo
+        const offset = rect.left - navbarRect.left + rect.width / 2 - movingCircle.width / 2; // 20 è la metà del diametro del cerchio
+        this.circleTransform = `translateX(${offset}px) translateY(0%)`;
+      }
     }
   }
 
@@ -87,8 +103,34 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.updateCirclePosition();
-    window.addEventListener('resize', () => this.updateCirclePosition());
-    window.addEventListener('onload', () => this.setActiveLink(this.activeLink));
+    // Chiama la funzione per verificare la dimensione dello schermo all'inizio
+    this.checkScreenSize();
+
+    // Aggiungi un listener per monitorare i cambiamenti delle dimensioni dello schermo
+    window.matchMedia('(max-width: 760px)').addEventListener('change', e => {
+      this.isSmallScreen = e.matches;
+      this.onScreenSizeChange();
+    });
+  }
+
+  checkScreenSize() {
+    // Controlla la dimensione dello schermo
+    this.isSmallScreen = window.innerWidth <= 760;
+    this.onScreenSizeChange();
+  }
+
+  onScreenSizeChange() {
+    if (this.isSmallScreen) {
+      console.log('Lo schermo è più piccolo di 760px');
+      this.userMenuVisible = true;
+      this.circleTransform = `translateX(-100%) translateY(0%)`;
+
+      // Esegui la tua funzione o logica qui
+    } else {
+      console.log('Lo schermo è più grande di 760px');
+      this.updateCirclePosition();
+      window.addEventListener('resize', () => this.updateCirclePosition());
+      window.addEventListener('onload', () => this.setActiveLink(this.activeLink));
+    }
   }
 }
