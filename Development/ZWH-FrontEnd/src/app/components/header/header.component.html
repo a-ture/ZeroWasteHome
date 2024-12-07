@@ -5,7 +5,13 @@
     <span class="navbar-title">ZeroWaste Home</span>
   </div>
 
-  <div class="navbar-right">
+  <div id="nav-icon4" class="hamburger" (click)="toggleMenu(); toggleOpen()" [class.open]="isOpen">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="navbar-right navbar-hidden" [class.active]="menuVisible">
     <!-- Barra di ricerca -->
     <div *ngIf="barra_ricerca !== 'no'" class="navbar-search">
       <span class="pi pi-search search-icon"></span>
@@ -23,6 +29,7 @@
       <li (click)="setActiveLink('donazioni')" [class.active]="activeLink === 'donazioni'">
         <a routerLink="/donazioni">Donazioni</a>
       </li>
+
       <!-- Cerchio che si sposta -->
       <span
         class="moving-circle"
