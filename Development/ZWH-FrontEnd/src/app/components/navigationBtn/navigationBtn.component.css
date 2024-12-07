@@ -19,3 +19,18 @@
   transform: scale(0.95); /* Riduci la dimensione del bottone per simulare la pressione */
   box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.1); /* Aggiungi ombra interna per effetto di profondità */
 }
+
+@media (max-width: 768px) {
+  .my-btn1 {
+    min-width: 10px;
+    background-color: #4d4d4d;
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.5em;
+    font-weight: bold;
+    text-align: center;
+  }
+}
