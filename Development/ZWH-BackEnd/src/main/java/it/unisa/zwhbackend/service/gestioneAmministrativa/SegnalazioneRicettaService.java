@@ -23,5 +23,5 @@ public interface SegnalazioneRicettaService {
    * @return un messaggio che indica se l'operazione è stata completata con successo o se ci sono
    *     errori.
    */
-  String risolviSegnalazione(Long segnalazioneId, Long gestore_id, String motivoBlocco);
+  String risolviSegnalazione(Long segnalazioneId, String gestore_id, String motivoBlocco);
 }

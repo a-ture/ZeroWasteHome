@@ -49,7 +49,7 @@ class GestioneSegnalazionePagamentoServiceTest {
   @Test
   void testTC_GPT_RPP_01() {
     // Usa il servizio reale
-    GestorePagamento gestorePagamento = new GestorePagamento(1L, "Ciccio", "ciccio@gmail.com");
+    GestorePagamento gestorePagamento = creaGestorePagamento();
 
     SegnalazionePagamento segnalazione = new SegnalazionePagamento();
     segnalazione.setId(1L);
@@ -128,6 +128,6 @@ class GestioneSegnalazionePagamentoServiceTest {
   }
 
   private GestorePagamento creaGestorePagamento() {
-    return new GestorePagamento(1L, "Ciccio", "Ciccio@gmail.com");
+    return new GestorePagamento("Ciccio", "Ciccio@gmail.com", "password");
   }
 }

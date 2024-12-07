@@ -27,7 +27,7 @@ public class ListaSpesa {
    */
   @OneToOne
   @JoinColumn(
-      name = "utente_id",
+      name = "utente_email",
       nullable = false,
       unique = true) // Chiave esterna unica per garantire la relazione 1:1
   @JsonManagedReference

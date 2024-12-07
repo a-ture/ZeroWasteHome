@@ -24,6 +24,7 @@ public interface SegnalazionePagamentoService {
    *
    * @param id l'identificativo della segnalazione di pagamento da risolvere
    * @param gestore il gestore che risolve la segnalazione
+   * @param dettagliRisoluzione descrizione della risoluzione della segnalazione
    * @return un {@link Optional} contenente la segnalazione risolta o vuoto se la segnalazione non è
    *     risolvibile
    */

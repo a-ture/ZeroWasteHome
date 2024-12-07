@@ -45,7 +45,7 @@ public class SegnalazioniRicetteController {
    */
   @PatchMapping("/{id}")
   public ResponseEntity<String> risolviSegnalazione(
-      @PathVariable Long id, Long gestore_id, String motivoBlocco) {
+      @PathVariable Long id, String gestore_id, String motivoBlocco) {
     // Chiama il servizio per risolvere la segnalazione con l'ID fornito
     String response = segnalazioneRicettaService.risolviSegnalazione(id, gestore_id, motivoBlocco);
     // Verifica se la risposta contiene la parola "successo"

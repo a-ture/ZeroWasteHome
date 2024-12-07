@@ -3,6 +3,7 @@ package it.unisa.zwhbackend.model.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -20,15 +21,18 @@ import java.util.List;
 public class GestoreCommunity {
 
   /**
-   * Identificatore univoco del gestore.
+   * Email del gestore.
    *
-   * <p>La colonna è definita come chiave primaria {@code @Id} e il valore viene generato
-   * automaticamente tramite {@code @GeneratedValue}. Utilizziamo {@code GenerationType.IDENTITY}
-   * per un incremento automatico dei valori del campo {@code id}.
+   * <p>Questo campo è obbligatorio e deve rispettare un formato valido grazie alle annotazioni
+   * {@code @NotBlank} e {@code @Email}. La colonna è definita come chiave primaria tramite
+   * {@code @Id}. È inoltre unica nel database per evitare duplicati, come indicato da
+   * {@code @Column(nullable = false, unique = true)}.
    */
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @NotBlank(message = "L'email è obbligatoria")
+  @Email(message = "Inserisci un'email valida")
+  @Column(nullable = false, unique = true)
+  private String email;
 
   /**
    * Nome del gestore.
@@ -42,16 +46,16 @@ public class GestoreCommunity {
   private String nome;
 
   /**
-   * Email del gestore.
+   * Password del gestore.
    *
-   * <p>Questo campo è obbligatorio e deve rispettare un formato valido grazie alle annotazioni
-   * {@code @NotBlank} e {@code @Email}. La colonna è unica nel database per evitare duplicati, come
-   * indicato da {@code @Column(nullable = false, unique = true)}.
+   * <p>Questo campo è obbligatorio e deve avere almeno 8 caratteri. Annota il campo con
+   * {@code @NotBlank}, {@code @Size} e {@code Column} per definire le regole di validazione e i
+   * vincoli del database.
    */
-  @NotBlank(message = "L'email è obbligatoria")
-  @Email(message = "Inserisci un'email valida")
-  @Column(nullable = false, unique = true)
-  private String email;
+  @NotBlank(message = "La password è obbligatoria")
+  @Size(min = 8, message = "La password deve avere almeno 8 caratteri")
+  @Column(nullable = false)
+  private String password;
 
   /**
    * Segnalazioni gestite dal gestore.
@@ -77,20 +81,25 @@ public class GestoreCommunity {
     this.email = email;
   }
 
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(long l) {
-    this.id = l;
-  }
-
   public @NotBlank(message = "Il nome è obbligatorio") String getNome() {
     return nome;
   }
 
   public void setNome(@NotBlank(message = "Il nome è obbligatorio") String nome) {
     this.nome = nome;
+  }
+
+  public @NotBlank(message = "La password è obbligatoria") @Size(
+      min = 8,
+      message = "La password deve avere almeno 8 caratteri") String getPassword() {
+    return password;
+  }
+
+  public void setPassword(
+      @NotBlank(message = "La password è obbligatoria")
+          @Size(min = 8, message = "La password deve avere almeno 8 caratteri")
+          String password) {
+    this.password = password;
   }
 
   public List<SegnalazioneRicetta> getSegnalazioniGestite() {

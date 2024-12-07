@@ -47,7 +47,6 @@ class GestioneSegnalazioneRicettaServiceTest {
   void setUp() {
     // Crea l'utente, la ricetta e la segnalazione per ogni test
     autore = new Utente();
-    autore.setId(1L);
     autore.setEmail("test@domain.com");
     autore.setName("Test User");
     autore.setNumeroSegnalazioni(0);
@@ -65,7 +64,7 @@ class GestioneSegnalazioneRicettaServiceTest {
     segnalazione.setRicettaAssociato(ricetta);
 
     gestore = new GestoreCommunity();
-    gestore.setId(1L);
+    gestore.setEmail("gestore@example.com");
   }
 
   /**
@@ -75,7 +74,8 @@ class GestioneSegnalazioneRicettaServiceTest {
   // TC_GSR_RU_01 - Test per motivo del blocco vuoto
   @Test
   void testRisoluzioneMotivoBloccoNonValido_TC_GSR_RU_01() {
-    String risultato = gestioneSegnalazioneRicettaService.risolviSegnalazione(1L, 1L, "");
+    String risultato =
+        gestioneSegnalazioneRicettaService.risolviSegnalazione(1L, "gestore@example.com", "");
 
     assertEquals("Il motivo del blocco è obbligatorio.", risultato);
   }
@@ -88,7 +88,8 @@ class GestioneSegnalazioneRicettaServiceTest {
   @Test
   void testRisoluzioneMotivoBloccoTroppoLungo_TC_GSR_RU_02() {
     String risultato =
-        gestioneSegnalazioneRicettaService.risolviSegnalazione(1L, 1L, "A".repeat(501));
+        gestioneSegnalazioneRicettaService.risolviSegnalazione(
+            1L, "gestore@example.com", "A".repeat(501));
 
     assertEquals("Il motivo del blocco non può superare i 500 caratteri.", risultato);
   }
@@ -105,13 +106,14 @@ class GestioneSegnalazioneRicettaServiceTest {
     // Mocking repository
     when(segnalazioneRicettaRepository.findById(segnalazione.getId()))
         .thenReturn(java.util.Optional.of(segnalazione));
-    when(gestoreRepository.findById(1L)).thenReturn(java.util.Optional.of(gestore));
+    when(gestoreRepository.findByEmail("gestore@example.com")).thenReturn(gestore);
     when(ricettaRepository.findById(ricetta.getId())).thenReturn(java.util.Optional.of(ricetta));
     when(utenteRepository.save(autore)).thenReturn(autore);
 
     // Test della risoluzione della segnalazione
     String risultato =
-        gestioneSegnalazioneRicettaService.risolviSegnalazione(1L, 1L, "Motivo di blocco");
+        gestioneSegnalazioneRicettaService.risolviSegnalazione(
+            1L, "gestore@example.com", "Motivo di blocco");
 
     // Verifica che il risultato sia quello atteso
     assertEquals(
@@ -134,7 +136,7 @@ class GestioneSegnalazioneRicettaServiceTest {
     // Mocking repository
     when(segnalazioneRicettaRepository.findById(segnalazione.getId()))
         .thenReturn(java.util.Optional.of(segnalazione));
-    when(gestoreRepository.findById(1L)).thenReturn(java.util.Optional.of(gestore));
+    when(gestoreRepository.findByEmail("gestore@example.com")).thenReturn(gestore);
     when(ricettaRepository.findById(ricetta.getId())).thenReturn(java.util.Optional.of(ricetta));
 
     // Simula il salvataggio dell'utente (verifica che venga eseguito una sola volta)
@@ -145,7 +147,8 @@ class GestioneSegnalazioneRicettaServiceTest {
 
     // Test della risoluzione della segnalazione
     String risultato =
-        gestioneSegnalazioneRicettaService.risolviSegnalazione(1L, 1L, "Motivo di blocco");
+        gestioneSegnalazioneRicettaService.risolviSegnalazione(
+            1L, "gestore@example.com", "Motivo di blocco");
 
     // Verifica che il risultato sia quello atteso
     assertEquals(

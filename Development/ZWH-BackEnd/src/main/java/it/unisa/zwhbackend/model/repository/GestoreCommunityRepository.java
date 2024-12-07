@@ -11,5 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Giovanni Balzano
  */
 public interface GestoreCommunityRepository extends JpaRepository<GestoreCommunity, Long> {
-  // Costruttore Vuoto
+  GestoreCommunity findByEmail(String gestoreId);
 }

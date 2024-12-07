@@ -32,6 +32,13 @@ public interface PossiedeInFrigoRepository
    */
   List<PossiedeInFrigo> findByUtenteAndProdotto(Utente utente, Prodotto prodotto);
 
-  /** restituisce tutte le occorrenze della tabella PossiedeInFrigo dato uno userId */
-  List<PossiedeInFrigo> findByUtenteId(long utenteId);
+  /**
+   * Restituisce tutte le occorrenze della tabella PossiedeInFrigo per un determinato utente
+   * identificato dall'email.
+   *
+   * @param email l'email dell'utente di cui si vogliono ottenere le occorrenze nella tabella
+   *     PossiedeInFrigo
+   * @return una lista di oggetti {@code PossiedeInFrigo} associati all'utente specificato
+   */
+  List<PossiedeInFrigo> findByUtenteEmail(String email);
 }
