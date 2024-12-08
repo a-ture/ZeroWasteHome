@@ -396,7 +396,6 @@ input {
   }
 }
 
-
 @media (max-width: 1000px) {
   .navbar-left {
     z-index: 101;

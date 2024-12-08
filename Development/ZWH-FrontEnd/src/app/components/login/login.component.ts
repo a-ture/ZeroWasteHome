@@ -3,7 +3,9 @@ import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { DialogModule } from 'primeng/dialog'; // Importa il modulo per il dialog
+import { DialogModule } from 'primeng/dialog';
+import { FormSegnalazioneModalService } from '../../services/servizio-form-segnalazione/from-segnalazione-modal.service';
+import { LoginModalService } from '../../services/servizio-login/login-modal.service'; // Importa il modulo per il dialog
 
 @Component({
   standalone: true,
@@ -21,8 +23,12 @@ import { DialogModule } from 'primeng/dialog'; // Importa il modulo per il dialo
 export class LoginComponent {
   loginForm: FormGroup; // Reactive form per gestire il login
   showDialog: boolean = false; // Controlla la visibilità del dialogo di conferma
+  isModalVisible: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private modalService: LoginModalService,
+  ) {
     // Inizializza il form con campi e validazioni
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]], // Campo email con validazione
@@ -36,11 +42,25 @@ export class LoginComponent {
       const { email, password } = this.loginForm.value; // Estrai i valori dal form
       console.log('Dati di login:', { email, password }); // Stampa i dati di login
       this.showDialog = true; // Mostra il dialogo di conferma
-    } else {
-      console.error('Form non valido'); // Messaggio di errore in caso di form non valido
     }
   }
 
+  ngOnInit(): void {
+    // Sottoscrizione all'observable del servizio per aggiornare lo stato della modale
+    this.modalService.modalVisible$.subscribe(
+      isVisible => (this.isModalVisible = isVisible), // Aggiorna lo stato della variabile isModalVisible
+    );
+  }
+
+  // Metodo per chiudere la modale
+  closeModal(): void {
+    this.modalService.closeModal(); // Chiama il metodo del servizio per impostare la visibilità della modale su false
+  }
+
+  // Metodo per gestire il clic sull'overlay (area scura attorno alla modale)
+  onOverlayClick(event: MouseEvent): void {
+    this.closeModal(); // Chiude la modale quando si clicca sull'overlay
+  }
   // Metodo per gestire la navigazione alla pagina di registrazione
   onRegister() {
     console.log('Navigazione alla pagina di registrazione...');
