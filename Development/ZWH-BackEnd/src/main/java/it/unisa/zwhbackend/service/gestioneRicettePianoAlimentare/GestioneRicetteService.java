@@ -1,5 +1,6 @@
 package it.unisa.zwhbackend.service.gestioneRicettePianoAlimentare;
 
+import it.unisa.zwhbackend.annotations.ExcludeGeneratedFromCodeCoverage;
 import it.unisa.zwhbackend.model.entity.Ricetta;
 import it.unisa.zwhbackend.model.repository.RicettaRepository;
 import it.unisa.zwhbackend.model.repository.UtenteRepository;
@@ -47,6 +48,7 @@ public class GestioneRicetteService implements RicettaService {
    * @return un elenco di tutte le ricette
    */
   @Override
+  @ExcludeGeneratedFromCodeCoverage
   public List<Ricetta> getAllRicette() {
     return ricettaRepository.findAll();
   }
@@ -58,6 +60,7 @@ public class GestioneRicetteService implements RicettaService {
    * @return una ricetta se esiste
    */
   @Override
+  @ExcludeGeneratedFromCodeCoverage
   public Optional<Ricetta> getRicettaById(Long id) {
     return ricettaRepository.findById(id);
   }
@@ -70,6 +73,7 @@ public class GestioneRicetteService implements RicettaService {
    * @return la ricetta aggiornata
    */
   @Override
+  @ExcludeGeneratedFromCodeCoverage
   public Ricetta aggiornaRicetta(Long id, Ricetta nuovaRicetta) {
     Ricetta ricettaEsistente =
         ricettaRepository
@@ -87,6 +91,7 @@ public class GestioneRicetteService implements RicettaService {
    * @param id l'ID della ricetta da eliminare
    */
   @Override
+  @ExcludeGeneratedFromCodeCoverage
   public void eliminaRicetta(Long id) {
     ricettaRepository.deleteById(id);
   }

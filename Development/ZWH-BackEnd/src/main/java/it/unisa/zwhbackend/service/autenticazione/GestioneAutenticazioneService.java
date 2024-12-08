@@ -1,5 +1,6 @@
 package it.unisa.zwhbackend.service.autenticazione;
 
+import it.unisa.zwhbackend.annotations.ExcludeGeneratedFromCodeCoverage;
 import it.unisa.zwhbackend.model.entity.GestoreCommunity;
 import it.unisa.zwhbackend.model.entity.GestorePagamento;
 import it.unisa.zwhbackend.model.entity.Utente;
@@ -100,6 +101,7 @@ public class GestioneAutenticazioneService implements AutenticazioneService {
    * @throws IllegalArgumentException Se il gestore non esiste o le credenziali non sono valide.
    */
   @Override
+  @ExcludeGeneratedFromCodeCoverage
   public String loginAmministrativo(String email, String rawPassword) throws Exception {
     // Recupera il gestore dalla tabella GestoreCommunity
     GestoreCommunity gestoreCommunity = gestoreCommunityRepository.findByEmail(email);
