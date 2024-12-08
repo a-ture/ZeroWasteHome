@@ -71,24 +71,101 @@
   cursor: pointer;
 }
 
-/* Media query per schermi più piccoli */
+/* Schermi grandi */
+.cards-container {
+  grid-template-columns: repeat(4, minmax(250px, 1fr)); /* Default: 4 card per riga */
+}
+
+/* Schermi medi-grandi (tra 1024px e 1200px) */
+@media (max-width: 1200px) {
+  .cards-container {
+    grid-template-columns: repeat(3, minmax(250px, 1fr)); /* 3 card per riga */
+  }
+}
+
+/* Schermi medi */
 @media (max-width: 1024px) {
   .cards-container {
-    grid-template-columns: repeat(3, minmax(250px, 1fr)); /* 3 card per riga su schermi medi */
+    grid-template-columns: repeat(3, minmax(200px, 1fr)); /* Riduce larghezza minima */
+    column-gap: 15px; /* Regola lo spazio orizzontale */
+    row-gap: 15px; /* Regola lo spazio verticale */
+  }
+
+  .card {
+    padding: 20px; /* Adatta il padding */
+    min-height: 200px; /* Altezza minima per dispositivi medi */
   }
 }
 
+/* Schermi medio-piccoli (tra 768px e 1024px) */
+@media (max-width: 850px) {
+  .cards-container {
+    grid-template-columns: repeat(2, minmax(200px, 1fr)); /* 2 card per riga */
+    column-gap: 15px; /* Adatta lo spazio tra le card */
+    row-gap: 15px;
+  }
+
+  .page-container {
+    padding: 15px; /* Adatta il padding */
+  }
+}
+
+/* Schermi piccoli */
 @media (max-width: 768px) {
   .cards-container {
-    grid-template-columns: repeat(2, minmax(250px, 1fr)); /* 2 card per riga su schermi piccoli */
+    grid-template-columns: repeat(2, minmax(180px, 1fr)); /* 2 card per riga con larghezza minima */
+    column-gap: 10px; /* Riduce ulteriormente lo spazio */
+    row-gap: 10px;
+  }
+
+  .card {
+    min-height: 180px; /* Altezza minima ridotta */
+    padding: 15px; /* Adatta il padding interno */
+  }
+
+  .card-icon {
+    font-size: 36px; /* Adatta la dimensione dell'icona */
+  }
+
+  .card h3 {
+    font-size: 16px; /* Adatta la dimensione del titolo */
+  }
+
+  .card p {
+    font-size: 13px; /* Adatta la dimensione del testo descrittivo */
   }
 }
 
+/* Schermi molto piccoli */
 @media (max-width: 480px) {
   .cards-container {
-    grid-template-columns: repeat(
-      1,
-      minmax(250px, 1fr)
-    ); /* 1 card per riga su schermi molto piccoli */
+    grid-template-columns: 1fr; /* 1 card per riga */
+    display: flex; /* Cambia il layout in flexbox */
+    flex-direction: column; /* Allinea le card verticalmente */
+    align-items: center; /* Centra orizzontalmente le card */
+    row-gap: 10px; /* Spaziatura verticale tra le card */
+  }
+
+  .page-container {
+    padding: 5px; /* Minimizza ulteriormente il padding */
+  }
+
+  .card {
+    min-height: 150px; /* Riduce ulteriormente l'altezza minima */
+    padding: 10px; /* Riduce ulteriormente il padding interno */
+    width: 100%; /* Si adatta alla larghezza del contenitore */
+    max-width: 300px; /* Mantiene una larghezza massima per evitare che siano troppo larghe */
+  }
+
+  .card-icon {
+    font-size: 32px; /* Ulteriore riduzione della dimensione dell'icona */
+  }
+
+  .card h3 {
+    font-size: 14px; /* Ulteriore riduzione della dimensione del titolo */
+  }
+
+  .card p {
+    font-size: 12px; /* Ulteriore riduzione della dimensione del testo descrittivo */
   }
 }

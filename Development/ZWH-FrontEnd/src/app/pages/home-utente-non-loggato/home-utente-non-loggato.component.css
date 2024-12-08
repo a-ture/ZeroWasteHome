@@ -1,3 +1,15 @@
 h1 {
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  #titleBenvenuto {
+    margin-top: 8%;
+  }
+}
+
+@media (max-width: 550px) {
+  #titleBenvenuto {
+    margin-top: 15%;
+  }
+}

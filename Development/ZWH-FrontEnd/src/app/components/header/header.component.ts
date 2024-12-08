@@ -153,4 +153,29 @@ export class HeaderComponent implements OnInit {
       window.addEventListener('onload', () => this.setActiveLink(this.activeLink));
     }
   }
+
+  scrollToSectionByText(text: string): void {
+    const xpath = `//*[contains(text(), '${text}')]`;
+    const result = document.evaluate(
+      xpath,
+      document,
+      null,
+      XPathResult.FIRST_ORDERED_NODE_TYPE,
+      null,
+    );
+    const element = result.singleNodeValue as HTMLElement;
+
+    console.log('XPath result:', element);
+
+    if (element) {
+      const rect = element.getBoundingClientRect();
+      console.log('Elemento trovato, posizione:', rect);
+      window.scrollBy({
+        top: rect.top - 100, // Scrolla al di sopra dell'elemento
+        behavior: 'smooth',
+      });
+    } else {
+      console.warn(`Elemento contenente il testo "${text}" non trovato.`);
+    }
+  }
 }

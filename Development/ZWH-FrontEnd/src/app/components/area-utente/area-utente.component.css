@@ -8,7 +8,7 @@
   background-color: #f4f4f4;
   border-radius: 25px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 40px;
+  padding: 20px;
   width: 100%;
   max-width: 800px;
   margin: 20px auto;
@@ -17,9 +17,10 @@
 .user-info {
   display: flex;
   flex-direction: column;
-  padding: 20px 20px 60px 20px;
+  padding: 10px 20px 50px 20px;
   width: 70%;
 }
+
 h2 {
   font-size: 24px;
   font-weight: bold;
@@ -95,4 +96,91 @@ button:hover {
   align-items: center;
   height: inherit;
   width: 30%;
+}
+
+@media (max-width: 1024px) {
+  .profile-container {
+    flex-direction: column; /* Disposizione verticale */
+    align-items: center; /* Centra gli elementi */
+    padding: 20px; /* Riduci il padding */
+  }
+
+  .user-info {
+    width: 100%; /* Adatta la larghezza */
+    padding: 10px; /* Riduci il padding interno */
+  }
+
+  .parte-destra {
+    width: 100%; /* Adatta la larghezza */
+    margin-top: 20px; /* Aggiungi margine tra le sezioni */
+  }
+
+  .immagine {
+    width: 40%; /* Riduci la dimensione dell'immagine */
+    margin-top: 20px;
+  }
+
+  .pulsanti {
+    justify-content: center; /* Centra i pulsanti */
+    gap: 10px; /* Mantieni lo spazio tra i pulsanti */
+  }
+
+  input,
+  select {
+    width: 100%; /* Adatta larghezza degli input */
+  }
+
+  label {
+    width: 100%; /* Adatta larghezza dei label */
+  }
+
+  .flex {
+    flex-direction: column; /* Disposizione verticale per label e input */
+    align-items: flex-start; /* Allinea a sinistra */
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 10px; /* Riduci ulteriormente il padding */
+  }
+
+  .user-info {
+    padding: 8px;
+  }
+
+  .immagine {
+    width: 50%; /* Riduci ulteriormente la dimensione dell'immagine */
+  }
+
+  .pulsanti {
+    flex-direction: column; /* Disposizione verticale per i pulsanti */
+    gap: 5px; /* Riduci lo spazio tra i pulsanti */
+    margin: 40px auto 20px auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 5px; /* Minimizza il padding */
+  }
+
+  .user-info h2 {
+    font-size: 20px; /* Riduci la dimensione del titolo */
+    margin-bottom: 10px; /* Riduci lo spazio sotto il titolo */
+  }
+
+  .immagine {
+    width: 40%; /* Riduci ancora la dimensione dell'immagine */
+  }
+
+  input,
+  select {
+    font-size: 14px; /* Riduci la dimensione del testo negli input */
+    padding: 6px 10px; /* Riduci il padding interno */
+  }
+
+  label {
+    font-size: 14px; /* Riduci la dimensione del testo dei label */
+  }
 }
