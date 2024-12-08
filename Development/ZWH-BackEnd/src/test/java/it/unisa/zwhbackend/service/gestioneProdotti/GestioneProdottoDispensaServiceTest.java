@@ -11,7 +11,6 @@ import it.unisa.zwhbackend.model.repository.PossiedeInFrigoRepository;
 import it.unisa.zwhbackend.model.repository.ProdottoRepository;
 import it.unisa.zwhbackend.model.repository.UtenteRepository;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,9 +20,9 @@ import org.springframework.boot.test.context.SpringBootTest;
  *
  * <p>Questo test verifica che il servizio `ProdottoService` gestisca correttamente la
  * visualizzazione dei prodotti presenti nella dispensa di un utente.
+ *
  * @author Ferdinando
  */
-
 @SpringBootTest
 class GestioneProdottoDispensaServiceTest {
 
@@ -56,7 +55,7 @@ class GestioneProdottoDispensaServiceTest {
   void testTC_GCD_VPD_01() {
     // Crea un utente con ID 1
     Utente utente = new Utente();
-    utente.setId(1L);
+    utente.setEmail("user@example.com");
 
     // Crea due prodotti
     Prodotto prodotto1 = new Prodotto("Prodotto 1", "123456");
@@ -67,13 +66,14 @@ class GestioneProdottoDispensaServiceTest {
     PossiedeInDispensa relazione2 = new PossiedeInDispensa(utente, prodotto2, 2, "2024-12-31");
 
     // Configura i mock per restituire l'utente e le due relazioni
-    when(utenteRepository.findById(1L)).thenReturn(Optional.of(utente));
+    when(utenteRepository.findByEmail("user@example.com")).thenReturn(utente);
     when(possiedeInDispensaRepository.findByUtente(utente))
         .thenReturn(List.of(relazione1, relazione2));
 
     // Invoca il metodo per ottenere i prodotti in dispensa
 
-    List<Prodotto> prodotti = gestioneProdottoService.visualizzaProdottiDispensa(1L);
+    List<Prodotto> prodotti =
+        gestioneProdottoService.visualizzaProdottiDispensa("user@example.com");
 
     // Verifica che la lista non sia nulla e contenga i due prodotti
     assertNotNull(prodotti);
@@ -91,14 +91,14 @@ class GestioneProdottoDispensaServiceTest {
   void testTC_GCD_VPD_02() {
     // Simula un utente con ID 2
     Utente utente = new Utente();
-    utente.setId(2L);
+    utente.setEmail("user@example.com");
 
     // Configura i mock per restituire un utente e una lista vuota di relazioni
-    when(utenteRepository.findById(2L)).thenReturn(Optional.of(utente));
+    when(utenteRepository.findByEmail("user@example.com")).thenReturn(utente);
     when(possiedeInDispensaRepository.findByUtente(utente)).thenReturn(List.of());
 
     // Invoca il metodo e verifica che restituisca una lista vuota
-    List<Prodotto> result = gestioneProdottoService.visualizzaProdottiDispensa(2L);
+    List<Prodotto> result = gestioneProdottoService.visualizzaProdottiDispensa("user@example.com");
 
     // Verifica che la lista restituita sia vuota
     assertTrue(result.isEmpty(), "Nessun prodotto in Dispensa.");
