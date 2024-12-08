@@ -12,11 +12,23 @@ import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
+import { FormSegnalazioneModalService } from '../../services/servizio-form-segnalazione/from-segnalazione-modal.service';
+import { LoginModalService } from '../../services/servizio-login/login-modal.service';
+import { LoginComponent } from '../login/login.component';
+import { navigationBtnComponent } from '../navigationBtn/navigationBtn.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MenubarModule, BadgeModule, AvatarModule, InputTextModule, CommonModule],
+  imports: [
+    MenubarModule,
+    BadgeModule,
+    AvatarModule,
+    InputTextModule,
+    CommonModule,
+    LoginComponent,
+    navigationBtnComponent,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
@@ -42,7 +54,10 @@ export class HeaderComponent implements OnInit {
   isSmallScreen: boolean = false;
   isOpen: boolean = false; // Stato per la classe "open"
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private modalService: LoginModalService,
+  ) {}
 
   // Funzione per aprire/chiudere il menu utente
   toggleUserMenu() {
@@ -89,6 +104,11 @@ export class HeaderComponent implements OnInit {
         this.circleTransform = `translateX(${offset}px) translateY(0%)`;
       }
     }
+  }
+
+  // Metodo per aprire la modale
+  openModal(): void {
+    this.modalService.openModal(); // Chiama il metodo del servizio per impostare la visibilità della modale su true
   }
 
   ngOnChanges(changes: SimpleChanges) {

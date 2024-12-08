@@ -5,7 +5,6 @@
   align-items: center;
   height: 55vh; /* Altezza relativa alla finestra */
   width: 55%; /* Larghezza relativa */
-  max-width: 1200px; /* Limita la larghezza massima */
   margin: 0 auto; /* Centra orizzontalmente */
 }
 
@@ -22,9 +21,9 @@
   text-align: center;
   color: black;
   width: 40%;
-  max-width: 300px;
+  max-width: 350px;
   min-width: 200px;
-  min-height: 300px;
+  min-height: 400px;
   max-height: 600px;
   overflow: hidden; /* Nasconde contenuti che escono */
   background-image: url('/assets/img/background.jpg'); /* Immagine di sfondo */
@@ -48,14 +47,6 @@
   font-size: 2rem;
   margin-bottom: 1rem; /* Spaziatura sotto il titolo */
   color: #000000;
-}
-
-/* Media query per dispositivi mobili */
-@media (max-width: 768px) {
-  .login-card {
-    width: 100%; /* Usa tutta la larghezza */
-    max-width: none;
-  }
 }
 
 /* Stile per il gruppo di input */
@@ -134,4 +125,42 @@
 
 .p-dialog .p-button-primary:hover {
   background-color: #005fa3 !important; /* Colore più scuro al passaggio */
+}
+
+/* Overlay che oscura lo sfondo */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Colore semitrasparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  backdrop-filter: blur(2px);
+}
+
+/* Contenuto del pop-up */
+.popup-content {
+  position: fixed;
+  width: 50vw;
+  padding: 30px;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: left;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  z-index: 101;
+}
+
+/* Media query per dispositivi mobili */
+@media (max-width: 768px) {
+  .login-card,
+  .popup-content {
+    width: 80vw; /* Usa tutta la larghezza */
+    max-width: 80vw;
+  }
 }

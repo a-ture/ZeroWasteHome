@@ -1,7 +1,8 @@
-<div class="login-container">
+<div class="popup-overlay" *ngIf="isModalVisible" (click)="closeModal()"></div>
+<div class="login-container" *ngIf="isModalVisible">
   <!-- Contenitore principale per il layout della pagina di login -->
 
-  <div class="login-card">
+  <div class="login-card popup-content">
     <!-- Card per il form di login -->
     <h1>LOGIN</h1>
 
