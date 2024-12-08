@@ -168,6 +168,8 @@ export class HeaderComponent implements OnInit {
     console.log('XPath result:', element);
 
     if (element) {
+      this.toggleMenu();
+      this.toggleOpen();
       const rect = element.getBoundingClientRect();
       console.log('Elemento trovato, posizione:', rect);
       window.scrollBy({
