@@ -14,14 +14,14 @@
       <!-- Titolo che descrive l'azione richiesta all'utente -->
       <h2>Inserisci codice a Barre</h2>
       <!-- Campo di input per permettere all'utente di inserire il codice a barre -->
-      <input type="number" placeholder="XXXXXXXXXXXXXX" />
+      <input type="number" placeholder="XXXXXXXXXXXXXX" [(ngModel)]="barcode" />
     </div>
 
     <div class="footer">
       <!-- Pulsante personalizzato per l'inserimento manuale -->
       <navigationBtn label="Inserisci Manualmente" (click)="navigate()"></navigationBtn>
       <!-- Pulsante personalizzato per confermare il codice inserito -->
-      <navigationBtn label="Conferma Codice" (click)="navigate()"></navigationBtn>
+      <navigationBtn label="Conferma Codice" (click)="confirmBarcode()"></navigationBtn>
     </div>
   </div>
 </div>

@@ -2,18 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Importa il modulo CommonModule per abilitare direttive come *ngIf e *ngFor
 import { Router } from '@angular/router';
 import { navigationBtnComponent } from '../navigationBtn/navigationBtn.component';
-import { InserisciProdottoModalService } from '../../services/servizio-inserisci-prodotto/inserisci-prodotto-modal.service'; // Importa il servizio per la gestione della modale
+import { InserisciProdottoModalService } from '../../services/servizio-inserisci-prodotto/inserisci-prodotto-modal.service';
+import { FormsModule } from '@angular/forms'; // Importa il servizio per la gestione della modale
 
 @Component({
   selector: 'app-conferma-codice-a-barre',
   standalone: true,
-  imports: [CommonModule, navigationBtnComponent], // Aggiungi CommonModule qui
+  imports: [CommonModule, navigationBtnComponent, FormsModule], // Aggiungi CommonModule qui
   templateUrl: './conferma-codice-a-barre.component.html',
   styleUrls: ['./conferma-codice-a-barre.component.css'],
 })
 export class ConfermaCodiceABarreComponent implements OnInit {
   // Variabile per tracciare la visibilità della modale
   isModalVisible: boolean = false;
+  barcode: string = ''; // Memorizza il codice a barre inserito dall'utente
   modalRoute: string | null = null; // Variabile per tracciare il percorso associato alla modale
 
   // Costruttore: inietta il servizio per la gestione della modale e il router
@@ -57,5 +59,25 @@ export class ConfermaCodiceABarreComponent implements OnInit {
     } else {
       console.error('Modal route is null or undefined'); // Debug se modalRoute è nullo
     }
+  }
+
+  // Metodo per inviare il codice e navigare alla pagina successiva
+  confirmBarcode() {
+    if (!this.barcode) {
+      alert('Inserire un codice valido!');
+      return;
+    }
+
+    this.modalService.getProductDetails(this.barcode).subscribe({
+      next: productDetails => {
+        // Naviga alla pagina successiva passando i dettagli del prodotto
+        this.router.navigate([this.modalRoute], { state: { productDetails } });
+        this.closeModal();
+      },
+      error: err => {
+        const errorMessage = err.error?.message || 'Si è verificato un errore. Riprova piu tardi.';
+        alert(errorMessage);
+      },
+    });
   }
 }

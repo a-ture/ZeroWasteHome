@@ -35,7 +35,7 @@ export class DynamicFormComponent implements OnInit {
   @Output() formSubmit = new EventEmitter<any>();
 
   // Stato per gestire l'immagine caricata
-  @Input() imagePreview: string | null = 'https://placehold.jp/3d4070/ffffff/200x200.png';
+  @Input() imagePreview!: string;
 
   // per i campi di input e textarea
   focusedField: string | null = null;
@@ -72,6 +72,9 @@ export class DynamicFormComponent implements OnInit {
   ngOnInit() {
     if (!this.submitText) {
       this.submitText = 'Aggiungi';
+    }
+    if (!this.imagePreview) {
+      this.imagePreview = 'https://placehold.jp/3d4070/ffffff/200x200.png';
     }
   }
 }
