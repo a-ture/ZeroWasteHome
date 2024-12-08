@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InserisciProdottoModalService {
+  private apiUrl = `${environment.apiUrl}/productExctraction`;
   private modalVisibleSubject = new BehaviorSubject<boolean>(false);
   modalVisible$ = this.modalVisibleSubject.asObservable();
 
@@ -21,5 +24,11 @@ export class InserisciProdottoModalService {
     console.log('Closing modal'); // Debug
     this.modalRouteSubject.next(null); // Resetta il percorso
     this.modalVisibleSubject.next(false); // Chiude la modale
+  }
+
+  constructor(private http: HttpClient) {}
+
+  getProductDetails(barcode: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${barcode}`);
   }
 }

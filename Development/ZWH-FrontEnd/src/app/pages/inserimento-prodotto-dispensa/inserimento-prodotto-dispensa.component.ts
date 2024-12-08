@@ -21,4 +21,20 @@ export class InserimentoProdottoDispensaComponent {
   ];
 
   page: string = 'Inserisci Prodotto Dispensa';
+
+  imageURL!: string;
+
+  ngOnInit(): void {
+    // Recupera i dati dalla navigazione
+    const productDetails = history.state.productDetails;
+
+    // Se i dati esistono, popolano i campi del form
+    if (productDetails) {
+      this.productFormFields[0].value = productDetails.productName || '';
+      this.productFormFields[1].value = '1';
+      this.productFormFields[3].value = productDetails.nutrition || '';
+      this.productFormFields[4].value = productDetails.notes || '';
+      this.imageURL = productDetails.imageUrl;
+    }
+  }
 }
