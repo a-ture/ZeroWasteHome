@@ -22,8 +22,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Effetto ombra */
   text-align: center;
   color: black;
-  width: 40%;
-  max-width: 350px;
+  max-width: 500px;
   min-width: 200px;
   min-height: 400px;
   max-height: 600px;
@@ -38,7 +37,6 @@
 .error {
   color: red; /* Colore rosso per indicare errori */
   font-size: 1rem; /* Testo di dimensione media */
-  font-weight: bold; /* Grassetto */
   margin-top: 0.25rem; /* Spaziatura sopra il messaggio */
   display: block;
   min-height: 1.2rem; /* Impedisce spostamenti del layout */
@@ -162,7 +160,33 @@
 @media (max-width: 768px) {
   .login-card,
   .popup-content {
-    width: 80vw; /* Usa tutta la larghezza */
-    max-width: 80vw;
+    width: 90vw;
+  }
+  .button,
+  .p-button-secondary {
+    width: 49%;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-card,
+  .popup-content {
+    width: 90vw; /* Mantieni la larghezza del contenitore principale */
+  }
+
+  .input-group input {
+    width: 100%; /* Gli input già occupano il 100% del loro contenitore */
+    padding: 1rem; /* Aumenta leggermente la spaziatura interna per maggiore usabilità */
+    font-size: 1.1rem; /* Rendi il testo più leggibile su dispositivi piccoli */
+  }
+
+  .button-group {
+    gap: 10px; /* Aggiungi spaziatura verticale tra i pulsanti */
+  }
+
+  .p-button {
+    width: 49%; /* I pulsanti occupano tutta la larghezza */
+    padding: 1rem 1.5rem 1rem 1.5rem; /* Aumenta la spaziatura interna per renderli più grandi */
+    font-size: 1rem; /* Rendi il testo più leggibile */
   }
 }

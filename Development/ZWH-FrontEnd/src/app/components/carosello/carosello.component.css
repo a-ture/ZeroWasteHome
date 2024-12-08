@@ -34,7 +34,7 @@ p-galleria img {
 }
 
 @media (max-width: 768px) {
-  .carosello {
+  .card:has(.carosello) {
     display: none;
   }
 }

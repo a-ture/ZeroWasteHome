@@ -31,8 +31,8 @@ export class LoginComponent {
   ) {
     // Inizializza il form con campi e validazioni
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]], // Campo email con validazione
-      password: ['', [Validators.required, Validators.minLength(8)]], // Campo password con validazione
+      email: [''], // Campo email con validazione
+      password: [''], // Campo password con validazione
     });
   }
 
@@ -41,7 +41,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value; // Estrai i valori dal form
       console.log('Dati di login:', { email, password }); // Stampa i dati di login
-      this.showDialog = true; // Mostra il dialogo di conferma
+      // this.showDialog = true; // Mostra il dialogo di conferma
     }
   }
 

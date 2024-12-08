@@ -4,7 +4,7 @@
 
   <div class="login-card popup-content">
     <!-- Card per il form di login -->
-    <h1>LOGIN</h1>
+    <h1>Login</h1>
 
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
       <!-- Form con reactive forms e evento submit -->
@@ -17,6 +17,7 @@
           type="email"
           formControlName="email"
           pInputText
+          autocomplete="email"
           placeholder="Inserisci email"
         />
         <!-- Messaggi di errore per il campo email -->
@@ -42,6 +43,7 @@
           type="password"
           formControlName="password"
           pInputText
+          autocomplete="current-password"
           placeholder="Inserisci password"
         />
         <!-- Messaggi di errore per il campo password -->

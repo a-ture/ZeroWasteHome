@@ -33,6 +33,7 @@ export class CardHomePageComponent {
       text: 'Condividi Ricetta',
       imageUrl: '',
       altText: 'Placeholder image',
+      routerLink: '/home',
     },
     {
       text: 'Genera lista della spesa',

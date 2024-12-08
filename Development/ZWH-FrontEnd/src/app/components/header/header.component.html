@@ -20,14 +20,34 @@
 
     <!-- Link di navigazione con effetto selezione -->
     <ul class="navbar-links">
-      <li (click)="setActiveLink('alimenti')" [class.active]="activeLink === 'alimenti'">
+      <li
+        *ngIf="loggato == 'si'"
+        (click)="setActiveLink('alimenti')"
+        [class.active]="activeLink === 'alimenti'"
+      >
         <a routerLink="/alimenti">Alimenti</a>
       </li>
-      <li (click)="setActiveLink('community')" [class.active]="activeLink === 'community'">
-        <a routerLink="/community">Community</a>
+      <li
+        *ngIf="loggato == 'si'"
+        (click)="setActiveLink('community')"
+        [class.active]="activeLink === 'community'"
+      >
+        <a>Community</a>
       </li>
-      <li (click)="setActiveLink('donazioni')" [class.active]="activeLink === 'donazioni'">
-        <a routerLink="/donazioni">Donazioni</a>
+      <li
+        *ngIf="loggato == 'si'"
+        (click)="setActiveLink('donazioni')"
+        [class.active]="activeLink === 'donazioni'"
+      >
+        <a>Donazioni</a>
+      </li>
+
+      <li *ngIf="loggato == 'no'">
+        <a (click)="scrollToSectionByText('Cosa è ZeroWaste Home')">Chi Siamo</a>
+      </li>
+
+      <li *ngIf="loggato == 'no'">
+        <a (click)="scrollToSectionByText('I nostri obiettivi')">Obiettivi</a>
       </li>
 
       <!-- Cerchio che si sposta -->
@@ -45,10 +65,9 @@
         <ul>
           <li *ngIf="loggato == 'no'" (click)="openModal()">Login</li>
           <li *ngIf="loggato == 'no'" (click)="openModal()">Registrati</li>
-          <li *ngIf="loggato == 'si'">Area personale</li>
-          <li *ngIf="loggato == 'si'">Condividi ricetta</li>
+          <li *ngIf="loggato == 'si'" routerLink="/area-personale">Area personale</li>
           <li *ngIf="loggato == 'si'">Segnalazioni</li>
-          <li *ngIf="loggato == 'si'">logout</li>
+          <li *ngIf="loggato == 'si'">Logout</li>
         </ul>
       </div>
     </div>
