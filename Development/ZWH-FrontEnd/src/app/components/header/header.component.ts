@@ -107,7 +107,7 @@ export class HeaderComponent implements OnInit {
     this.checkScreenSize();
 
     // Aggiungi un listener per monitorare i cambiamenti delle dimensioni dello schermo
-    window.matchMedia('(max-width: 760px)').addEventListener('change', e => {
+    window.matchMedia('(max-width: 1000px)').addEventListener('change', e => {
       this.isSmallScreen = e.matches;
       this.onScreenSizeChange();
     });
@@ -115,7 +115,7 @@ export class HeaderComponent implements OnInit {
 
   checkScreenSize() {
     // Controlla la dimensione dello schermo
-    this.isSmallScreen = window.innerWidth <= 760;
+    this.isSmallScreen = window.innerWidth <= 1000;
     this.onScreenSizeChange();
   }
 
@@ -127,7 +127,7 @@ export class HeaderComponent implements OnInit {
 
       // Esegui la tua funzione o logica qui
     } else {
-      console.log('Lo schermo è più grande di 760px');
+      console.log('Lo schermo è più grande di 1000px');
       this.updateCirclePosition();
       window.addEventListener('resize', () => this.updateCirclePosition());
       window.addEventListener('onload', () => this.setActiveLink(this.activeLink));
