@@ -16,6 +16,7 @@ import { FormSegnalazioneModalService } from '../../services/servizio-form-segna
 import { LoginModalService } from '../../services/servizio-login/login-modal.service';
 import { LoginComponent } from '../login/login.component';
 import { navigationBtnComponent } from '../navigationBtn/navigationBtn.component';
+import { LogoutService } from '../../services/servizio-logout/logout.service';
 
 @Component({
   selector: 'app-header',
@@ -57,6 +58,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private cdr: ChangeDetectorRef,
     private modalService: LoginModalService,
+    private logoutService: LogoutService,
   ) {}
 
   // Funzione per aprire/chiudere il menu utente
@@ -179,5 +181,9 @@ export class HeaderComponent implements OnInit {
     } else {
       console.warn(`Elemento contenente il testo "${text}" non trovato.`);
     }
+  }
+
+  logout() {
+    this.logoutService.logout();
   }
 }
