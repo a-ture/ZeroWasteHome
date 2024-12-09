@@ -20,7 +20,11 @@ export class BreadcrumbsService {
     '/alimenti/inserimento-prodotto-dispensa': ['Alimenti', 'Prodotto Dispensa'],
     '/area-personale': ['Area Personale'],
     '/area-personale/profilo': ['Area Personale', 'Profilo'],
+    '/area-personale/le-mie-ricette': ['Area Personale', 'Le Mie Ricette'],
+    '/area-personale/assistenza': ['Area Personale', 'Assistenza'],
     '/assistenza': ['Assistenza'],
+    '/community/inserimento-segnalazione': ['Community', 'Inserisci Segnalazione'],
+    '/home/le-mie-ricette': ['Le Mie Ricette'],
   };
 
   constructor(

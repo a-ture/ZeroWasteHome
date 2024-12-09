@@ -1,5 +1,5 @@
-INSERT INTO utente (email, password, name) VALUES ('test1@example.com', 'password123', 'Test User 1');
-INSERT INTO utente (email, password, name) VALUES ('test2@example.com', 'password123', 'Test User 2');
+INSERT INTO utente (email, password, name) VALUES ('test1@example.com', '$2a$12$8u24Shf540Hr3krsiEHE5ep23BBygG5pVRIJTIjyIazaVeM2XxDG2', 'Test User 1');
+INSERT INTO utente (email, password, name) VALUES ('test2@example.com', '$2a$12$8u24Shf540Hr3krsiEHE5ep23BBygG5pVRIJTIjyIazaVeM2XxDG2', 'Test User 2');
 
 INSERT INTO utente_categoria (utente_email, categoria) VALUES ("test1@example.com", null);
 INSERT INTO utente_categoria (utente_email, categoria) VALUES ("test2@example.com", null);
