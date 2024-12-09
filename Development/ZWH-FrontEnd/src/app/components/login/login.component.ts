@@ -39,9 +39,18 @@ export class LoginComponent {
   // Metodo eseguito al submit del form
   onLogin() {
     if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value; // Estrai i valori dal form
-      console.log('Dati di login:', { email, password }); // Stampa i dati di login
-      // this.showDialog = true; // Mostra il dialogo di conferma
+      const { email, password } = this.loginForm.value; // Estrai i valori
+      this.modalService.login(email, password).subscribe({
+        next: response => {
+          console.log('Token:', response);
+          this.modalService.closeModal();
+        },
+        error: error => {
+          console.error('Errore:', error);
+        },
+      });
+    } else {
+      console.log('Il form non è valido');
     }
   }
 
