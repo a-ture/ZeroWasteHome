@@ -18,16 +18,16 @@ export class CardHomePageComponent {
       routerLink: '/area-personale',
     },
     {
-      text: 'Prodotti in dispensa',
+      text: 'I Miei Prodotti',
       imageUrl: '',
       altText: 'Placeholder image',
       routerLink: '/alimenti',
     },
     {
-      text: 'Prodotti in frigo',
+      text: 'Le Mie Ricette',
       imageUrl: '',
       altText: 'Placeholder image',
-      routerLink: '/alimenti',
+      routerLink: '/home/le-mie-ricette',
     },
     {
       text: 'Condividi Ricetta',
