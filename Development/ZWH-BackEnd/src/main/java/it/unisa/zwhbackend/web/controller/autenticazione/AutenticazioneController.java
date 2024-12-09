@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.unisa.zwhbackend.service.autenticazione.AutenticazioneService;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Marco Renella
  */
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/public")
 public class AutenticazioneController {
 
   private final AutenticazioneService autenticazioneService;
@@ -43,8 +44,9 @@ public class AutenticazioneController {
    * Endpoint per l'autenticazione di un utente tramite email e password. - Verifica le credenziali
    * e restituisce un token JWT in caso di successo.
    *
-   * @param email L'email dell'utente fornita durante il login
-   * @param password La password fornita durante il login
+   * @param request Mappa contenente i parametri necessari per il login: - "email": L'email
+   *     dell'utente fornita durante il login. - "password": La password dell'utente fornita durante
+   *     il login.
    * @return `ResponseEntity` con il risultato dell'operazione
    */
   @Operation(summary = "Autentica un utente e genera un token JWT")
@@ -79,7 +81,9 @@ public class AutenticazioneController {
                     schema = @Schema(example = "{ \"messaggio\": \"Errore interno del server\" }")))
       })
   @PostMapping("/login")
-  public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
+  public ResponseEntity<?> login(@RequestBody Map<String, String> request) {
+    String email = request.get("email");
+    String password = request.get("password");
     try {
       // Chiama il servizio per autenticare l'utente e ottenere un token JWT
       String token = autenticazioneService.login(email, password);
