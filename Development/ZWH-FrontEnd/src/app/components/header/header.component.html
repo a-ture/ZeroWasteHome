@@ -1,6 +1,11 @@
 <nav class="navbar">
   <!-- Logo e Titolo -->
-  <div class="navbar-left">
+  <div class="navbar-left" *ngIf="loggato == 'no'" routerLink="/" style="cursor: pointer">
+    <img src="assets/img/logo.png" alt="ZeroWaste Logo" class="logo" />
+    <span class="navbar-title">ZeroWaste Home</span>
+  </div>
+
+  <div class="navbar-left" *ngIf="loggato == 'si'" routerLink="/home" style="cursor: pointer">
     <img src="assets/img/logo.png" alt="ZeroWaste Logo" class="logo" />
     <span class="navbar-title">ZeroWaste Home</span>
   </div>
@@ -67,7 +72,7 @@
           <li *ngIf="loggato == 'no'" (click)="openModal()">Registrati</li>
           <li *ngIf="loggato == 'si'" routerLink="/area-personale">Area personale</li>
           <li *ngIf="loggato == 'si'">Segnalazioni</li>
-          <li *ngIf="loggato == 'si'">Logout</li>
+          <li *ngIf="loggato == 'si'" (click)="logout()">Logout</li>
         </ul>
       </div>
     </div>

@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class InserisciProdottoModalService {
-  private apiUrl = `${environment.apiUrl}/productExctraction`;
+  private apiUrl = `${environment.apiUrl}/utente/productExctraction`;
   private modalVisibleSubject = new BehaviorSubject<boolean>(false);
   modalVisible$ = this.modalVisibleSubject.asObservable();
 
