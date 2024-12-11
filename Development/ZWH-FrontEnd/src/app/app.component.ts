@@ -3,11 +3,12 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { ExampleCardsListComponent } from './components/example-cards-list/example-cards-list.component';
 import { ConfermaCodiceABarreComponent } from './components/conferma-codice-a-barre/conferma-codice-a-barre.component';
 import { filter } from 'rxjs/operators';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ExampleCardsListComponent, ConfermaCodiceABarreComponent],
+  imports: [RouterOutlet, ExampleCardsListComponent, ConfermaCodiceABarreComponent, ToastModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
