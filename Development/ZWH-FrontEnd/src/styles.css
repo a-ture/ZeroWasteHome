@@ -6,3 +6,11 @@ body {
   margin: 0px;
   padding: 0px;
 }
+
+@media (max-width: 600px) {
+  .p-toast {
+    width: 90% !important;
+    left: 5% !important;
+    font-size: 14px;
+  }
+}
