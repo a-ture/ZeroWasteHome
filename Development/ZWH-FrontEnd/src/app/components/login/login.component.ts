@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
-import { FormSegnalazioneModalService } from '../../services/servizio-form-segnalazione/from-segnalazione-modal.service';
-import { LoginModalService } from '../../services/servizio-login/login-modal.service'; // Importa il modulo per il dialog
+import { LoginModalService } from '../../services/servizio-login/login-modal.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   standalone: true,
@@ -28,11 +28,12 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private modalService: LoginModalService,
+    private messageService: MessageService,
   ) {
     // Inizializza il form con campi e validazioni
     this.loginForm = this.fb.group({
-      email: [''], // Campo email con validazione
-      password: [''], // Campo password con validazione
+      email: ['', Validators.required], // Campo email con validazione per campo obbligatorio
+      password: ['', Validators.required], // Campo password con validazione per campo obbligatorio
     });
   }
 
@@ -46,7 +47,12 @@ export class LoginComponent {
           this.modalService.closeModal();
         },
         error: error => {
-          console.error('Errore:', error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Login fallito',
+            detail: error,
+            life: 4000, // tempo in millisecondi (4 secondi)
+          });
         },
       });
     } else {

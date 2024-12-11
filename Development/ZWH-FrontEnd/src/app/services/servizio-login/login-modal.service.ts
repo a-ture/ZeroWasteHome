@@ -3,6 +3,7 @@ import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +35,7 @@ export class LoginModalService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private messageService: MessageService,
   ) {}
 
   // Metodo per eseguire il login
@@ -43,9 +45,16 @@ export class LoginModalService {
       tap(response => {
         localStorage.setItem('token', response.token); //salva il token
         this.router.navigate(['/home']);
+
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Login effettuato',
+          detail: 'Accesso eseguito con successo!',
+          life: 4000, // tempo in millisecondi (4 secondi)
+        });
       }),
       catchError(error => {
-        // Estrai il messaggio d'errore dal backend
+        // Estrae il messaggio d'errore dal backend
         return throwError(() => error.error?.messaggio || 'Errore imprevisto durante il login');
       }),
     );

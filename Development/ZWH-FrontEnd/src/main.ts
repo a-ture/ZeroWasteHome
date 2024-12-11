@@ -6,6 +6,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app/routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './app/interceptors/auth.interceptor';
+import { MessageService } from 'primeng/api';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -14,5 +15,6 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(
       withInterceptors([authInterceptor]), // Registra l'interceptor qui
     ),
+    MessageService,
   ],
 }).catch(err => console.error(err));
