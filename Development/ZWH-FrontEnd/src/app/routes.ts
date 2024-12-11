@@ -12,57 +12,87 @@ import { InserimentoSegnalazioneComponent } from './pages/inserimento-segnalazio
 import { PaginaAlimentiComponent } from './pages/pagina-alimenti/pagina-alimenti.component';
 import { PaginaRicetteUtenteComponent } from './pages/pagina-ricette-utente/pagina-ricette-utente.component';
 import { SegnalazioneRicettaComponent } from './pages/segnalazione-ricetta/segnalazione-ricetta.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeUtenteNonLoggatoComponent }, // Home page
 
-  { path: 'home', component: HomeComponent },
-  { path: 'alimenti', component: PaginaAlimentiComponent, data: { breadcrumb: 'Alimenti' } },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  {
+    path: 'alimenti',
+    component: PaginaAlimentiComponent,
+    data: { breadcrumb: 'Alimenti' },
+    canActivate: [AuthGuard],
+  },
   {
     path: 'alimenti/genera-lista',
     component: GeneraListaComponent,
     data: { breadcrumb: 'Genera Lista' },
+    canActivate: [AuthGuard],
   },
   {
     path: 'alimenti/inserimento-ricetta',
     component: InserimentoRicettaComponent,
     data: { breadcrumb: 'Inserisci Ricetta' },
+    canActivate: [AuthGuard],
   },
   {
     path: 'area-personale',
     component: AreaUtenteCardComponent,
     data: { breadcrumb: 'Area Personale' },
+    canActivate: [AuthGuard],
   },
   {
     path: 'area-personale/profilo',
     component: AreaUtenteFormComponent,
     data: { breadcrumb: 'Profilo' },
+    canActivate: [AuthGuard],
   },
-  { path: 'assistenza', component: AssistenzaComponent, data: { breadcrumb: 'Assistenza' } },
+  {
+    path: 'assistenza',
+    component: AssistenzaComponent,
+    data: { breadcrumb: 'Assistenza' },
+  },
+  {
+    path: 'area-personale/assistenza',
+    component: AssistenzaComponent,
+    data: { breadcrumb: 'Assistenza' },
+  },
   {
     path: 'alimenti/inserimento-prodotto-dispensa',
     component: InserimentoProdottoDispensaComponent,
     data: { breadcrumb: 'Prodotto Dispensa' },
+    canActivate: [AuthGuard],
   },
   {
     path: 'alimenti/inserimento-prodotto-frigo',
     component: InserimentoProdottoFrigoComponent,
     data: { breadcrumb: 'Prodotto Frigo' },
+    canActivate: [AuthGuard],
   },
   {
-    path: 'inserimento/segnalazione',
+    path: 'community/inserimento-segnalazione',
     component: InserimentoSegnalazioneComponent,
     data: { breadcrumb: 'Inserisci Segnalazione' },
+    canActivate: [AuthGuard],
   },
   {
-    path: 'le-mie-ricette',
+    path: 'home/le-mie-ricette',
     component: PaginaRicetteUtenteComponent,
     data: { breadcrumb: 'Le Mie Ricette' },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'area-personale/le-mie-ricette',
+    component: PaginaRicetteUtenteComponent,
+    data: { breadcrumb: 'Le Mie Ricette' },
+    canActivate: [AuthGuard],
   },
   {
     path: 'segnalazione-ricetta',
     component: SegnalazioneRicettaComponent,
     data: { breadcrumb: 'Segnalazione Ricetta' },
+    canActivate: [AuthGuard],
   },
   { path: '**', redirectTo: 'home' }, // Redirect per percorsi non trovati
 ];

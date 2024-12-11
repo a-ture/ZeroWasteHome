@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { CaroselloComponent } from '../../components/carosello/carosello.component';
 import { FooterComponent } from '../../components/footer/footer.component';
@@ -20,4 +20,13 @@ import { InformazioniNnlComponent } from '../../components/informazioni-nnl/info
   templateUrl: './home-utente-non-loggato.component.html',
   styleUrl: './home-utente-non-loggato.component.css',
 })
-export class HomeUtenteNonLoggatoComponent {}
+export class HomeUtenteNonLoggatoComponent implements OnInit {
+  loggato: string = 'no'; // Inizializza a false
+
+  ngOnInit(): void {
+    const token = localStorage.getItem('token'); // Recupera il token dal localStorage
+    if (token) {
+      this.loggato = 'si';
+    }
+  }
+}

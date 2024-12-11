@@ -3,10 +3,12 @@ package it.unisa.zwhbackend.config;
 import it.unisa.zwhbackend.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
 
 /**
  * Configurazione della sicurezza per l'applicazione.
@@ -26,9 +28,10 @@ import org.springframework.security.web.SecurityFilterChain;
  * @author Marco Renella
  */
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
-  /** Filtro per l'autenticazione JWT. * */
+  /** Filtro per l'autenticazione JWT. */
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
   /**
@@ -43,9 +46,6 @@ public class SecurityConfig {
   /**
    * Configura la catena dei filtri di sicurezza e le regole di accesso agli endpoint.
    *
-   * <p>Disabilita CSRF per le API stateless, definisce i permessi per i vari endpoint e aggiunge il
-   * filtro di autenticazione JWT.
-   *
    * @param http Configuratore di sicurezza HTTP fornito da Spring Security.
    * @return La configurazione della catena di filtri.
    * @throws Exception Se si verifica un errore durante la configurazione.
@@ -53,6 +53,19 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
+        // Abilita il supporto per i CORS
+        .cors(
+            cors ->
+                cors.configurationSource(
+                    request -> {
+                      CorsConfiguration config = new CorsConfiguration();
+                      config.setAllowCredentials(true);
+                      config.addAllowedOrigin("http://localhost:4200"); // Dominio del frontend
+                      config.addAllowedHeader("*"); // Consente tutti gli header
+                      config.addAllowedMethod("*"); // Consente tutti i metodi HTTP
+                      return config;
+                    }))
+
         // Disabilita CSRF (necessario per API stateless)
         .csrf(csrf -> csrf.disable())
 
@@ -73,8 +86,7 @@ public class SecurityConfig {
                     .requestMatchers("/api/utente/**")
                     .hasAnyRole("UTENTE", "GESTORE_COMMUNITY", "GESTORE_PAGAMENTI")
 
-                    // Tutti gli altri endpoint sono attualmente accessibili (in futuro: modificare
-                    // per richiedere autenticazione)
+                    // Tutti gli altri endpoint richiedono autenticazione
                     .anyRequest()
                     .permitAll())
 
@@ -89,8 +101,6 @@ public class SecurityConfig {
 
   /**
    * Bean per il codificatore delle password.
-   *
-   * <p>Utilizza BCrypt per garantire una maggiore sicurezza delle password.
    *
    * @return L'implementazione di {@code PasswordEncoder}.
    */

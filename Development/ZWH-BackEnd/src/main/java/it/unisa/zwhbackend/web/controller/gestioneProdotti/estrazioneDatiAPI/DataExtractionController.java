@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  * <p>Autore: Marco Renella
  */
 @RestController
-@RequestMapping("/api/productExctraction")
+@RequestMapping("/api/utente/productExctraction")
 public class DataExtractionController {
 
   @Autowired private DataExtractionService extractionService;
