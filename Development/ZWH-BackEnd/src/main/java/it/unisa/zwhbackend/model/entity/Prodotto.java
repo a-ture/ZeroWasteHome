@@ -55,8 +55,8 @@ public class Prodotto {
    * Categoria del prodotto.
    *
    * <p>Questo campo è una lista di stringhe che rappresentano le categorie a cui il prodotto
-   * appartiene. Ogni prodotto può appartenere a più categorie (ad esempio 'vegano', 'gluten-free',
-   * ecc.).
+   * appartiene. Ogni prodotto può appartenere a più categorie (ad esempio 'vegano',
+   * 'senza_glutine', ecc.).
    */
   @ElementCollection
   @Column(name = "categoria")

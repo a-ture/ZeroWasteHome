@@ -1,6 +1,7 @@
 package it.unisa.zwhbackend.service.gestioneListaSpesa;
 
 import it.unisa.zwhbackend.model.entity.*;
+import it.unisa.zwhbackend.model.enums.CategoriaAlimentare;
 import it.unisa.zwhbackend.model.repository.ListaSpesaRepository;
 import it.unisa.zwhbackend.model.repository.PossiedeInDispensaRepository;
 import it.unisa.zwhbackend.model.repository.PossiedeInFrigoRepository;
@@ -206,9 +207,12 @@ public class GestioneListaSpesaService implements ListaSpesaService {
   List<Prodotto> createStaticDailyPlanItems() {
     // Esempio di prodotti simulati per il piano giornaliero
     List<Prodotto> dailyPlanItems = new ArrayList<>();
-    dailyPlanItems.add(new Prodotto("Latte", "1", Arrays.asList("senza-glutine")));
-    dailyPlanItems.add(new Prodotto("Pane", "2", Arrays.asList("vegano")));
-    dailyPlanItems.add(new Prodotto("Uova", "3", Arrays.asList("vegano")));
+    dailyPlanItems.add(
+        new Prodotto("Latte", "1", Arrays.asList(CategoriaAlimentare.VEGETARIANO.toString())));
+    dailyPlanItems.add(
+        new Prodotto("Pane", "2", Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
+    dailyPlanItems.add(
+        new Prodotto("Uova", "3", Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
 
     // Aggiungere altri prodotti se necessario
     return dailyPlanItems;

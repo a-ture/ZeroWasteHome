@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import it.unisa.zwhbackend.model.entity.Prodotto;
+import it.unisa.zwhbackend.model.enums.CategoriaAlimentare;
 import it.unisa.zwhbackend.model.repository.ProdottoRepository;
 import java.util.Collections;
 import java.util.List;
@@ -92,7 +93,7 @@ class GestioneRicercaProdottiServiceTest {
   private Prodotto creaProdotto(String nome) {
     Prodotto prodotto = new Prodotto();
     prodotto.setName(nome);
-    prodotto.setCategoria(List.of("Vegano"));
+    prodotto.setCategoria(List.of(CategoriaAlimentare.VEGANO.toString()));
     return prodotto;
   }
 }
