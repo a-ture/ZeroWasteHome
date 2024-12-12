@@ -4,6 +4,7 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { UtilityBarComponent } from '../../components/utility-bar/utility-bar.component';
 import { productTableComponent } from '../../components/product-table/product-table.component';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pagina-ricette-utente',
@@ -19,11 +20,17 @@ import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.comp
   styleUrl: './pagina-ricette-utente.component.css',
 })
 export class PaginaRicetteUtenteComponent {
+  constructor(private router: Router) {}
   // Proprietà per il titolo della tabella
   tableTitle: string = 'Le Mie Ricette';
 
   // Proprietà per i buttons relativi alla tabella
-  buttons = [{ label: 'Aggiungi' }];
+  buttons = [
+    {
+      label: 'Aggiungi',
+      action: () => this.router.navigate(['area-personale/le-mie-ricette/inserimento-ricetta']),
+    },
+  ];
 
   // Dati per la lista dei prodotti
   recipeList = [
