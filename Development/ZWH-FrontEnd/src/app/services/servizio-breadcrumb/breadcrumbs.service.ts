@@ -29,7 +29,6 @@ export class BreadcrumbsService {
     '/area-personale/assistenza': ['Area Personale', 'Assistenza'],
     '/assistenza': ['Assistenza'],
     '/community/inserimento-segnalazione': ['Community', 'Inserisci Segnalazione'],
-    '/home/le-mie-ricette': ['Le Mie Ricette'],
   };
 
   constructor(
@@ -73,6 +72,8 @@ export class BreadcrumbsService {
       return '/area-personale';
     } else if (label === 'Le Mie Ricette') {
       return '/area-personale/le-mie-ricette';
+    } else if (label === 'Inserimento Ricetta') {
+      return '/area-personale/le-mie-ricette/inserimento-ricetta';
     }
 
     // Se nessuna corrispondenza è trovata, restituisci il percorso attuale
