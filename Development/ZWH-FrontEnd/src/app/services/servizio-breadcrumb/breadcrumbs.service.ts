@@ -21,6 +21,11 @@ export class BreadcrumbsService {
     '/area-personale': ['Area Personale'],
     '/area-personale/profilo': ['Area Personale', 'Profilo'],
     '/area-personale/le-mie-ricette': ['Area Personale', 'Le Mie Ricette'],
+    '/area-personale/le-mie-ricette/inserimento-ricetta': [
+      'Area Personale',
+      'Le Mie Ricette',
+      'Inserimento Ricetta',
+    ],
     '/area-personale/assistenza': ['Area Personale', 'Assistenza'],
     '/assistenza': ['Assistenza'],
     '/community/inserimento-segnalazione': ['Community', 'Inserisci Segnalazione'],
@@ -66,6 +71,8 @@ export class BreadcrumbsService {
       return '/alimenti/inserimento-prodotto-dispensa';
     } else if (label === 'Area Personale') {
       return '/area-personale';
+    } else if (label === 'Le Mie Ricette') {
+      return '/area-personale/le-mie-ricette';
     }
 
     // Se nessuna corrispondenza è trovata, restituisci il percorso attuale

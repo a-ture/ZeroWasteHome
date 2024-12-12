@@ -94,5 +94,11 @@ export const routes: Routes = [
     data: { breadcrumb: 'Segnalazione Ricetta' },
     canActivate: [AuthGuard],
   },
+  {
+    path: 'area-personale/le-mie-ricette/inserimento-ricetta',
+    component: InserimentoRicettaComponent,
+    data: { breadcrumb: 'Inserimento Ricetta' },
+    canActivate: [AuthGuard],
+  },
   { path: '**', redirectTo: 'home' }, // Redirect per percorsi non trovati
 ];
