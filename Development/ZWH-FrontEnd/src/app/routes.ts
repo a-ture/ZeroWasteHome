@@ -83,6 +83,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'home/le-mie-ricette/inserimento-ricetta',
+    component: InserimentoRicettaComponent,
+    data: { breadcrumb: 'Le Mie Ricette' },
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'area-personale/le-mie-ricette',
     component: PaginaRicetteUtenteComponent,
     data: { breadcrumb: 'Le Mie Ricette' },

@@ -27,7 +27,7 @@ export class CardHomePageComponent {
       text: 'Le Mie Ricette',
       imageUrl: '',
       altText: 'Placeholder image',
-      routerLink: '/home/le-mie-ricette',
+      routerLink: '/area-personale/le-mie-ricette',
     },
     {
       text: 'Condividi Ricetta',
