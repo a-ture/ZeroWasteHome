@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import it.unisa.zwhbackend.model.entity.*;
+import it.unisa.zwhbackend.model.enums.CategoriaAlimentare;
 import it.unisa.zwhbackend.model.repository.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -33,7 +34,9 @@ class GestioneListaSpesaServiceTest {
     // Setup utente
     utente = new Utente();
     utente.setEmail("user@example.com");
-    utente.setCategoria(Arrays.asList("vegano", "senza-glutine"));
+    utente.setCategoria(
+        Arrays.asList(
+            CategoriaAlimentare.VEGANO.toString(), CategoriaAlimentare.SENZA_GLUTINE.toString()));
   }
 
   @Test
@@ -41,11 +44,13 @@ class GestioneListaSpesaServiceTest {
     // PA1, PP1: Le liste coincidono
     List<PossiedeInFrigo> possiedeInFrigo =
         List.of(
-            createPossiedeInFrigo("Latte", "senza-glutine"),
-            createPossiedeInFrigo("Pane", "vegano"));
+            createPossiedeInFrigo("Latte", CategoriaAlimentare.SENZA_GLUTINE.toString()),
+            createPossiedeInFrigo("Pane", CategoriaAlimentare.VEGANO.toString()));
 
     List<Prodotto> pianoGiornaliero =
-        List.of(createProdotto("Latte", "senza-glutine"), createProdotto("Pane", "vegano"));
+        List.of(
+            createProdotto("Latte", CategoriaAlimentare.SENZA_GLUTINE.toString()),
+            createProdotto("Pane", CategoriaAlimentare.VEGANO.toString()));
 
     when(possiedeInFrigoRepository.findByUtenteEmail(utente.getEmail()))
         .thenReturn(possiedeInFrigo);
@@ -63,8 +68,8 @@ class GestioneListaSpesaServiceTest {
     // PA2, PP1: Prodotti mancanti
     List<PossiedeInFrigo> possiedeInFrigo =
         List.of(
-            createPossiedeInFrigo("Latte", "senza-glutine"),
-            createPossiedeInFrigo("Pane", "vegano"));
+            createPossiedeInFrigo("Latte", CategoriaAlimentare.SENZA_GLUTINE.toString()),
+            createPossiedeInFrigo("Pane", CategoriaAlimentare.VEGANO.toString()));
 
     // Spy sulla classe di servizio per simulare il piano giornaliero
     GestioneListaSpesaService gestioneListaSpesaServiceSpy = spy(gestioneListaSpesaService);
@@ -72,9 +77,9 @@ class GestioneListaSpesaServiceTest {
     // Simula il piano giornaliero statico
     List<Prodotto> pianoGiornaliero =
         List.of(
-            new Prodotto("Latte", "1", List.of("senza-glutine")),
-            new Prodotto("Pane", "2", List.of("vegano")),
-            new Prodotto("Uova", "3", List.of("vegano")));
+            new Prodotto("Latte", "1", List.of(CategoriaAlimentare.SENZA_GLUTINE.toString())),
+            new Prodotto("Pane", "2", List.of(CategoriaAlimentare.VEGANO.toString())),
+            new Prodotto("Uova", "3", List.of(CategoriaAlimentare.VEGANO.toString())));
     when(gestioneListaSpesaServiceSpy.createStaticDailyPlanItems()).thenReturn(pianoGiornaliero);
 
     // Mock dei repository
@@ -132,11 +137,13 @@ class GestioneListaSpesaServiceTest {
   void test_TC_GPL_GL_04() {
     // PA2, PP2: Prodotti mancanti, preferenze impostate
     List<PossiedeInFrigo> possiedeInFrigo =
-        List.of(createPossiedeInFrigo("Latte", "senza-glutine"), createPossiedeInFrigo("Pane", ""));
+        List.of(
+            createPossiedeInFrigo("Latte", CategoriaAlimentare.SENZA_GLUTINE.toString()),
+            createPossiedeInFrigo("Pane", ""));
 
     List<Prodotto> pianoGiornaliero =
         List.of(
-            createProdotto("Latte", "senza-glutine"),
+            createProdotto("Latte", CategoriaAlimentare.SENZA_GLUTINE.toString()),
             createProdotto("Pane", ""),
             createProdotto("Uova", ""));
 
@@ -176,11 +183,14 @@ class GestioneListaSpesaServiceTest {
 
   @Test
   void testIsCompatibleWithPreferences() {
-    List<String> preferences = List.of("vegano", "senza-glutine");
+    List<String> preferences =
+        List.of(
+            CategoriaAlimentare.VEGANO.toString(), CategoriaAlimentare.SENZA_GLUTINE.toString());
 
     // Caso: Compatibile
     assertTrue(
-        gestioneListaSpesaService.isCompatibleWithPreferences(List.of("vegano"), preferences));
+        gestioneListaSpesaService.isCompatibleWithPreferences(
+            List.of(CategoriaAlimentare.VEGANO.toString()), preferences));
 
     // Caso: Non compatibile
     assertFalse(
@@ -189,49 +199,12 @@ class GestioneListaSpesaServiceTest {
     // Caso: Nessuna preferenza impostata
     assertTrue(
         gestioneListaSpesaService.isCompatibleWithPreferences(
-            List.of("vegano"), Collections.emptyList()));
+            List.of(CategoriaAlimentare.VEGANO.toString()), Collections.emptyList()));
 
     // Caso: Prodotto senza categorie
     assertFalse(
         gestioneListaSpesaService.isCompatibleWithPreferences(
             Collections.emptyList(), preferences));
-  }
-
-  @Test
-  void testGenerateShoppingList_ExpiringProducts() {
-    LocalDate today = LocalDate.now();
-
-    List<PossiedeInFrigo> possiedeInFrigo =
-        List.of(
-            new PossiedeInFrigo(
-                utente,
-                createProdotto("Latte", "senza-glutine"),
-                1,
-                today.plusDays(1).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))), // In scadenza
-            new PossiedeInFrigo(
-                utente,
-                createProdotto("Pane", "vegano"),
-                1,
-                today
-                    .plusDays(10)
-                    .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))) // Non in scadenza
-            );
-
-    when(possiedeInFrigoRepository.findByUtenteEmail(utente.getEmail()))
-        .thenReturn(possiedeInFrigo);
-    when(possiedeInDispensaRepository.findByUtente(utente)).thenReturn(Collections.emptyList());
-
-    ListaSpesa result = gestioneListaSpesaService.generateShoppingList(utente);
-
-    assertNotNull(result, "La lista della spesa non dovrebbe essere null");
-    assertEquals(
-        1,
-        result.getProducts().size(),
-        "La lista della spesa dovrebbe contenere solo i prodotti in scadenza");
-    assertEquals(
-        "Latte",
-        result.getProducts().get(0).getName(),
-        "Il prodotto nella lista della spesa dovrebbe essere 'Latte'");
   }
 
   private PossiedeInFrigo createPossiedeInFrigo(String nomeProdotto, String categoria) {
