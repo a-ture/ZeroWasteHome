@@ -1,5 +1,7 @@
 # ZeroWasteHome
-
+<p align="center">
+<img alt="ZeroWasteHome"  width="460" height="400" src="Documenti/Utils/Logo_ZeroWasteHome.png">
+</p>
 ZeroWasteHome è un'applicazione progettata per la gestione intelligente di dispensa e frigorifero. L'obiettivo è aiutare gli utenti a ridurre gli sprechi alimentari, ottimizzare la spesa e mantenere un controllo efficace sugli alimenti disponibili. Grazie all'integrazione con dispositivi IoT e altre funzionalità avanzate, ZeroWasteHome rappresenta un assistente personale per la gestione della cucina.
 
 ## Caratteristiche principali
