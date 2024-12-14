@@ -5,7 +5,7 @@ INSERT INTO utente_categoria (utente_email, categoria) VALUES ("test1@example.co
 INSERT INTO utente_categoria (utente_email, categoria) VALUES ("test2@example.com", null);
 
 INSERT INTO prodotto (codice_barre, nome_prodotto) VALUES ('1', 'Latte');
-INSERT INTO prodotto (codice_barre, nome_prodotto) VALUES ('2', 'Pane senza glutine');
+INSERT INTO prodotto (codice_barre, nome_prodotto) VALUES ('2', 'Pane');
 INSERT INTO prodotto (codice_barre, nome_prodotto) VALUES ('3', 'Uova');
 INSERT INTO prodotto (codice_barre, nome_prodotto) VALUES ('4', 'Riso');
 
