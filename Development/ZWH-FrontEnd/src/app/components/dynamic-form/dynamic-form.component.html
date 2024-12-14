@@ -9,27 +9,27 @@
       <div id="form-inputs">
         <!-- Itera sui campi passati come input -->
         <div *ngFor="let field of fields" class="form-group">
-          <!-- Genera input o textarea in base al tipo -->
           <div class="float-label-container">
-            <input
-              *ngIf="field.type === 'date'"
-              type="date"
+            <!-- Menu a tendina -->
+            <select
+              *ngIf="field.type === 'select'"
               [name]="field.label"
               [(ngModel)]="field.value"
-              class="form-control date-field"
-              [ngClass]="{
-                focused: focusedField === field.label,
-                'valid-date': field.value && field.value.length > 0,
-              }"
-              (focus)="onFocus(field.label)"
-              (blur)="onBlur(field.label)"
-            />
+              class="form-control"
+            >
+              <option *ngFor="let option of field.options" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+
+            <!-- Altri input -->
             <input
-              *ngIf="field.type !== 'textarea' && field.type !== 'date'"
+              *ngIf="field.type !== 'textarea' && field.type !== 'date' && field.type !== 'select'"
               [type]="field.type"
               [name]="field.label"
               [(ngModel)]="field.value"
               class="form-control"
+              [min]="field.type === 'number' ? 1 : null"
               (focus)="onFocus(field.label)"
               (blur)="onBlur(field.label)"
             />

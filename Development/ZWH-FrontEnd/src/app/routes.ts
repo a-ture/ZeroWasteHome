@@ -12,6 +12,7 @@ import { InserimentoSegnalazioneComponent } from './pages/inserimento-segnalazio
 import { PaginaAlimentiComponent } from './pages/pagina-alimenti/pagina-alimenti.component';
 import { PaginaRicetteUtenteComponent } from './pages/pagina-ricette-utente/pagina-ricette-utente.component';
 import { SegnalazioneRicettaComponent } from './pages/segnalazione-ricetta/segnalazione-ricetta.component';
+import { VisualizzaRicettaComponent } from './pages/visualizza-ricetta/visualizza-ricetta.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginGestoreComponent } from './pages/login-gestore/login-gestore.component';
 
