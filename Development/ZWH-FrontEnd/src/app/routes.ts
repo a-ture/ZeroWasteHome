@@ -16,6 +16,9 @@ import { VisualizzaRicettaComponent } from './pages/visualizza-ricetta/visualizz
 import { AuthGuard } from './guards/auth.guard';
 import { LoginGestoreComponent } from './pages/login-gestore/login-gestore.component';
 import { SegnalazioneRicettaGestoreComponent } from './pages/segnalazione-ricetta-gestore/segnalazione-ricetta-gestore/segnalazione-ricetta-gestore.component';
+import { ComingSoonComponent } from './pages/coming-soon/coming-soon.component';
+import { DonazioniComponent } from './pages/donazioni/donazioni.component';
+import { CommunityComponent } from './pages/community/community.component';
 
 export const routes: Routes = [
   { path: '', component: HomeUtenteNonLoggatoComponent }, // Home page
@@ -124,5 +127,19 @@ export const routes: Routes = [
     path: 'admin',
     component: LoginGestoreComponent,
   },
-  { path: '**', redirectTo: 'home' }, // Redirect per percorsi non trovati
+  {
+    path: 'donazioni',
+    component: DonazioniComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'community',
+    component: CommunityComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'coming-soon',
+    component: ComingSoonComponent,
+  },
+  { path: '**', redirectTo: 'coming-soon' }, // Redirect per percorsi non trovati
 ];
