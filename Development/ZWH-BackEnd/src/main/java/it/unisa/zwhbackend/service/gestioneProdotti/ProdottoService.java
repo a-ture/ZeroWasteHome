@@ -1,6 +1,7 @@
 package it.unisa.zwhbackend.service.gestioneProdotti;
 
 import it.unisa.zwhbackend.model.entity.Prodotto;
+import it.unisa.zwhbackend.model.entity.ProdottoRequestDTO;
 import java.util.List;
 
 /**
@@ -62,7 +63,7 @@ public interface ProdottoService {
    * @return una lista di prodotti presenti nella dispensa dell'utente specificato
    * @throws IllegalStateException se l'utente con l'ID specificato non è trovato nel sistema
    */
-  public List<Prodotto> visualizzaProdottiDispensa(String email);
+  public List<ProdottoRequestDTO> visualizzaProdottiDispensa(String email);
 
   /**
    * Cerca i prodotti in base a un criterio di corrispondenza parziale sul nome.
