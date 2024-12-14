@@ -1,4 +1,9 @@
 <app-header barra_ricerca="no" loggato="si"></app-header>
 <app-breadcrumb class="breadcrumb"></app-breadcrumb>
-<dynamic-form [fields]="productFormFields" [page]="page"></dynamic-form>
+<dynamic-form
+  [fields]="productFormFields"
+  [page]="page"
+  submitText="Aggiungi"
+  (formSubmit)="onSubmit($event)"
+></dynamic-form>
 <app-footer></app-footer>
