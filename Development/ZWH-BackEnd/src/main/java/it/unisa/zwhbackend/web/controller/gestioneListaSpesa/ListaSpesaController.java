@@ -2,6 +2,7 @@ package it.unisa.zwhbackend.web.controller.gestioneListaSpesa;
 
 import it.unisa.zwhbackend.model.entity.ListaSpesa;
 import it.unisa.zwhbackend.model.entity.Utente;
+import it.unisa.zwhbackend.model.repository.ListaSpesaRepository;
 import it.unisa.zwhbackend.model.repository.UtenteRepository;
 import it.unisa.zwhbackend.service.gestioneListaSpesa.ListaSpesaService;
 import java.util.Optional;
@@ -20,9 +21,11 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/lista-spesa")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ListaSpesaController {
 
   private final ListaSpesaService shoppingListService;
+  // private final ListaSpesaRepository shoppingListRepository;
   private final UtenteRepository utenteRepository;
 
   /**
@@ -34,9 +37,10 @@ public class ListaSpesaController {
    */
   @Autowired
   public ListaSpesaController(
-      ListaSpesaService shoppingListService, UtenteRepository utenteRepository) {
+          ListaSpesaService shoppingListService, ListaSpesaRepository shoppingListRepository, UtenteRepository utenteRepository) {
     this.shoppingListService = shoppingListService;
-    this.utenteRepository = utenteRepository;
+      //this.shoppingListRepository = shoppingListRepository;
+      this.utenteRepository = utenteRepository;
   }
 
   /**
@@ -51,29 +55,32 @@ public class ListaSpesaController {
    * @return La lista della spesa generata come {@code ResponseEntity}.
    */
   @PostMapping("/generate")
-  public ResponseEntity<ListaSpesa> generateShoppingList(String email) {
-
-    // Ottiene l'utente
+  public ResponseEntity<ListaSpesa> generateShoppingList(@RequestBody String email) {
     Utente utente = utenteRepository.findByEmail(email);
 
-    // Genera la lista della spesa
-    ListaSpesa shoppingList = shoppingListService.generateShoppingList(utente);
+    if (utente == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 
+    ListaSpesa shoppingList = shoppingListService.generateShoppingList(utente);
     return ResponseEntity.status(HttpStatus.CREATED).body(shoppingList);
   }
 
-  /**
+  /* Metodo non necessario ma funzionante
+   *
    * Ottiene la lista della spesa associata a un utente.
    *
    * <p>Questo endpoint recupera la lista della spesa esistente per un utente specificato, in base
    * al suo ID. Se non è presente una lista della spesa, viene restituito un errore 404.
    *
-   * @param userId ID dell'utente di cui si vuole recuperare la lista della spesa.
+   * @param userEmail Email dell'utente di cui si vuole recuperare la lista della spesa.
    * @return Lista della spesa dell'utente.
    */
+
+  /*
   @GetMapping("/user/{userId}")
-  public ResponseEntity<ListaSpesa> getShoppingListByUserId(@PathVariable String userId) {
-    Optional<ListaSpesa> shoppingList = shoppingListService.getShoppingListByUserId(userId);
+  public ResponseEntity<ListaSpesa> getShoppingListByUserEmail(@PathVariable String userEmail) {
+    Optional<ListaSpesa> shoppingList = shoppingListRepository.findByUtenteEmail(userEmail);
 
     // Verifica se la lista della spesa esiste
     if (shoppingList.isEmpty()) {
@@ -82,4 +89,5 @@ public class ListaSpesaController {
 
     return ResponseEntity.ok(shoppingList.get());
   }
+   */
 }

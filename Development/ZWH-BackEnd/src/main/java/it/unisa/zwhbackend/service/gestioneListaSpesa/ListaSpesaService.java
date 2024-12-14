@@ -27,14 +27,6 @@ public interface ListaSpesaService {
   ListaSpesa createShoppingList(Utente utente, List<Prodotto> products);
 
   /**
-   * Ottiene la lista della spesa associata a un utente.
-   *
-   * @param userId ID dell'utente di cui si vuole recuperare la lista della spesa.
-   * @return La lista della spesa associata all'utente, se esiste.
-   */
-  Optional<ListaSpesa> getShoppingListByUserId(String userId);
-
-  /**
    * Genera una lista della spesa per un utente in base agli articoli disponibili nel frigo, nella
    * dispensa e nel piano giornaliero.
    *
