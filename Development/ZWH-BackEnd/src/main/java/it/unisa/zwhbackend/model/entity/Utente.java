@@ -71,7 +71,7 @@ public class Utente {
   @Column(name = "categoria")
   private List<String> categoria;
 
-  @OneToOne(mappedBy = "utente", cascade = CascadeType.ALL)
+  @OneToOne(mappedBy = "utente", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonBackReference
   private ListaSpesa listaSpesa;
 

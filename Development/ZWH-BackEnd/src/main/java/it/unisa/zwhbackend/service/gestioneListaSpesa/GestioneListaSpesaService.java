@@ -12,6 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementazione del servizio per la gestione delle liste della spesa.
@@ -56,36 +57,36 @@ public class GestioneListaSpesaService implements ListaSpesaService {
    * @param products Lista dei prodotti da aggiungere alla lista della spesa.
    * @return La lista della spesa creata.
    */
+  @Transactional
   @Override
   public ListaSpesa createShoppingList(Utente utente, List<Prodotto> products) {
 
     if (utente.getListaSpesa() != null) {
-      // Se l'utente ha già una lista della spesa, sovrascrivila
-      // Rimuovi la vecchia lista dalla relazione
-      ListaSpesaRepository.delete(utente.getListaSpesa());
+      // Disassocia la lista della spesa dall'utente
+      ListaSpesa oldShoppingList = utente.getListaSpesa();
+      utente.setListaSpesa(null);
+      oldShoppingList.setUtente(null);
+
+      // Salva i cambiamenti per sincronizzare lo stato con il database
+      ListaSpesaRepository.save(oldShoppingList);
+
+      // Elimina la vecchia lista della spesa
+      ListaSpesaRepository.delete(oldShoppingList);
     }
 
     ListaSpesa shoppingList = new ListaSpesa();
     shoppingList.setUtente(utente);
     shoppingList.setProducts(products);
     shoppingList.setDataCreazione(Date.valueOf(LocalDate.now()));
+
+    utente.setListaSpesa(shoppingList);
+
     ListaSpesa result = ListaSpesaRepository.save(shoppingList);
 
     if (result == null) {
       result = new ListaSpesa();
     }
     return result;
-  }
-
-  /**
-   * Ottiene tutte le liste della spesa associate a un utente.
-   *
-   * @param email ID dell'utente di cui si vogliono recuperare le liste della spesa.
-   * @return Lista di tutte le liste della spesa associate all'utente.
-   */
-  @Override
-  public Optional<ListaSpesa> getShoppingListByUserId(String email) {
-    return ListaSpesaRepository.findByUtenteEmail(email).stream().findFirst();
   }
 
   /**

@@ -19,7 +19,7 @@ public interface ListaSpesaRepository extends JpaRepository<ListaSpesa, Long> {
   /**
    * Recupera la lista della spesa associata a un utente.
    *
-   * @param utenteEmail ID dell'utente per cui si vuole recuperare la lista della spesa.
+   * @param utenteEmail Email dell'utente per cui si vuole recuperare la lista della spesa.
    * @return La lista della spesa associata all'utente, se esiste.
    */
   Optional<ListaSpesa> findByUtenteEmail(String utenteEmail);
