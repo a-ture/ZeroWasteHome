@@ -1,64 +1,87 @@
 package it.unisa.zwhbackend.web.controller.gestioneAmministrativa;
 
 import it.unisa.zwhbackend.service.gestioneAmministrativa.AmministrazioneService;
+import it.unisa.zwhbackend.model.entity.SegnalazioneRicetta;
 import it.unisa.zwhbackend.service.gestioneAmministrativa.SegnalazioneRicettaService;
+import java.util.List;
+import java.util.Map;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Controller per la gestione delle segnalazioni.
- *
- * <p>Questo controller espone un'API REST che consente di risolvere una segnalazione tramite
- * un'operazione di aggiornamento parziale (PATCH). La logica di risoluzione delle segnalazioni
- * viene delegata al servizio {@link SegnalazioneRicettaService}.
+ * Controller per la gestione delle segnalazioni relative alle ricette.
+ * Fornisce endpoint per ottenere tutte le segnalazioni e per risolvere
+ * una segnalazione specifica.
  *
  * @author Giovanni Balzano
  */
 @RestController
-@RequestMapping("/api/segnalazioni")
+@RequestMapping("/api/utente/gestoreSegnalazioni")
 public class SegnalazioneRicettaController {
 
   // Variabile per memorizzare il servizio che gestisce le segnalazioni
   private final AmministrazioneService amministrazioneService;
-
+  private final SegnalazioneRicettaService segnalazioneRicettaService;
   /**
-   * Costruttore che inietta il servizio per la gestione delle segnalazioni delle ricette.
+   * Costruttore del controller per l'inizializzazione del servizio delle segnalazioni.
    *
    * <p>Il servizio {@link AmministrazioneService} contiene la logica di business per risolvere le
    * segnalazioni delle ricette.
    *
    * @param amministrazioneService il servizio che implementa la facade per le funzionalità della
    *     gestione amministrativa
+   * @param segnalazioneRicettaService il servizio per la gestione delle segnalazioni di ricette
    */
-  public SegnalazioneRicettaController(AmministrazioneService amministrazioneService) {
+  public SegnalazioneRicettaController(AmministrazioneService amministrazioneService, SegnalazioneRicettaService segnalazioneRicettaService) {
     this.amministrazioneService = amministrazioneService;
+    this.segnalazioneRicettaService = segnalazioneRicettaService;
   }
 
   /**
-   * Endpoint per risolvere una segnalazione di una ricetta.
+   * Endpoint per ottenere tutte le segnalazioni di ricette.
    *
-   * <p>Quando questo endpoint viene chiamato, il servizio {@link SegnalazioneRicettaService}
-   * aggiorna lo stato della segnalazione con l'ID fornito e la segnalazione viene risolta.
+   * @return una ResponseEntity contenente la lista delle segnalazioni e lo stato HTTP OK (200)
+   *         oppure lo stato HTTP INTERNAL_SERVER_ERROR (500) in caso di errore
+   */
+  @GetMapping
+  public ResponseEntity<List<SegnalazioneRicetta>> getSegnalazioni() {
+    try {
+      List<SegnalazioneRicetta> segnalazioni = segnalazioneRicettaService.getAllSegnalazioni();
+      return ResponseEntity.ok(segnalazioni);
+    } catch (Exception e) {
+      System.err.println("Errore durante il recupero delle segnalazioni: " + e.getMessage());
+      e.printStackTrace();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+  }
+
+  /**
+   * Endpoint per risolvere una segnalazione di ricetta specifica.
    *
-   * @param id l'ID della segnalazione da risolvere
-   * @param gestore_id l'ID del gestore che risolve la segnalazione
-   * @param motivoBlocco il motivo del blocco dell'autore della segnalazione.
-   * @return una {@link ResponseEntity} con un messaggio di successo o errore
+   * @param id l'identificativo univoco della segnalazione da risolvere
+   * @param body una mappa contenente il motivo del blocco come chiave "motivoBlocco"
+   * @return una ResponseEntity contenente un messaggio di successo o di errore,
+   *         e il relativo stato HTTP (200 per successo, 400 per errore di input)
    */
   @PatchMapping("/{id}")
   public ResponseEntity<String> risolviSegnalazione(
-      @PathVariable Long id, String gestore_id, String motivoBlocco) {
+      @PathVariable Long id, @RequestBody Map<String, String> body) {
     // Chiama il servizio per risolvere la segnalazione con l'ID fornito
-    String response =
-        amministrazioneService.risolviSegnalazioneRicetta(id, gestore_id, motivoBlocco);
-    // Verifica se la risposta contiene la parola "successo"
-    if (response.contains("successo")) {
-      // Se la segnalazione è stata risolta con successo, restituisce una risposta HTTP 200 OK con
-      // il messaggio
+      String motivoBlocco = body.get("motivoBlocco");
+      if (motivoBlocco == null || motivoBlocco.trim().isEmpty()) {
+          return ResponseEntity.badRequest().body("Motivo del blocco è obbligatorio.");
+      }
+
+      // Recupera l'email del gestore autenticato
+      String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+      // Passa l'email al servizio
+      String response = amministrazioneService.risolviSegnalazioneRicetta(id, email, motivoBlocco);
+      if (response.contains("successo")) {
       return ResponseEntity.ok(response);
     }
-    // Se c'è stato un errore, restituisce una risposta HTTP 400 Bad Request con il messaggio di
-    // errore
     return ResponseEntity.badRequest().body(response);
   }
 }

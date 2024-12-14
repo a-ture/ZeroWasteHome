@@ -14,6 +14,7 @@ import { PaginaRicetteUtenteComponent } from './pages/pagina-ricette-utente/pagi
 import { SegnalazioneRicettaComponent } from './pages/segnalazione-ricetta/segnalazione-ricetta.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginGestoreComponent } from './pages/login-gestore/login-gestore.component';
+import { SegnalazioneRicettaGestoreComponent } from './pages/segnalazione-ricetta-gestore/segnalazione-ricetta-gestore/segnalazione-ricetta-gestore.component';
 
 export const routes: Routes = [
   { path: '', component: HomeUtenteNonLoggatoComponent }, // Home page
@@ -99,6 +100,11 @@ export const routes: Routes = [
     path: 'segnalazione-ricetta',
     component: SegnalazioneRicettaComponent,
     data: { breadcrumb: 'Segnalazione Ricetta' },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'pagina-gestore',
+    component: SegnalazioneRicettaGestoreComponent,
     canActivate: [AuthGuard],
   },
   {
