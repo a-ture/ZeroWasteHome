@@ -1,11 +1,14 @@
-package it.unisa.zwhbackend.service.gestioneProdotti.ricercaProdotti;
+package it.unisa.zwhbackend.service.gestioneProdotti;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import it.unisa.zwhbackend.model.entity.Prodotto;
 import it.unisa.zwhbackend.model.enums.CategoriaAlimentare;
+import it.unisa.zwhbackend.model.repository.PossiedeInDispensaRepository;
+import it.unisa.zwhbackend.model.repository.PossiedeInFrigoRepository;
 import it.unisa.zwhbackend.model.repository.ProdottoRepository;
+import it.unisa.zwhbackend.model.repository.UtenteRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -13,7 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Classe di test per il servizio {@link GestioneRicercaProdottiService}. Questa classe verifica il
+ * Classe di test per il servizio {@link GestioneProdottoService}. Questa classe verifica il
  * comportamento della ricerca dei prodotti per nome in vari scenari, come risultati validi, assenza
  * di risultati o gestione di input non validi. Utilizza Mockito per simulare le dipendenze.
  *
@@ -22,16 +25,27 @@ import org.junit.jupiter.api.Test;
 class GestioneRicercaProdottiServiceTest {
 
   private ProdottoRepository prodottoRepository;
-  private GestioneRicercaProdottiService gestioneRicercaProdottiPerNomeService;
+  private GestioneProdottoService gestioneProdottoService;
+  private PossiedeInFrigoRepository possiedeInFrigoRepository;
+  private PossiedeInDispensaRepository possiedeInDispensaRepository;
+  private UtenteRepository utenteRepository;
 
   /**
    * Configura l'ambiente di test prima di ogni esecuzione. Crea un mock per il repository dei
-   * prodotti e inizializza il servizio da testare.
+   * prodotti e per l'interfaccia ProdottoService.
    */
   @BeforeEach
   void setUp() {
     prodottoRepository = mock(ProdottoRepository.class);
-    gestioneRicercaProdottiPerNomeService = new GestioneRicercaProdottiService(prodottoRepository);
+    possiedeInFrigoRepository = mock(PossiedeInFrigoRepository.class);
+    possiedeInDispensaRepository = mock(PossiedeInDispensaRepository.class);
+    utenteRepository = mock(UtenteRepository.class);
+    gestioneProdottoService =
+        new GestioneProdottoService(
+            prodottoRepository,
+            possiedeInFrigoRepository,
+            possiedeInDispensaRepository,
+            utenteRepository);
   }
 
   /**
@@ -51,7 +65,7 @@ class GestioneRicercaProdottiServiceTest {
         .thenReturn(List.of(prodotto));
 
     // Act: Esecuzione del metodo da testare
-    List<Prodotto> risultato = gestioneRicercaProdottiPerNomeService.RicercaPerNome(nomeProdotto);
+    List<Prodotto> risultato = gestioneProdottoService.RicercaPerNome(nomeProdotto);
 
     // Assert: Verifica il risultato
     assertNotNull(risultato);
@@ -79,7 +93,7 @@ class GestioneRicercaProdottiServiceTest {
         assertThrows(
             NoSuchElementException.class,
             () -> {
-              gestioneRicercaProdottiPerNomeService.RicercaPerNome(nomeProdotto);
+              gestioneProdottoService.RicercaPerNome(nomeProdotto);
             });
     assertEquals("Nessun prodotto trovato", exception.getMessage());
   }

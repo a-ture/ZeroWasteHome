@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.unisa.zwhbackend.model.entity.Prodotto;
-import it.unisa.zwhbackend.service.gestioneProdotti.ricercaProdotti.GestioneRicercaProdottiService;
+import it.unisa.zwhbackend.service.gestioneProdotti.ProdottoService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,16 +24,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/prodotti")
 public class RicercaProdottiController {
 
-  private final GestioneRicercaProdottiService ricercaProdottiService;
+  private final ProdottoService prodottoService;
 
   /**
    * Costruttore della classe. Inietta il servizio per la gestione della logica di ricerca dei
    * prodotti.
    *
-   * @param ricercaProdottiService il servizio per la ricerca dei prodotti
+   * @param prodottoService l'interfaccia del servizio per la gestione dei prodotti
    */
-  public RicercaProdottiController(GestioneRicercaProdottiService ricercaProdottiService) {
-    this.ricercaProdottiService = ricercaProdottiService;
+  public RicercaProdottiController(ProdottoService prodottoService) {
+    this.prodottoService = prodottoService;
   }
 
   /**
@@ -94,7 +94,7 @@ public class RicercaProdottiController {
       }
 
       // Effettua la ricerca
-      List<Prodotto> prodotti = ricercaProdottiService.RicercaPerNome(name);
+      List<Prodotto> prodotti = prodottoService.RicercaPerNome(name);
 
       // Controlla se la lista dei prodotti è vuota
       if (prodotti.isEmpty()) {

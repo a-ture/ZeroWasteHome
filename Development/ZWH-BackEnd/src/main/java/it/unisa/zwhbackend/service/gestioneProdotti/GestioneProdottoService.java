@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
  * <p>Il servizio interagisce con i repository per eseguire operazioni CRUD sugli oggetti {@link
  * Prodotto}, {@link Utente} e {@link PossiedeInFrigo}.
  *
- * @author Marco Meglio, Ferdinando Ranieri
+ * @author Marco Meglio, Ferdinando Ranieri, Alessandra Trotta
  */
 @Service
 public class GestioneProdottoService implements ProdottoService {
@@ -239,5 +239,35 @@ public class GestioneProdottoService implements ProdottoService {
       e.printStackTrace();
       throw new RuntimeException("Errore durante il recupero dei prodotti dalla dispensa", e);
     }
+  }
+
+  /**
+   * Esegue la ricerca di prodotti in base a un criterio parziale sul nome.
+   *
+   * <p>Verifica che il nome fornito non sia nullo o vuoto prima di procedere alla ricerca. Utilizza
+   * un'operazione case-insensitive per cercare prodotti il cui nome contenga la stringa fornita. Se
+   * non vengono trovati risultati, viene sollevata un'eccezione.
+   *
+   * @param name la stringa da cercare nei nomi dei prodotti
+   * @return una lista di prodotti che soddisfano il criterio di ricerca
+   * @throws IllegalArgumentException se il nome fornito è nullo o vuoto
+   * @throws NoSuchElementException se non viene trovato alcun prodotto corrispondente
+   */
+  @Override
+  public List<Prodotto> RicercaPerNome(String name) {
+    // Verifica che il nome non sia vuoto o nullo
+    if (name == null || name.trim().isEmpty()) {
+      throw new IllegalArgumentException("Il campo di ricerca non può essere vuoto");
+    }
+
+    // Effettua la ricerca dei prodotti
+    List<Prodotto> prodotti = prodottoRepository.findByNameContainingIgnoreCase(name);
+
+    // Gestisce il caso in cui non vengano trovati prodotti
+    if (prodotti == null || prodotti.isEmpty()) {
+      throw new NoSuchElementException("Nessun prodotto trovato");
+    }
+
+    return prodotti;
   }
 }

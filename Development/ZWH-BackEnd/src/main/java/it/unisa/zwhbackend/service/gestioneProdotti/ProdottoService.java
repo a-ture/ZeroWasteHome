@@ -5,12 +5,13 @@ import java.util.List;
 
 /**
  * Interfaccia che definisce i servizi per la gestione dei prodotti. Fornisce metodi per
- * l'inserimento, la gestione e la visualizzazione dei prodotti associati a un utente.
+ * l'inserimento, la gestione, la visualizzazione dei prodotti associati a un utente.
  *
  * <p>Include operazioni per l'aggiunta di prodotti al sistema, l'associazione con utenti, e il
- * recupero di prodotti associati a un determinato utente.
+ * recupero di prodotti associati a un determinato utente. Include anche la ricerca dei prodotti per
+ * nome.
  *
- * @author Marco Meglio
+ * @author Marco Meglio, Alessandra Trotta
  */
 public interface ProdottoService {
 
@@ -62,4 +63,15 @@ public interface ProdottoService {
    * @throws IllegalStateException se l'utente con l'ID specificato non è trovato nel sistema
    */
   public List<Prodotto> visualizzaProdottiDispensa(String email);
+
+  /**
+   * Cerca i prodotti in base a un criterio di corrispondenza parziale sul nome.
+   *
+   * <p>Implementazioni di questo metodo devono garantire la gestione di casi in cui il nome fornito
+   * sia nullo o vuoto.
+   *
+   * @param name la stringa da cercare nei nomi dei prodotti
+   * @return una lista di prodotti che soddisfano il criterio di ricerca
+   */
+  List<Prodotto> RicercaPerNome(String name);
 }

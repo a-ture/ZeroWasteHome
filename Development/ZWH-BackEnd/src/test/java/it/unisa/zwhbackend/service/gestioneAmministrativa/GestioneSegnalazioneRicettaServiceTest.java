@@ -33,7 +33,7 @@ class GestioneSegnalazioneRicettaServiceTest {
 
   @MockBean private UtenteRepository utenteRepository;
 
-  @Autowired private GestioneSegnalazioneRicettaService gestioneSegnalazioneRicettaService;
+  @Autowired private GestioneAmministrazioneService gestioneAmministrazioneService;
 
   private Utente autore;
   private Ricetta ricetta;
@@ -75,7 +75,7 @@ class GestioneSegnalazioneRicettaServiceTest {
   @Test
   void testRisoluzioneMotivoBloccoNonValido_TC_GSR_RU_01() {
     String risultato =
-        gestioneSegnalazioneRicettaService.risolviSegnalazione(1L, "gestore@example.com", "");
+        gestioneAmministrazioneService.risolviSegnalazioneRicetta(1L, "gestore@example.com", "");
 
     assertEquals("Il motivo del blocco è obbligatorio.", risultato);
   }
@@ -88,7 +88,7 @@ class GestioneSegnalazioneRicettaServiceTest {
   @Test
   void testRisoluzioneMotivoBloccoTroppoLungo_TC_GSR_RU_02() {
     String risultato =
-        gestioneSegnalazioneRicettaService.risolviSegnalazione(
+        gestioneAmministrazioneService.risolviSegnalazioneRicetta(
             1L, "gestore@example.com", "A".repeat(501));
 
     assertEquals("Il motivo del blocco non può superare i 500 caratteri.", risultato);
@@ -112,7 +112,7 @@ class GestioneSegnalazioneRicettaServiceTest {
 
     // Test della risoluzione della segnalazione
     String risultato =
-        gestioneSegnalazioneRicettaService.risolviSegnalazione(
+        gestioneAmministrazioneService.risolviSegnalazioneRicetta(
             1L, "gestore@example.com", "Motivo di blocco");
 
     // Verifica che il risultato sia quello atteso
@@ -147,7 +147,7 @@ class GestioneSegnalazioneRicettaServiceTest {
 
     // Test della risoluzione della segnalazione
     String risultato =
-        gestioneSegnalazioneRicettaService.risolviSegnalazione(
+        gestioneAmministrazioneService.risolviSegnalazioneRicetta(
             1L, "gestore@example.com", "Motivo di blocco");
 
     // Verifica che il risultato sia quello atteso
