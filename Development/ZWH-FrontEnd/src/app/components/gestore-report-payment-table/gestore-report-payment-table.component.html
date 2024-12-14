@@ -1,0 +1,49 @@
+<table class="styled-table">
+  <thead>
+    <tr>
+      <th>Informazioni</th>
+      <th>Opzioni</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Iterazione sulla lista dei report -->
+    <tr *ngFor="let report of reports; let reportIndex = index">
+      <td class="report-information">
+        <table class="info-table">
+          <!-- Iterazione sulle informazioni del report -->
+          <tr *ngFor="let info of report.info">
+            <td>
+              <strong>Utente: {{ info.utente }}</strong>
+            </td>
+            <td>Descrizione: {{ info.descrizione }}</td>
+            <td>Data Creazione: {{ info.dataCreazione | date: 'short' }}</td>
+            <td>Stato segnalazione: {{ info.statoSegnalazione }}</td>
+          </tr>
+        </table>
+      </td>
+      <td class="report-options">
+        <!-- Bottone "Prendi in carico" visibile solo se almeno un elemento ha statoSegnalazione = APERTA -->
+        <navigationBtn
+          label="Prendi in carico"
+          [style.display]="isReportOpen(report) ? 'block' : 'none'"
+        ></navigationBtn>
+        <app-bottone-form-segnalazione
+          label="Risolvi"
+          [style.display]="isReportOpen(report) ? 'none' : 'block'"
+        ></app-bottone-form-segnalazione>
+        <!-- Pulsante per aprire i dettagli -->
+        <app-bottone-dettagli-report
+          text="Dettagli report"
+          (click)="toggleDetails(reportIndex)"
+        ></app-bottone-dettagli-report>
+      </td>
+    </tr>
+    <!-- Componente dei dettagli -->
+    <tr *ngFor="let report of reports; let reportIndex = index">
+      <td colspan="2" *ngIf="selectedReportIndex === reportIndex">
+        <app-dettagli-report [text]="getDetails(reportIndex)"></app-dettagli-report>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<app-form-segnalazione title="Inserisci dettagli risoluzione"></app-form-segnalazione>

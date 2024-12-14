@@ -1,0 +1,6 @@
+<!-- Container principale per l'interfaccia -->
+<div class="container" *ngIf="isModalVisible" (click)="onOverlayClick($event)">
+  <div class="intern-container" (click)="$event.stopPropagation()">
+    <p>{{ text }}</p>
+  </div>
+</div>
