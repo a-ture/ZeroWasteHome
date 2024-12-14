@@ -1,5 +1,6 @@
 package it.unisa.zwhbackend.web.controller.gestioneAmministrativa;
 
+import it.unisa.zwhbackend.service.gestioneAmministrativa.AmministrazioneService;
 import it.unisa.zwhbackend.service.gestioneAmministrativa.SegnalazioneRicettaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,21 +16,22 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/segnalazioni")
-public class SegnalazioniRicetteController {
+public class SegnalazioneRicettaController {
 
   // Variabile per memorizzare il servizio che gestisce le segnalazioni
-  private final SegnalazioneRicettaService segnalazioneRicettaService;
+  private final AmministrazioneService amministrazioneService;
 
   /**
    * Costruttore che inietta il servizio per la gestione delle segnalazioni delle ricette.
    *
-   * <p>Il servizio {@link SegnalazioneRicettaService} contiene la logica di business per risolvere
-   * le segnalazioni delle ricette.
+   * <p>Il servizio {@link AmministrazioneService} contiene la logica di business per risolvere le
+   * segnalazioni delle ricette.
    *
-   * @param segnalazioneRicettaService il servizio per la gestione delle segnalazioni delle ricette.
+   * @param amministrazioneService il servizio che implementa la facade per le funzionalità della
+   *     gestione amministrativa
    */
-  public SegnalazioniRicetteController(SegnalazioneRicettaService segnalazioneRicettaService) {
-    this.segnalazioneRicettaService = segnalazioneRicettaService;
+  public SegnalazioneRicettaController(AmministrazioneService amministrazioneService) {
+    this.amministrazioneService = amministrazioneService;
   }
 
   /**
@@ -47,7 +49,8 @@ public class SegnalazioniRicetteController {
   public ResponseEntity<String> risolviSegnalazione(
       @PathVariable Long id, String gestore_id, String motivoBlocco) {
     // Chiama il servizio per risolvere la segnalazione con l'ID fornito
-    String response = segnalazioneRicettaService.risolviSegnalazione(id, gestore_id, motivoBlocco);
+    String response =
+        amministrazioneService.risolviSegnalazioneRicetta(id, gestore_id, motivoBlocco);
     // Verifica se la risposta contiene la parola "successo"
     if (response.contains("successo")) {
       // Se la segnalazione è stata risolta con successo, restituisce una risposta HTTP 200 OK con

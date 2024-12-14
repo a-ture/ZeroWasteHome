@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/ricette")
-public class GestioneRicetteController {
+public class RicettaController {
 
   private final GestioneRicetteService gestioneRicetteService;
 
@@ -35,7 +35,7 @@ public class GestioneRicetteController {
    * @param gestioneRicetteService il servizio per la gestione delle ricette
    */
   @Autowired
-  public GestioneRicetteController(GestioneRicetteService gestioneRicetteService) {
+  public RicettaController(GestioneRicetteService gestioneRicetteService) {
     this.gestioneRicetteService = gestioneRicetteService;
   }
 

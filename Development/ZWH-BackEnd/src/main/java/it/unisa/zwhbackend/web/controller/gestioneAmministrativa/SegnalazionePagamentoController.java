@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.unisa.zwhbackend.model.entity.GestorePagamento;
 import it.unisa.zwhbackend.model.entity.SegnalazionePagamento;
 import it.unisa.zwhbackend.model.repository.GestorePagamentoRepository;
-import it.unisa.zwhbackend.service.gestioneAmministrativa.GestioneSegnalazionePagamentoService;
+import it.unisa.zwhbackend.service.gestioneAmministrativa.AmministrazioneService;
 import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,20 +25,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/segnalazioniPagamento")
 public class SegnalazionePagamentoController {
 
-  private final GestioneSegnalazionePagamentoService gestioneSegnalazionePagamentoService;
+  private final AmministrazioneService amministrazioneService;
   private final GestorePagamentoRepository gestorePagamentoRepository;
 
   /**
    * Costruttore per iniettare i servizi e i repository necessari al controller.
    *
-   * @param gestioneSegnalazionePagamentoService il servizio che gestisce le segnalazioni di
-   *     pagamento
+   * @param amministrazioneService il servizio che fa da facade per le funzionalità di gestione
+   *     amministrativa
    * @param gestorePagamentoRepository il repository per l'entità {@link GestorePagamento}
    */
   public SegnalazionePagamentoController(
-      GestioneSegnalazionePagamentoService gestioneSegnalazionePagamentoService,
+      AmministrazioneService amministrazioneService,
       GestorePagamentoRepository gestorePagamentoRepository) {
-    this.gestioneSegnalazionePagamentoService = gestioneSegnalazionePagamentoService;
+    this.amministrazioneService = amministrazioneService;
     this.gestorePagamentoRepository = gestorePagamentoRepository;
   }
 
@@ -81,7 +81,7 @@ public class SegnalazionePagamentoController {
 
       // Tenta di risolvere la segnalazione, aggiornando il suo stato
       Optional<SegnalazionePagamento> segnalazione =
-          gestioneSegnalazionePagamentoService.aggiornaStatoSegnalazione(
+          amministrazioneService.aggiornaStatoSegnalazionePagamento(
               idSegnalazione, optionalGestore.get(), dettagliRisoluzione);
 
       // Se la segnalazione non è stata aggiornata, restituisce errore 500
@@ -122,7 +122,7 @@ public class SegnalazionePagamentoController {
 
     // Tenta di prendere in carico la segnalazione, aggiornando il suo stato
     Optional<SegnalazionePagamento> segnalazione =
-        gestioneSegnalazionePagamentoService.aggiornaStatoSegnalazione(
+        amministrazioneService.aggiornaStatoSegnalazionePagamento(
             idSegnalazione, optionalGestore.get(), null);
 
     // Se la segnalazione non è stata aggiornata, restituisce errore 500

@@ -1,5 +1,6 @@
 package it.unisa.zwhbackend.service.gestioneAmministrativa;
 
+import it.unisa.zwhbackend.annotations.ExcludeGeneratedFromCodeCoverage;
 import it.unisa.zwhbackend.model.entity.GestorePagamento;
 import it.unisa.zwhbackend.model.entity.SegnalazionePagamento;
 import it.unisa.zwhbackend.model.enums.StatoSegnalazione;
@@ -47,6 +48,7 @@ public class GestioneSegnalazionePagamentoService implements SegnalazionePagamen
    *     risolvibile
    */
   @Override
+  @ExcludeGeneratedFromCodeCoverage
   public Optional<SegnalazionePagamento> RisolviSegnalazione(
       Long id, GestorePagamento gestore, String dettagliRisoluzione) {
     Optional<SegnalazionePagamento> optionalSegnalazione = segnalazioneRepository.findById(id);
