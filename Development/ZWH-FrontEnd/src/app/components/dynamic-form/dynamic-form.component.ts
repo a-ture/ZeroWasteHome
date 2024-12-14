@@ -24,8 +24,8 @@ import { navigationBtnComponent } from '../navigationBtn/navigationBtn.component
 })
 export class DynamicFormComponent implements OnInit {
   // Ogni oggetto di questo array rappresenta un input del form,
-  //                nome campo,      tipo,        valore default
-  @Input() fields: { label: string; type: string; value?: string }[] = [];
+  //                nome campo,      tipo,        valore default,     opzioni fra cui scegliere
+  @Input() fields: { label: string; type: string; value?: string; options?: string[] }[] = [];
 
   @Input() page!: string;
 
@@ -65,6 +65,7 @@ export class DynamicFormComponent implements OnInit {
   }
 
   // Metodo per simulare il click del campo input nascosto
+  private MyDatabaseService: any;
   triggerFileInput(fileInput: HTMLInputElement) {
     fileInput.click();
   }
@@ -76,5 +77,18 @@ export class DynamicFormComponent implements OnInit {
     if (!this.imagePreview) {
       this.imagePreview = 'https://placehold.jp/3d4070/ffffff/200x200.png';
     }
+
+    // constructor(private databaseService: this.MyDatabaseService) {}
+
+    /* VEDER COME USARE IL DB
+    // Esempio: Aggiunta dinamica di opzioni per campi di tipo select
+    this.fields.forEach(field => {
+      if (field.type === 'select') {
+        this.databaseService.getEnumOptions(field.label).subscribe(options => {
+          field.options = options; // Popola le opzioni dinamicamente
+        });
+      }
+    });
+    */
   }
 }

@@ -52,4 +52,16 @@ export class PaginaRicetteUtenteComponent {
 
   // Proprietà per i buttons relativi ad ogni prodotto
   buttonList = ['Visualizza', 'Modifica', 'Condividi', 'Elimina'];
+
+  //l'id della ricetta va preso dinamicamente dal DB, bisogna avere gli id di tutte le
+  //ricette, metterli in un array e assegnare ogni id all'evento
+  private IdRicetta: number = 1;
+
+  // Eventi per i bottoni
+  buttonEvents = [
+    () => this.router.navigate(['area-personale/le-mie-ricette/visualizza-ricetta']), // Visualizza
+    () => console.log(`Modifica cliccato per ricetta ${this.IdRicetta}`), // Modifica
+    () => console.log(`Condividi cliccato per ricetta ${this.IdRicetta}`), // Condividi
+    () => console.log(`Elimina cliccato per ricetta ${this.IdRicetta}`), // Elimina
+  ];
 }

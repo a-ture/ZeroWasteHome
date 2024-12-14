@@ -15,7 +15,7 @@ export class InserimentoRicettaComponent {
   productFormFields = [
     { label: 'Nome Ricetta', type: 'text', value: '' },
     { label: 'Quantità per persona', type: 'number' },
-    { label: 'Categoria ricetta', type: 'text' },
+    { label: 'Categoria ricetta', type: 'select',  value: '', options: ["ANTIPASTO", "PRIMO", "SECONDO", "CONTORNO", "DOLCE"]},
     { label: 'Ingredienti', type: 'textarea', value: '' },
     { label: 'Passaggi', type: 'textarea', value: '' },
   ];

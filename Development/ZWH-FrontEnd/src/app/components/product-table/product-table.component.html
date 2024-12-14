@@ -1,34 +1,37 @@
 <table class="styled-table">
   <thead>
-    <tr>
-      <th>Image</th>
-      <th>Information</th>
-      <th>Options</th>
-    </tr>
+  <tr>
+    <th>Image</th>
+    <th>Information</th>
+    <th>Options</th>
+  </tr>
   </thead>
   <tbody>
-    <!-- Iterazione sulla lista dei prodotti -->
-    <tr *ngFor="let product of products">
-      <td class="product-image">
-        <img [src]="product.src" alt="Product Image" />
-      </td>
-      <td class="product-information">
-        <table class="info-table">
-          <!-- Iterazione sulle informazioni del prodotto -->
-          <tr *ngFor="let info of product.info">
-            <td>
-              <strong>{{ info.name }}:</strong>
-            </td>
-            <td>{{ info.val }}</td>
-          </tr>
-        </table>
-      </td>
-      <td class="product-options">
-        <!-- Iterazione sui bottoni -->
-        <div *ngFor="let button of buttuns">
-          <navigationBtn label="{{ button }}"></navigationBtn>
-        </div>
-      </td>
-    </tr>
+  <!-- Iterazione sulla lista dei prodotti -->
+  <tr *ngFor="let product of products; let i = index">
+    <td class="product-image">
+      <img [src]="product.src" alt="Product Image" />
+    </td>
+    <td class="product-information">
+      <table class="info-table">
+        <!-- Iterazione sulle informazioni del prodotto -->
+        <tr *ngFor="let info of product.info">
+          <td>
+            <strong>{{ info.name }}:</strong>
+          </td>
+          <td>{{ info.val }}</td>
+        </tr>
+      </table>
+    </td>
+    <td class="product-options">
+      <!-- Iterazione sui bottoni -->
+      <div *ngFor="let structButton of structButtons">
+        <navigationBtn
+          [label]="structButton.button"
+          (event)="structButton.event(productIds[i])"
+        ></navigationBtn>
+      </div>
+    </td>
+  </tr>
   </tbody>
 </table>
