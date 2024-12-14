@@ -4,7 +4,6 @@ import it.unisa.zwhbackend.model.entity.ListaSpesa;
 import it.unisa.zwhbackend.model.entity.Prodotto;
 import it.unisa.zwhbackend.model.entity.Utente;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Interfaccia che definisce le operazioni per la gestione delle liste della spesa.

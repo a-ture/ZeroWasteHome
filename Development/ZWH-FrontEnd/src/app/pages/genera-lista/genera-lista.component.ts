@@ -33,7 +33,7 @@ export class GeneraListaComponent implements OnInit {
   ngOnInit(): void {
     const email = 'test1@example.com'; // Email dinamica, eventualmente sostituire
     this.shoppingListService.generateShoppingList(email).subscribe({
-      next: (data) => {
+      next: data => {
         console.log('Dati ricevuti dal backend:', data); // Log dei dati
 
         // Mappatura dei dati dal backend alla struttura necessaria per il componente
@@ -45,8 +45,7 @@ export class GeneraListaComponent implements OnInit {
 
         console.log('Items elaborati:', this.items); // Log degli items elaborati
       },
-      error: (err) => console.error('Errore durante il recupero della lista:', err),
+      error: err => console.error('Errore durante il recupero della lista:', err),
     });
   }
-
 }
