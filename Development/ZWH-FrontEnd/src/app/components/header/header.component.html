@@ -37,14 +37,14 @@
         (click)="setActiveLink('community')"
         [class.active]="activeLink === 'community'"
       >
-        <a>Community</a>
+        <a routerLink="/community">Community</a>
       </li>
       <li
         *ngIf="loggato == 'si'"
         (click)="setActiveLink('donazioni')"
         [class.active]="activeLink === 'donazioni'"
       >
-        <a>Donazioni</a>
+        <a routerLink="/donazioni">Donazioni</a>
       </li>
 
       <li *ngIf="loggato == 'no'">
@@ -71,7 +71,7 @@
           <li *ngIf="loggato == 'no'" (click)="openModal()">Login</li>
           <li *ngIf="loggato == 'no'" (click)="openModal()">Registrati</li>
           <li *ngIf="loggato == 'si'" routerLink="/area-personale">Area personale</li>
-          <li *ngIf="loggato == 'si'">Segnalazioni</li>
+          <li *ngIf="loggato == 'si'" routerLink="/segnalazioni">Segnalazioni</li>
           <li *ngIf="loggato == 'si'" (click)="logout()">Logout</li>
         </ul>
       </div>
