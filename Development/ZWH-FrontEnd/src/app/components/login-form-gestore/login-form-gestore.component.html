@@ -1,0 +1,14 @@
+<div class="login-container">
+  <h2>Login Gestore</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <div>
+      <label for="email">Email</label>
+      <input type="email" id="email" formControlName="email" required />
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input type="password" id="password" formControlName="password" required />
+    </div>
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+  </form>
+</div>

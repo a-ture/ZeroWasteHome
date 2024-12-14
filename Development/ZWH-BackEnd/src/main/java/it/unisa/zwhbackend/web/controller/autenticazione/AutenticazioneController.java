@@ -104,8 +104,9 @@ public class AutenticazioneController {
    * Endpoint per l'autenticazione di un gestore tramite email e password. - Verifica le credenziali
    * e restituisce un token JWT in caso di successo.
    *
-   * @param email L'email del gestore fornita durante il login
-   * @param password La password fornita durante il login
+   * @param request Mappa contenente i parametri necessari per il login: - "email": L'email
+   *     dell'utente fornita durante il login. - "password": La password dell'utente fornita durante
+   *     il login.
    * @return `ResponseEntity` con il risultato dell'operazione
    */
   @Operation(summary = "Autentica un gestore e genera un token JWT")
@@ -140,8 +141,9 @@ public class AutenticazioneController {
                     schema = @Schema(example = "{ \"messaggio\": \"Errore interno del server\" }")))
       })
   @PostMapping("/admin/login")
-  public ResponseEntity<?> loginAmministrativo(
-      @RequestParam String email, @RequestParam String password) {
+  public ResponseEntity<?> loginAmministrativo(@RequestBody Map<String, String> request) {
+    String email = request.get("email");
+    String password = request.get("password");
     try {
       // Chiama il servizio per autenticare il gestore e ottenere un token JWT
       String token = autenticazioneService.loginAmministrativo(email, password);
