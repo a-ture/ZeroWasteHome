@@ -23,4 +23,6 @@ public interface RicettaService {
   Ricetta aggiornaRicetta(Long id, Ricetta nuovaRicetta);
 
   void eliminaRicetta(Long id);
+
+  public List<Ricetta> getRicetteByUtente(String email);
 }

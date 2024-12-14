@@ -95,4 +95,11 @@ public class GestioneRicetteService implements RicettaService {
   public void eliminaRicetta(Long id) {
     ricettaRepository.deleteById(id);
   }
+
+  // Metodo per ottenere tutte le ricette di un determinato utente
+  @Override
+  @ExcludeGeneratedFromCodeCoverage
+  public List<Ricetta> getRicetteByUtente(String email) {
+    return ricettaRepository.findByAutore_Email(email);
+  }
 }

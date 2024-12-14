@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.unisa.zwhbackend.model.entity.Ricetta;
+import it.unisa.zwhbackend.model.entity.Utente;
 import it.unisa.zwhbackend.service.gestioneRicettePianoAlimentare.GestioneRicetteService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -13,6 +14,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -24,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Anna Tagliamonte
  */
 @RestController
-@RequestMapping("/api/ricette")
+@RequestMapping("/api/utente/ricette")
 public class RicettaController {
 
   private final GestioneRicetteService gestioneRicetteService;
@@ -73,13 +75,15 @@ public class RicettaController {
   @PostMapping
   public ResponseEntity<Ricetta> aggiungiRicetta(@RequestBody @Valid Ricetta ricetta) {
     try {
+      System.out.println("Payload ricevuto: " + ricetta);
+      Utente utente = new Utente();
+      utente.setEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+      ricetta.setAutore(utente);
       Ricetta nuovaRicetta = gestioneRicetteService.aggiungiRicetta(ricetta);
       return ResponseEntity.status(HttpStatus.CREATED).body(nuovaRicetta);
-    } catch (IllegalArgumentException e) {
-      return ResponseEntity.badRequest().body(null); // In caso di errore di validazione
     } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .body(null); // Per errori imprevisti
+      e.printStackTrace();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
   }
 
@@ -225,5 +229,13 @@ public class RicettaController {
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
+  }
+
+  // Endpoint per ottenere tutte le ricette di un determinato utente
+  @GetMapping("/ottieniRicette")
+  public ResponseEntity<List<Ricetta>> getRicetteByUtente() {
+    String email = SecurityContextHolder.getContext().getAuthentication().getName();
+    List<Ricetta> ricette = gestioneRicetteService.getRicetteByUtente(email);
+    return ResponseEntity.ok(ricette);
   }
 }
