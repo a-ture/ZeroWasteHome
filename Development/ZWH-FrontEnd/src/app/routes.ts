@@ -109,6 +109,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'area-personale/le-mie-ricette/visualizza-ricetta',
+    component: VisualizzaRicettaComponent,
+    data: { breadcrumb: 'Visualizza ricetta' },
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'admin',
     component: LoginGestoreComponent,
   },
