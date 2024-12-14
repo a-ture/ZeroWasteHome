@@ -4,6 +4,7 @@ import it.unisa.zwhbackend.model.entity.*;
 import it.unisa.zwhbackend.model.enums.StatoSegnalazione;
 import it.unisa.zwhbackend.model.repository.*;
 import java.time.LocalDate;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -166,6 +167,15 @@ public class GestioneSegnalazioneRicettaService implements SegnalazioneRicettaSe
     return ricettaRepository
         .findById(segnalazioneRicetta.getRicettaAssociato().getId())
         .orElseThrow(() -> new RuntimeException("Ricetta non trovata."));
+  }
+
+  /**
+   * Recupera tutte le segnalazioni.
+   *
+   * @return Lista di tutte le segnalazioni presenti nel sistema
+   */
+  public List<SegnalazioneRicetta> getAllSegnalazioni() {
+    return segnalazioneRicettaRepository.findAll(); // Utilizza il repository per recuperare i dati
   }
 
   /**

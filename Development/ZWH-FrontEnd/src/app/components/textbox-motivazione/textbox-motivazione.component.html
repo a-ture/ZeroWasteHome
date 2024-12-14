@@ -1,0 +1,31 @@
+<div *ngIf="showModal" class="modal-overlay">
+  <div class="modal-content">
+    <!-- Icona X per chiudere la modale -->
+    <span class="close-btn" (click)="closeModal()">×</span>
+
+    <div style="display: flex; flex-direction: column; align-items: center; margin-top: 2rem">
+      <h2>Inserisci la motivazione del blocco</h2>
+      <textarea
+        rows="8"
+        cols="60"
+        placeholder="Scrivi qui la motivazione..."
+        [(ngModel)]="motivazione"
+        style="
+          border: 2px solid #ccc;
+          border-radius: 10px;
+          padding: 15px;
+          font-size: 18px;
+          width: 90%;
+          max-width: 550px;
+          height: 225px;
+        "
+      ></textarea>
+
+      <app-bottone-conferma-azione
+        [text]="'Invia'"
+        style="font-size: 18px; padding: 12px 24px; width: 150px; height: 50px"
+        (click)="submitMotivazione()"
+      ></app-bottone-conferma-azione>
+    </div>
+  </div>
+</div>

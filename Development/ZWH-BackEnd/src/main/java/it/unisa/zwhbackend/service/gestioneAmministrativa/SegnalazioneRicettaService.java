@@ -1,5 +1,8 @@
 package it.unisa.zwhbackend.service.gestioneAmministrativa;
 
+import it.unisa.zwhbackend.model.entity.SegnalazioneRicetta;
+import java.util.List;
+
 /**
  * Interfaccia per la gestione delle segnalazioni nel sistema.
  *
@@ -24,4 +27,6 @@ public interface SegnalazioneRicettaService {
    *     errori.
    */
   String risolviSegnalazione(Long segnalazioneId, String gestore_id, String motivoBlocco);
+
+  List<SegnalazioneRicetta> getAllSegnalazioni();
 }

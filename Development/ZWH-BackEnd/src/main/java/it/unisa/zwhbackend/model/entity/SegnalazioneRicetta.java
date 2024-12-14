@@ -1,5 +1,6 @@
 package it.unisa.zwhbackend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.unisa.zwhbackend.model.enums.StatoSegnalazione;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -67,6 +68,7 @@ public class SegnalazioneRicetta {
   @ManyToOne // Relazione molti-a-uno con l'entità GestoreCommunity
   @JoinColumn(name = "gestore_id") // Collega questa entità alla colonna 'gestore_id' della tabella
   // 'segnalazione_ricetta'
+  @JsonIgnore
   private GestoreCommunity gestoreAssociato; // Il gestore che ha preso in carico la segnalazione
 
   /**
@@ -82,6 +84,7 @@ public class SegnalazioneRicetta {
   @JoinColumn(
       name = "ricetta_id",
       nullable = true) // La colonna 'ricetta_id' è opzionale (nullable = true)
+  @JsonIgnore
   private Ricetta ricettaAssociato; // La ricetta associata a questa segnalazione (può essere null)
 
   /**

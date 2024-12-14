@@ -1,0 +1,31 @@
+<app-header barra_ricerca="no" loggato="si"></app-header>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Contenuto</th>
+      <th>Stato</th>
+      <th>Ricetta</th>
+      <th>Gestore</th>
+      <th>Azioni</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let segnalazione of segnalazioni">
+      <td>{{ segnalazione.id }}</td>
+      <td>{{ segnalazione.contenuto }}</td>
+      <td>{{ segnalazione.stato }}</td>
+      <td>{{ segnalazione.ricettaAssociato?.nome || 'N/A' }}</td>
+      <td>{{ segnalazione.gestoreAssociato?.nome || 'N/A' }}</td>
+      <td>
+        <navigationBtn
+          label="Blocca Autore"
+          (click)="onBloccaAutoreClick(segnalazione.id)"
+        ></navigationBtn>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<app-footer></app-footer>
