@@ -18,7 +18,4 @@ import { productTableComponent } from '../../components/product-table/product-ta
   templateUrl: './visualizza-ricetta.component.html',
   styleUrl: './visualizza-ricetta.component.css',
 })
-export class VisualizzaRicettaComponent {
-
-
-}
+export class VisualizzaRicettaComponent {}

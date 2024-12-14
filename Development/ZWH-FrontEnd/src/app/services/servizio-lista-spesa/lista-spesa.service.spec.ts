@@ -9,7 +9,7 @@ describe('ShoppingListService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule], // Importa il modulo di testing HTTP
-      providers: [ShoppingListService],  // Fornisci il servizio da testare
+      providers: [ShoppingListService], // Fornisci il servizio da testare
     });
     service = TestBed.inject(ShoppingListService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -27,7 +27,7 @@ describe('ShoppingListService', () => {
     const mockResponse = { prodotti: [{ nomeProdotto: 'Pane', quantita: 1 }] };
     const email = 'utente@example.com';
 
-    service.generateShoppingList(email).subscribe((response) => {
+    service.generateShoppingList(email).subscribe(response => {
       expect(response).toEqual(mockResponse);
     });
 

@@ -5,7 +5,6 @@ import it.unisa.zwhbackend.model.entity.Utente;
 import it.unisa.zwhbackend.model.repository.ListaSpesaRepository;
 import it.unisa.zwhbackend.model.repository.UtenteRepository;
 import it.unisa.zwhbackend.service.gestioneListaSpesa.ListaSpesaService;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,13 +33,16 @@ public class ListaSpesaController {
    * @param shoppingListService Servizio per la gestione delle liste della spesa.
    * @param utenteRepository Repository per l'entità Utente, utilizzato per accedere ai dati degli
    *     utenti.
+   * @param shoppingListRepository repository per Entità lista della Spesa
    */
   @Autowired
   public ListaSpesaController(
-          ListaSpesaService shoppingListService, ListaSpesaRepository shoppingListRepository, UtenteRepository utenteRepository) {
+      ListaSpesaService shoppingListService,
+      ListaSpesaRepository shoppingListRepository,
+      UtenteRepository utenteRepository) {
     this.shoppingListService = shoppingListService;
-      //this.shoppingListRepository = shoppingListRepository;
-      this.utenteRepository = utenteRepository;
+    // this.shoppingListRepository = shoppingListRepository;
+    this.utenteRepository = utenteRepository;
   }
 
   /**
