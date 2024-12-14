@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { navigationBtnComponent } from '../navigationBtn/navigationBtn.component';
 import { InserisciProdottoModalService } from '../../services/servizio-inserisci-prodotto/inserisci-prodotto-modal.service';
 import { FormSegnalazioneModalService } from '../../services/servizio-form-segnalazione/from-segnalazione-modal.service';
@@ -11,6 +11,7 @@ import { FormSegnalazioneModalService } from '../../services/servizio-form-segna
   styleUrl: './bottone-form-segnalazione.component.css',
 })
 export class BottoneFormSegnalazioneComponent {
+  @Input() label: string = 'Spiegaci il tuo problema'; // Valore predefinito
   // Costruttore: inietta il servizio per la gestione della modale
   constructor(private modalService: FormSegnalazioneModalService) {}
 

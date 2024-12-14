@@ -1,20 +1,21 @@
 import { Component, Input } from '@angular/core';
-import { navigationBtnComponent } from '../navigationBtn/navigationBtn.component';
-import { CommonModule } from '@angular/common'; // Importa il modulo CommonModule per abilitare direttive come *ngIf e *ngFor
-import { FormSegnalazioneModalService } from '../../services/servizio-form-segnalazione/from-segnalazione-modal.service';
+import { NgIf } from '@angular/common';
+import { ServizioDettgliReportService } from '../../services/servizio-dettagli-report/servizio-dettgli-report.service';
 
 @Component({
-  selector: 'app-form-segnalazione',
+  selector: 'app-dettagli-report',
   standalone: true,
-  imports: [navigationBtnComponent, CommonModule],
-  templateUrl: './form-segnalazione.component.html',
-  styleUrl: './form-segnalazione.component.css',
+  imports: [NgIf],
+  templateUrl: './dettagli-report.component.html',
+  styleUrl: './dettagli-report.component.css',
 })
-export class FormSegnalazioneComponent {
-  @Input() title: string = 'Spiegaci il tuo problema'; // Titolo con valore predefinito
+export class DettagliReportComponent {
+  @Input() text: string = '';
   // Variabile per tracciare la visibilità della modale
   isModalVisible: boolean = false;
-  constructor(private modalService: FormSegnalazioneModalService) {}
+
+  // Costruttore: inietta il servizio per la gestione della modale
+  constructor(private modalService: ServizioDettgliReportService) {}
 
   // Metodo eseguito all'inizializzazione del componente
   ngOnInit(): void {
