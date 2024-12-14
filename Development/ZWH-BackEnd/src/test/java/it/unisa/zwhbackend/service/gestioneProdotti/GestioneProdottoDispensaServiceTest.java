@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import it.unisa.zwhbackend.model.entity.PossiedeInDispensa;
 import it.unisa.zwhbackend.model.entity.Prodotto;
+import it.unisa.zwhbackend.model.entity.ProdottoRequestDTO;
 import it.unisa.zwhbackend.model.entity.Utente;
 import it.unisa.zwhbackend.model.repository.PossiedeInDispensaRepository;
 import it.unisa.zwhbackend.model.repository.PossiedeInFrigoRepository;
@@ -32,12 +33,17 @@ class GestioneProdottoDispensaServiceTest {
   private PossiedeInFrigoRepository possiedeInFrigoRepository;
   private UtenteRepository utenteRepository;
 
+  /**
+   * Configura i mock necessari per il test e inizializza il servizio da testare.
+   *
+   * <p>I mock simulano il comportamento dei repository utilizzati dal servizio.
+   */
   @BeforeEach
   void setUp() {
     possiedeInDispensaRepository = mock(PossiedeInDispensaRepository.class);
-    utenteRepository = mock(UtenteRepository.class); // Aggiunto
-    prodottoRepository = mock(ProdottoRepository.class); // Aggiunto
-    possiedeInFrigoRepository = mock(PossiedeInFrigoRepository.class); // Aggiunto
+    utenteRepository = mock(UtenteRepository.class);
+    prodottoRepository = mock(ProdottoRepository.class);
+    possiedeInFrigoRepository = mock(PossiedeInFrigoRepository.class);
 
     gestioneProdottoService =
         new GestioneProdottoService(
@@ -48,22 +54,29 @@ class GestioneProdottoDispensaServiceTest {
   }
 
   /**
-   * Test del caso in cui un utente con ID valido ha due prodotti nella dispensa. Verifica che il
-   * metodo `visualizzaProdottiDispensa` restituisca correttamente la lista dei prodotti.
+   * Test del caso in cui un utente con ID valido ha due prodotti nella dispensa.
+   *
+   * <p>Verifica che il metodo `visualizzaProdottiDispensa` restituisca correttamente la lista dei
+   * prodotti.
+   *
+   * <p>Scenario: - L'utente "user@example.com" ha due prodotti associati nella dispensa.
+   *
+   * <p>Mock configurati: - Il repository degli utenti restituisce l'utente. - Il repository delle
+   * relazioni restituisce i prodotti associati alla dispensa.
    */
   @Test
   void testTC_GCD_VPD_01() {
-    // Crea un utente con ID 1
+    // Crea un utente con email
     Utente utente = new Utente();
     utente.setEmail("user@example.com");
 
     // Crea due prodotti
-    Prodotto prodotto1 = new Prodotto("Prodotto 1", "123456");
-    Prodotto prodotto2 = new Prodotto("Prodotto 2", "789101");
+    Prodotto prodotto1 = new Prodotto("Prodotto1", "123456");
+    Prodotto prodotto2 = new Prodotto("Prodotto2", "789101");
 
     // Crea due relazioni per l'utente con i prodotti
-    PossiedeInDispensa relazione1 = new PossiedeInDispensa(utente, prodotto1, 1, "2024-12-30");
-    PossiedeInDispensa relazione2 = new PossiedeInDispensa(utente, prodotto2, 2, "2024-12-31");
+    PossiedeInDispensa relazione1 = new PossiedeInDispensa(utente, prodotto1, 1, "30/12/2024");
+    PossiedeInDispensa relazione2 = new PossiedeInDispensa(utente, prodotto2, 2, "31/12/2024");
 
     // Configura i mock per restituire l'utente e le due relazioni
     when(utenteRepository.findByEmail("user@example.com")).thenReturn(utente);
@@ -71,25 +84,44 @@ class GestioneProdottoDispensaServiceTest {
         .thenReturn(List.of(relazione1, relazione2));
 
     // Invoca il metodo per ottenere i prodotti in dispensa
-
-    List<Prodotto> prodotti =
+    List<ProdottoRequestDTO> prodotti =
         gestioneProdottoService.visualizzaProdottiDispensa("user@example.com");
 
     // Verifica che la lista non sia nulla e contenga i due prodotti
-    assertNotNull(prodotti);
-    assertEquals(2, prodotti.size());
-    assertTrue(prodotti.contains(prodotto1));
-    assertTrue(prodotti.contains(prodotto2));
+    assertNotNull(prodotti, "La lista dei prodotti non dovrebbe essere null.");
+    assertEquals(2, prodotti.size(), "La lista dovrebbe contenere 2 prodotti.");
+
+    // Verifica che i dati siano corretti
+    ProdottoRequestDTO prodottoDTO1 = prodotti.get(0);
+    ProdottoRequestDTO prodottoDTO2 = prodotti.get(1);
+
+    assertEquals("Prodotto1", prodottoDTO1.getNomeProdotto());
+    assertEquals("123456", prodottoDTO1.getCodiceBarre());
+    assertEquals("30/12/2024", prodottoDTO1.getDataScadenza());
+    assertEquals(1, prodottoDTO1.getQuantità());
+    assertEquals("user@example.com", prodottoDTO1.getIdUtente());
+
+    assertEquals("Prodotto2", prodottoDTO2.getNomeProdotto());
+    assertEquals("789101", prodottoDTO2.getCodiceBarre());
+    assertEquals("31/12/2024", prodottoDTO2.getDataScadenza());
+    assertEquals(2, prodottoDTO2.getQuantità());
+    assertEquals("user@example.com", prodottoDTO2.getIdUtente());
   }
 
   /**
-   * Test del caso in cui un utente non abbia prodotti nella dispensa. Verifica che il metodo
-   * `visualizzaProdottiDispensa` restituisca una lista vuota quando non ci sono prodotti associati
-   * all'utente.
+   * Test del caso in cui un utente non abbia prodotti nella dispensa.
+   *
+   * <p>Verifica che il metodo `visualizzaProdottiDispensa` restituisca una lista vuota quando non
+   * ci sono prodotti associati all'utente.
+   *
+   * <p>Scenario: - L'utente "user@example.com" non ha prodotti associati nella dispensa.
+   *
+   * <p>Mock configurati: - Il repository degli utenti restituisce l'utente. - Il repository delle
+   * relazioni restituisce una lista vuota.
    */
   @Test
   void testTC_GCD_VPD_02() {
-    // Simula un utente con ID 2
+    // Simula un utente con email
     Utente utente = new Utente();
     utente.setEmail("user@example.com");
 
@@ -98,9 +130,11 @@ class GestioneProdottoDispensaServiceTest {
     when(possiedeInDispensaRepository.findByUtente(utente)).thenReturn(List.of());
 
     // Invoca il metodo e verifica che restituisca una lista vuota
-    List<Prodotto> result = gestioneProdottoService.visualizzaProdottiDispensa("user@example.com");
+    List<ProdottoRequestDTO> result =
+        gestioneProdottoService.visualizzaProdottiDispensa("user@example.com");
 
     // Verifica che la lista restituita sia vuota
-    assertTrue(result.isEmpty(), "Nessun prodotto in Dispensa.");
+    assertNotNull(result, "La lista non dovrebbe essere null.");
+    assertTrue(result.isEmpty(), "La lista dovrebbe essere vuota.");
   }
 }

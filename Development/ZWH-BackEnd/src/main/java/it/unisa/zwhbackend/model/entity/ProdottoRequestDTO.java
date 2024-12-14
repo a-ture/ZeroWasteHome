@@ -56,6 +56,15 @@ public class ProdottoRequestDTO {
   private String
       idUtente; // Variabile per avere un corretto riferimento all'utente che inserisci il prodotto
 
+  public ProdottoRequestDTO(
+      String codiceBarre, String nomeProdotto, String dataScadenza, int quantità, String idUtente) {
+    this.codiceBarre = codiceBarre;
+    this.nomeProdotto = nomeProdotto;
+    this.dataScadenza = dataScadenza;
+    this.quantità = quantità;
+    this.idUtente = idUtente;
+  }
+
   // in frigo
 
   // Getter e Setter per l'id dell'utente

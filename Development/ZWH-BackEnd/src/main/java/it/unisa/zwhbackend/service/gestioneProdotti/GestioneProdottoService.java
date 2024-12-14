@@ -201,41 +201,41 @@ public class GestioneProdottoService implements ProdottoService {
   }
 
   /**
-   * Restituisce tutti i prodotti presenti nella dispensa di un utente.
+   * Restituisce tutti i prodotti presenti nella dispensa di un utente specifico.
    *
-   * <p>Questo metodo recupera tutte le relazioni {@link PossiedeInDispensa} per un utente
-   * specificato e restituisce i prodotti associati a quelle relazioni.
+   * <p>Questo metodo recupera tutte le relazioni {@link PossiedeInDispensa} associate all'utente
+   * identificato dall'email fornita, trasformandole in una lista di oggetti {@link
+   * ProdottoRequestDTO} contenenti i dettagli del prodotto, la quantità e la scadenza.
    *
-   * @param email l'id dell'utente di cui visualizzare i prodotti nella dispensa
-   * @return una lista di {@link Prodotto} presenti nella dispensa dell'utente
+   * @param email l'email dell'utente di cui visualizzare i prodotti nella dispensa
+   * @return una lista di {@link ProdottoRequestDTO} rappresentanti i prodotti nella dispensa
+   * @throws IllegalStateException se l'utente con l'email fornita non esiste
    * @throws RuntimeException se si verifica un errore durante il recupero dei dati
    */
-  public List<Prodotto> visualizzaProdottiDispensa(String email) {
+  public List<ProdottoRequestDTO> visualizzaProdottiDispensa(String email) {
     try {
-      // Recupera l'utente con l'id specificato
       Utente utente = utenteRepository.findByEmail(email);
       if (utente == null) {
-        throw new IllegalStateException("Utente con ID " + email + " non trovato");
+        throw new IllegalStateException("Utente con email " + email + " non trovato");
       }
 
-      // Recupera tutte le relazioni tra l'utente e i prodotti nella dispensa
       List<PossiedeInDispensa> relazioni = possiedeInDispensaRepository.findByUtente(utente);
 
-      // Estrae i prodotti dalle relazioni
-      List<Prodotto> prodottiInDispensa = new ArrayList<>();
+      List<ProdottoRequestDTO> prodottiInDispensa = new ArrayList<>();
       for (PossiedeInDispensa relazione : relazioni) {
-        prodottiInDispensa.add(relazione.getProdotto()); // Aggiunge il prodotto alla lista
+        Prodotto prodotto = relazione.getProdotto();
+        prodottiInDispensa.add(
+            new ProdottoRequestDTO(
+                prodotto.getCodiceBarre(),
+                prodotto.getName(),
+                relazione.getDataScadenza(),
+                relazione.getQuantita(),
+                relazione.getUtente().getEmail()));
       }
-      if (prodottiInDispensa.isEmpty()) {
-        throw new NoSuchElementException("Nessun prodotto in Dispensa.");
-      }
-      return prodottiInDispensa; // Ritorna la lista dei prodotti
-
+      return prodottiInDispensa;
     } catch (NoSuchElementException e) {
-      // Gestisce il caso in cui non ci siano prodotti in dispensa
-      return new ArrayList<>(); // Ritorna una lista vuota in caso di errore specifico
+      return new ArrayList<>();
     } catch (Exception e) {
-      // Gestisce eventuali errori
       e.printStackTrace();
       throw new RuntimeException("Errore durante il recupero dei prodotti dalla dispensa", e);
     }

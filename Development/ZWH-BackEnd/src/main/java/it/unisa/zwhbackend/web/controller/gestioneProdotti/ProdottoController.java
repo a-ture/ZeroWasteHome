@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,8 @@ import org.springframework.web.bind.annotation.*;
  * @author Marco Meglio
  */
 @RestController
-@RequestMapping("/api/gestioneProdotto") // Mappa le richieste alla URL base "/api/gestioneProdotto"
+@RequestMapping(
+    "/api/utente/gestioneProdotto") // Mappa le richieste alla URL base "/api/gestioneProdotto"
 public class ProdottoController {
 
   private final ProdottoService prodottoService; // Servizio per gestire i prodotti
@@ -127,7 +129,6 @@ public class ProdottoController {
    * <p>Questo endpoint consente di ottenere tutti i prodotti presenti nella dispensa dell'utente
    * con l'ID specificato. La risposta conterrà la lista dei prodotti nella dispensa.
    *
-   * @param email l'ID dell'utente di cui visualizzare i prodotti nella dispensa
    * @return una risposta HTTP con la lista dei prodotti nella dispensa
    */
   @Operation(
@@ -156,18 +157,14 @@ public class ProdottoController {
                     mediaType = "application/json",
                     schema = @Schema(example = "{ \"messaggio\": \"Errore imprevisto\" }")))
       })
-  @GetMapping("/dispensa") // Mappa le richieste GET per visualizzare i prodotti nella dispensa
-  public ResponseEntity<?> visualizzaProdottiDispensa(@RequestParam("Email") String email) {
+  @GetMapping("/dispensa")
+  public ResponseEntity<?> visualizzaProdottiDispensa() {
+    String email = SecurityContextHolder.getContext().getAuthentication().getName();
     try {
-      // Ottieni la lista dei prodotti nella dispensa dell'utente
-      List<Prodotto> prodottiDispensa = prodottoService.visualizzaProdottiDispensa(email);
-      return new ResponseEntity<>(
-          prodottiDispensa, HttpStatus.OK); // Restituisce i prodotti con successo
+      List<ProdottoRequestDTO> prodottiDispensa = prodottoService.visualizzaProdottiDispensa(email);
+      return new ResponseEntity<>(prodottiDispensa, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<>(
-          null,
-          HttpStatus
-              .INTERNAL_SERVER_ERROR); // Restituisce un errore 500 in caso di errore imprevisto
+      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

@@ -7,34 +7,34 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { InserisciProdottoModalService } from '../../services/servizio-inserisci-prodotto/inserisci-prodotto-modal.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
-import { filter } from 'rxjs/operators';
-
+import { DispensaService } from '../../services/servizio-prodotti-dispensa/dispensa.service';
+import { catchError, map, Observable, of } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { Prodotto } from '../../services/servizio-prodotti-dispensa/prodotto';
 @Component({
   selector: 'app-pagina-alimenti',
   standalone: true,
   imports: [
+    CommonModule,
     HeaderComponent,
     DynamicFormComponent,
     UtilityBarComponent,
     productTableComponent,
     FooterComponent,
     BreadcrumbComponent,
+    AsyncPipe,
   ],
   templateUrl: './pagina-alimenti.component.html',
   styleUrl: './pagina-alimenti.component.css',
 })
 export class PaginaAlimentiComponent {
-  // Proprietà per le label selezionabili
   labels = [
     { title: 'Frigo', showVerticalLine: true },
     { title: 'Dispensa', showVerticalLine: false },
   ];
-
-  // Proprietà per il titolo della tabella
   tableTitle: string = 'Informazioni sugli Alimenti';
-  activeLabel: string = 'Frigo'; // Etichetta attiva di default
-
-  // Proprietà per i buttons relativi alla tabella
+  activeLabel: string = 'Frigo';
   buttons = [
     {
       label: 'Genera Ricetta',
@@ -43,10 +43,13 @@ export class PaginaAlimentiComponent {
     { label: 'Genera Lista', action: () => this.router.navigate(['alimenti/genera-lista']) },
     { label: 'Add aliments', action: () => this.openInserisciAlimentoModal() },
   ];
+  productList: any[] = []; // Cambiato in array normale
+  buttonList = ['Visualizza', 'Modifica', 'Elimina'];
 
   constructor(
     private modalService: InserisciProdottoModalService,
     private router: Router,
+    private dispensaService: DispensaService,
   ) {}
 
   openInserisciAlimentoModal(): void {
@@ -54,36 +57,34 @@ export class PaginaAlimentiComponent {
       this.activeLabel === 'Frigo'
         ? 'alimenti/inserimento-prodotto-frigo'
         : 'alimenti/inserimento-prodotto-dispensa';
-
-    console.log('Opening modal with route:', route); // Debug
     this.modalService.openModal(route);
   }
 
-  // Dati per la lista dei prodotti
-  productList = [
-    {
-      src: 'https://placehold.jp/200x200.png',
-      info: [
-        { name: 'Nome', val: 'Prodotto 1' },
-        { name: 'Quantità', val: '1' },
-        { name: 'Scadenza', val: '14/8/2025' },
-      ],
-    },
-    {
-      src: 'https://placehold.jp/200x200.png',
-      info: [
-        { name: 'Nome', val: 'Prodotto 2' },
-        { name: 'Quantità', val: '2' },
-        { name: 'Scadenza', val: '20/12/2025' },
-      ],
-    },
-  ];
-
-  // Proprietà per i buttons relativi ad ogni prodotto
-  buttonList = ['Visualizza', 'Modifica', 'Elimina'];
-
   onLabelChange(label: string): void {
     this.activeLabel = label;
-    console.log('Active Label:', this.activeLabel); // Debug
+    if (label === 'Dispensa') {
+      this.fetchDispensaProducts();
+    } else {
+      this.productList = []; // Resetta la lista per la vista 'Frigo'
+    }
+  }
+
+  private fetchDispensaProducts(): void {
+    this.dispensaService.visualizzaDispensa().subscribe({
+      next: (products: Prodotto[]) => {
+        this.productList = products.map(product => ({
+          src: 'https://via.placeholder.com/200', // Placeholder per immagini prodotto
+          info: [
+            { name: 'Nome', val: product.nomeProdotto },
+            { name: 'Quantità', val: product.quantità },
+            { name: 'Scadenza', val: product.dataScadenza },
+          ],
+        }));
+      },
+      error: error => {
+        console.error('Errore durante il caricamento dei prodotti:', error);
+        this.productList = []; // Resetta la lista in caso di errore
+      },
+    });
   }
 }
