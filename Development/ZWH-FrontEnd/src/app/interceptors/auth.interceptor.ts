@@ -1,14 +1,21 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  // Recupera il token dal localStorage
+  // Recupera il token utente e il token admin dal localStorage
   const token = localStorage.getItem('token');
+  const adminToken = localStorage.getItem('admin_token');
 
-  // Se il token esiste, clona la richiesta e aggiunge l'intestazione Authorization
+  // Se uno dei token esiste, clona la richiesta e aggiunge l'intestazione Authorization
   if (token) {
     req = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`,
+      },
+    });
+  } else if (adminToken) {
+    req = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${adminToken}`,
       },
     });
   }

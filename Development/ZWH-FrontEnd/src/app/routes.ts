@@ -21,6 +21,7 @@ import { DonazioniComponent } from './pages/donazioni/donazioni.component';
 import { CommunityComponent } from './pages/community/community.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { GestoreReportPagamentoComponent } from './pages/gestore-report-pagamento/gestore-report-pagamento.component';
+import { AdminAuthGuard } from './guards/admin-auth.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeUtenteNonLoggatoComponent }, // Home page
@@ -111,7 +112,7 @@ export const routes: Routes = [
   {
     path: 'pagina-gestore',
     component: SegnalazioneRicettaGestoreComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AdminAuthGuard],
   },
   {
     path: 'area-personale/le-mie-ricette/inserimento-ricetta',
