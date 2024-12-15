@@ -218,7 +218,7 @@ public class GestioneProdottoService implements ProdottoService {
   private void validaCodiceBarre(String codiceBarre) {
     if (codiceBarre == null || !codiceBarre.matches("^[0-9]{8,16}$")) {
       throw new IllegalArgumentException(
-          "Il codice deve avere una lunghezza compresa tra 8 e 16 caratteri e deve contenere solo cifre.");
+          "Il codice deve avere una lunghezza minima di 8 caratteri, massima di 16 e deve contenere solo cifre.");
     }
   }
 
