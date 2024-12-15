@@ -14,30 +14,38 @@
           <tr *ngFor="let info of report.info">
             <td>
               <strong>Utente: {{ report.utente }}</strong>
+              <!-- Mostra l'utente collegato al report -->
             </td>
             <td>Data Creazione: {{ info.dataCreazione | date: 'short' }}</td>
+            <!-- Mostra la data di creazione formattata in formato breve -->
             <td>Stato segnalazione: {{ info.stato }}</td>
+            <!-- Mostra lo stato della segnalazione -->
           </tr>
         </table>
       </td>
       <td class="report-options">
-        <!-- Bottone "Prendi in carico" visibile solo se almeno un elemento ha statoSegnalazione = APERTA -->
+        <!-- Bottone "Prendi in carico" visibile solo se almeno un elemento ha statoSegnalazione = "APERTA" -->
         <navigationBtn
           label="Prendi in carico"
           [style.display]="isReportOpen(report) ? 'block' : 'none'"
+          (click)="prendiInCaricoReport(report)"
         ></navigationBtn>
+        <!-- Bottone "Risolvi" visibile se il report non è in stato "APERTA" e non è già chiuso -->
         <app-bottone-form-segnalazione
           label="Risolvi"
-          [style.display]="isReportOpen(report) ? 'none' : 'block'"
+          [style.display]="
+            isReportOpen(report) ? 'none' : isReportClosed(report) ? 'none' : 'block'
+          "
+          (click)="apriModale(report)"
         ></app-bottone-form-segnalazione>
-        <!-- Pulsante per aprire i dettagli -->
+        <!-- Pulsante per aprire i dettagli del report -->
         <app-bottone-dettagli-report
           text="Dettagli report"
           (click)="toggleDetails(reportIndex)"
         ></app-bottone-dettagli-report>
       </td>
     </tr>
-    <!-- Componente dei dettagli -->
+    <!-- Riga per visualizzare i dettagli del report selezionato -->
     <tr *ngFor="let report of reports; let reportIndex = index">
       <td colspan="2" *ngIf="selectedReportIndex === reportIndex">
         <app-dettagli-report [text]="getDetails(reportIndex)"></app-dettagli-report>
@@ -45,4 +53,9 @@
     </tr>
   </tbody>
 </table>
-<app-form-segnalazione title="Inserisci dettagli risoluzione"></app-form-segnalazione>
+
+<!-- Modale per la risoluzione del report -->
+<app-form-segnalazione
+  title="Inserisci dettagli risoluzione"
+  [report]="selectedReport"
+></app-form-segnalazione>

@@ -14,15 +14,24 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Controller per gestire le segnalazioni di pagamento. Fornisce l'endpoint per risolvere le
- * segnalazioni di pagamento e per prenderle in carico.
+ * Controller per gestire le segnalazioni di pagamento.
  *
- * <p>Questa classe espone un'API REST per risolvere le segnalazioni di pagamento e per permettere
- * ai gestori di prendere in carico i problemi relativi ai pagamenti tramite l'ID della segnalazione
- * e l'ID del gestore.
+ * <p>Fornisce gli endpoint REST per:
+ *
+ * <ul>
+ *   <li>Risoluzione di una segnalazione di pagamento.
+ *   <li>Presa in carico di una segnalazione di pagamento.
+ *   <li>Recupero di tutte le segnalazioni di pagamento.
+ * </ul>
+ *
+ * <p>Questo controller utilizza i servizi per la gestione amministrativa e interagisce con il
+ * repository {@link GestorePagamentoRepository}.
+ *
+ * <p>Autenticazione basata su Spring Security per determinare l'utente autenticato.
  *
  * @author Benito Farina
  */
@@ -34,11 +43,10 @@ public class SegnalazionePagamentoController {
   private final GestorePagamentoRepository gestorePagamentoRepository;
 
   /**
-   * Costruttore per iniettare i servizi e i repository necessari al controller.
+   * Costruttore del controller.
    *
-   * @param amministrazioneService il servizio che fa da facade per le funzionalità di gestione
-   *     amministrativa
-   * @param gestorePagamentoRepository il repository per l'entità {@link GestorePagamento}
+   * @param amministrazioneService Servizio per la gestione amministrativa.
+   * @param gestorePagamentoRepository Repository per accedere ai dati dei gestori di pagamento.
    */
   public SegnalazionePagamentoController(
       AmministrazioneService amministrazioneService,
@@ -50,95 +58,107 @@ public class SegnalazionePagamentoController {
   /**
    * Risolve una segnalazione di pagamento.
    *
-   * <p>Questo endpoint consente a un gestore di risolvere una segnalazione di pagamento fornendo
-   * l'ID della segnalazione e l'ID del gestore che risolve il problema. Restituisce la segnalazione
-   * aggiornata se la risoluzione è riuscita o un errore altrimenti.
+   * <p>Consente a un gestore autenticato di risolvere una segnalazione di pagamento. L'endpoint
+   * aggiorna lo stato della segnalazione e registra i dettagli della risoluzione.
    *
-   * @param idSegnalazione l'ID della segnalazione di pagamento da risolvere
-   * @param gestoreId l'ID del gestore che risolve la segnalazione
-   * @param dettagliRisoluzione dettagli relativi alla risoluzione della segnalazione
-   * @return una {@link ResponseEntity} contenente la segnalazione risolta o un errore
+   * @param idSegnalazione ID della segnalazione da risolvere.
+   * @param dettagliRisoluzione Dettagli relativi alla risoluzione della segnalazione.
+   * @return Una {@link ResponseEntity} contenente:
+   *     <ul>
+   *       <li>La segnalazione aggiornata, se l'operazione ha avuto successo.
+   *       <li>Errore 400, se il gestore non è trovato o c'è un errore nei parametri.
+   *       <li>Errore 500, in caso di errore interno del server.
+   *     </ul>
    */
   @Operation(summary = "Risolvi una segnalazione")
-  @ApiResponses(
-      value = {
-        @ApiResponse(responseCode = "200", description = "Segnalazione risolta con successo"),
-        @ApiResponse(
-            responseCode = "400",
-            description = "Segnalazione non trovata o errore durante la risoluzione"),
-        @ApiResponse(responseCode = "500", description = "Errore interno del server")
-      })
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Segnalazione risolta con successo"),
+    @ApiResponse(responseCode = "400", description = "Errore durante la risoluzione"),
+    @ApiResponse(responseCode = "500", description = "Errore interno del server")
+  })
   @PatchMapping("/risolvi/{idSegnalazione}")
   public ResponseEntity<SegnalazionePagamento> risolvereSegnalazione(
-      @PathVariable Long idSegnalazione,
-      @RequestParam String gestoreId,
-      @RequestParam String dettagliRisoluzione) {
+      @PathVariable Long idSegnalazione, @RequestParam String dettagliRisoluzione) {
     try {
+      // Ottieni l'email del gestore autenticato dal contesto di sicurezza
+      String gestoreEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 
       // Recupera il gestore di pagamento dalla repository
       Optional<GestorePagamento> optionalGestore =
-          gestorePagamentoRepository.findByEmail(gestoreId);
+          gestorePagamentoRepository.findByEmail(gestoreEmail);
 
-      // Se il gestore non è trovato, restituisce errore 400
       if (optionalGestore.isEmpty()) {
-        return ResponseEntity.status(400).body(null); // Gestore non trovato
+        return ResponseEntity.status(400)
+            .body(null); // Restituisce errore se il gestore non è trovato
       }
 
-      // Tenta di risolvere la segnalazione, aggiornando il suo stato
+      // Aggiorna lo stato della segnalazione
       Optional<SegnalazionePagamento> segnalazione =
           amministrazioneService.aggiornaStatoSegnalazionePagamento(
               idSegnalazione, optionalGestore.get(), dettagliRisoluzione);
 
-      // Se la segnalazione non è stata aggiornata, restituisce errore 500
       if (segnalazione.isEmpty()) {
-        return ResponseEntity.status(500).body(null); // Errore durante l'aggiornamento dello stato
+        return ResponseEntity.status(500).body(null); // Errore durante l'aggiornamento
       }
 
-      // Restituisce la segnalazione aggiornata
-      return ResponseEntity.ok(segnalazione.get());
+      return ResponseEntity.ok(segnalazione.get()); // Restituisce la segnalazione risolta
     } catch (Exception e) {
-      // In caso di errore generico, restituisce errore 400
-      return ResponseEntity.status(400).body(null); // In caso di errore generico
+      return ResponseEntity.status(400).body(null); // Gestisce errori generici
     }
   }
 
   /**
-   * Permette a un gestore di prendere in carico una segnalazione di pagamento.
+   * Prende in carico una segnalazione di pagamento.
    *
-   * <p>Questo endpoint consente a un gestore di prendere in carico una segnalazione di pagamento
-   * fornendo l'ID della segnalazione e l'ID del gestore. L'ID del gestore viene usato per associare
-   * la segnalazione al gestore che si fa carico del problema.
+   * <p>Consente a un gestore autenticato di prendere in carico una segnalazione di pagamento.
+   * L'endpoint associa il gestore alla segnalazione e aggiorna il suo stato.
    *
-   * @param idSegnalazione l'ID della segnalazione di pagamento da prendere in carico
-   * @param gestoreId l'ID del gestore che prende in carico la segnalazione
-   * @return una {@link ResponseEntity} contenente la segnalazione aggiornata o un errore
+   * @param idSegnalazione ID della segnalazione da prendere in carico.
+   * @return Una {@link ResponseEntity} contenente:
+   *     <ul>
+   *       <li>La segnalazione aggiornata, se l'operazione ha avuto successo.
+   *       <li>Errore 400, se il gestore non è trovato o c'è un errore nei parametri.
+   *       <li>Errore 500, in caso di errore interno del server.
+   *     </ul>
    */
   @PatchMapping("/prendiInCarico/{idSegnalazione}")
   public ResponseEntity<SegnalazionePagamento> prendiInCaricoSegnalazione(
-      @PathVariable Long idSegnalazione, @RequestParam String gestoreId) {
+      @PathVariable Long idSegnalazione) {
 
-    // Recupera il gestore di pagamento dalla repository
-    Optional<GestorePagamento> optionalGestore = gestorePagamentoRepository.findByEmail(gestoreId);
+    String gestoreEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 
-    // Se il gestore non è trovato, restituisce errore 400
+    Optional<GestorePagamento> optionalGestore =
+        gestorePagamentoRepository.findByEmail(gestoreEmail);
+
     if (optionalGestore.isEmpty()) {
-      return ResponseEntity.status(400).body(null); // Gestore non trovato
+      return ResponseEntity.status(400)
+          .body(null); // Restituisce errore se il gestore non è trovato
     }
 
-    // Tenta di prendere in carico la segnalazione, aggiornando il suo stato
     Optional<SegnalazionePagamento> segnalazione =
         amministrazioneService.aggiornaStatoSegnalazionePagamento(
             idSegnalazione, optionalGestore.get(), null);
 
-    // Se la segnalazione non è stata aggiornata, restituisce errore 500
     if (segnalazione.isEmpty()) {
-      return ResponseEntity.status(500).body(null); // Errore durante l'aggiornamento dello stato
+      return ResponseEntity.status(500).body(null); // Errore durante l'aggiornamento
     }
 
-    // Restituisce la segnalazione aggiornata
-    return ResponseEntity.ok(segnalazione.get());
+    return ResponseEntity.ok(segnalazione.get()); // Restituisce la segnalazione aggiornata
   }
 
+  /**
+   * Recupera tutte le segnalazioni di pagamento.
+   *
+   * <p>Restituisce una lista di tutte le segnalazioni di pagamento registrate nel sistema. Ogni
+   * segnalazione è arricchita con informazioni relative all'utente e ai dettagli della
+   * segnalazione.
+   *
+   * @return Una {@link ResponseEntity} contenente:
+   *     <ul>
+   *       <li>Una lista di mappe con i dettagli delle segnalazioni e degli utenti associati.
+   *       <li>Errore 500, in caso di errore interno del server.
+   *     </ul>
+   */
   @GetMapping
   public ResponseEntity<List<Map<String, Object>>> getAllSegnalazioniPagamento() {
     List<SegnalazionePagamento> segnalazioni = amministrazioneService.getAllSegnalazioni();
@@ -147,7 +167,7 @@ public class SegnalazionePagamentoController {
         segnalazioni.stream()
             .map(
                 segnalazione -> {
-                  // Crea una mappa con i dettagli della segnalazione
+                  // Mappa con i dettagli della segnalazione
                   Map<String, Object> info =
                       new HashMap<>(
                           Map.of(
@@ -164,22 +184,17 @@ public class SegnalazionePagamentoController {
                                       ? segnalazione.getDettagliRisoluzione()
                                       : "Non disponibile"));
 
-                  // Crea il wrapper con il nome dell'utente e info
-                  Map<String, Object> wrapper =
-                      new HashMap<>(
-                          Map.of(
-                              "utente",
-                              segnalazione.getUtente() != null
-                                  ? segnalazione.getUtente().getName()
-                                  : "Utente sconosciuto",
-                              "info",
-                              List.of(info) // Aggiungi info come lista
-                              ));
-
-                  return wrapper;
+                  // Wrapper con utente e info
+                  return Map.of(
+                      "utente",
+                      segnalazione.getUtente() != null
+                          ? segnalazione.getUtente().getName()
+                          : "Utente sconosciuto",
+                      "info",
+                      List.of(info));
                 })
             .collect(Collectors.toList());
 
-    return ResponseEntity.ok(response);
+    return ResponseEntity.ok(response); // Restituisce la lista delle segnalazioni
   }
 }
