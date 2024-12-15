@@ -64,7 +64,8 @@ class GestioneProdottoServiceTest {
                     "1234567",
                     2,
                     "user@example.com",
-                    new ArrayList<>(List.of("GLUTENFREE"))));
+                    new ArrayList<>(List.of("GLUTENFREE")),
+                    "img"));
     assertEquals(
         "Il codice deve avere una lunghezza minima di 8 caratteri, massima di 16 e deve contenere solo cifre.",
         exception.getMessage());
@@ -86,7 +87,8 @@ class GestioneProdottoServiceTest {
                     "12345678",
                     2,
                     "user@example.com",
-                    new ArrayList<>(List.of("GLUTENFREE"))));
+                    new ArrayList<>(List.of("GLUTENFREE")),
+                    "img"));
     assertEquals(
         "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.",
         exception.getMessage());
@@ -108,8 +110,9 @@ class GestioneProdottoServiceTest {
                     "12345678",
                     2,
                     "user@example.com",
-                    new ArrayList<>(List.of("GLUTENFREE"))));
-    assertEquals("La Data deve essere del formato gg/mm/aa.", exception.getMessage());
+                    new ArrayList<>(List.of("GLUTENFREE")),
+                    "img"));
+    assertEquals("La Data deve essere del formato gg/mm/aaaa.", exception.getMessage());
   }
 
   /**
@@ -128,7 +131,8 @@ class GestioneProdottoServiceTest {
                     "12345678",
                     -1,
                     "user@example.com",
-                    List.of("GLUTENFREE")));
+                    List.of("GLUTENFREE"),
+                    "img"));
     assertEquals(
         "La Quantità deve essere un numero positivo maggiore di zero.", exception.getMessage());
   }
@@ -147,14 +151,21 @@ class GestioneProdottoServiceTest {
 
     // Mock dei repository
     Utente utente = mock(Utente.class);
-    Prodotto prodotto = new Prodotto(nomeProdotto, codiceBarre, List.of("GLUTENFREE"));
+    Prodotto prodotto = new Prodotto(nomeProdotto, codiceBarre, List.of("GLUTENFREE"), "img");
+
     when(utenteRepository.findByEmail(idUtente)).thenReturn(utente);
     when(prodottoRepository.findByCodiceBarre(codiceBarre)).thenReturn(Optional.empty());
 
     // Chiamata al metodo per aggiungere il prodotto nel frigo
     Prodotto prodottoRestituito =
         gestioneProdottoService.aggiungiProdottoFrigo(
-            nomeProdotto, dataScadenza, codiceBarre, quantita, idUtente, List.of("GLUTENFREE"));
+            nomeProdotto,
+            dataScadenza,
+            codiceBarre,
+            quantita,
+            idUtente,
+            List.of("GLUTENFREE"),
+            "img");
 
     // Verifica che il prodotto non sia nullo
     assertNotNull(prodottoRestituito);
