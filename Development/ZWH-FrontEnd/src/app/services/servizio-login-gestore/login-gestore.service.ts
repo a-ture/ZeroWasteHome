@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { MessageService } from 'primeng/api';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ export class LoginGestoreService {
   constructor(
     private http: HttpClient,
     private messageService: MessageService,
+    private router: Router,
   ) {}
 
   // Metodo per decodificare il JWT
@@ -44,6 +46,12 @@ export class LoginGestoreService {
           detail: 'Accesso eseguito con successo!',
           life: 4000,
         });
+
+        if (roles == 'GESTORE_COMMUNITY') {
+          this.router.navigate(['/pagina-gestore']);
+        } else if (roles == 'GESTORE_PAGAMENTO') {
+          this.router.navigate(['/pagina-gestore']);
+        }
       }),
       catchError(error => {
         return throwError(() => error.error?.message || 'Errore imprevisto durante il login');

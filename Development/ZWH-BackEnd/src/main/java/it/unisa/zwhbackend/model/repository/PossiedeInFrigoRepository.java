@@ -41,4 +41,6 @@ public interface PossiedeInFrigoRepository
    * @return una lista di oggetti {@code PossiedeInFrigo} associati all'utente specificato
    */
   List<PossiedeInFrigo> findByUtenteEmail(String email);
+
+  List<PossiedeInFrigo> findByUtente(Utente utente);
 }
