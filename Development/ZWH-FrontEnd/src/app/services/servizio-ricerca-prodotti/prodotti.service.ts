@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Prodotto } from './prodotto';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { Prodotto } from './prodotto';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +17,8 @@ export class ProdottiService {
    * @returns Observable contenente la lista di prodotti trovati.
    */
   ricercaProdottiPerNome(name: string): Observable<Prodotto[]> {
-    return this.http.get<Prodotto[]>(`${this.apiUrl}?name=${encodeURIComponent(name)}`);
+    return this.http
+      .get<any[]>(`${this.apiUrl}?name=${encodeURIComponent(name)}`)
+      .pipe(map(response => response.map(item => Prodotto.fromApiResponse(item))));
   }
 }

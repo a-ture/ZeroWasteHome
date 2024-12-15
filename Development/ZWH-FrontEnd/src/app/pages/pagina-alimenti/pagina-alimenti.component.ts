@@ -13,6 +13,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { Prodotto } from '../../services/servizio-prodotti-dispensa/prodotto';
+import { FrigoService } from '../../services/servizio-prodotti-frigo/frigo.service';
 
 @Component({
   selector: 'app-pagina-alimenti',
@@ -55,10 +56,13 @@ export class PaginaAlimentiComponent implements OnInit {
     private prodottiService: ProdottiService,
     private router: Router,
     private dispensaService: DispensaService,
+    private frigoService: FrigoService,
     private modalService: InserisciProdottoModalService,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fetchFrigoProduct();
+  }
 
   /**
    * Trasforma la lista di prodotti nel formato richiesto per `productList`.
@@ -66,7 +70,7 @@ export class PaginaAlimentiComponent implements OnInit {
    * @returns Lista trasformata.
    */
   transformProductList(
-    prodotti: RicercaProdotto[],
+    prodotti: Prodotto[],
   ): { src: string; info: { name: string; val: string }[] }[] {
     return prodotti.map(prodotto => ({
       src: 'https://placehold.jp/200x200.png', // URL placeholder
@@ -91,8 +95,17 @@ export class PaginaAlimentiComponent implements OnInit {
 
   cercaProdotti(query: string): void {
     this.prodottiService.ricercaProdottiPerNome(query).subscribe({
-      next: prodotti => {
-        this.productList = this.transformProductList(prodotti);
+      next: (products: Prodotto[]) => {
+        this.productList = products
+          .map(product => Prodotto.fromApiResponse(product))
+          .map(product => ({
+            src: product.img || 'https://via.placeholder.com/200', // Usa immagine del prodotto o un placeholder
+            info: [
+              { name: 'Nome', val: product.nomeProdotto },
+              { name: 'Quantità', val: product.quantità },
+              { name: 'Scadenza', val: product.dataScadenza },
+            ],
+          }));
       },
       error: err => {
         console.error('Errore nella ricerca:', err);
@@ -114,12 +127,31 @@ export class PaginaAlimentiComponent implements OnInit {
     if (label === 'Dispensa') {
       this.fetchDispensaProducts();
     } else {
-      this.productList = []; // Resetta la lista per la vista 'Frigo'
+      this.fetchFrigoProduct();
     }
   }
 
   private fetchDispensaProducts(): void {
     this.dispensaService.visualizzaDispensa().subscribe({
+      next: (products: Prodotto[]) => {
+        this.productList = products.map(product => ({
+          src: product.img || 'https://via.placeholder.com/200', // Placeholder per immagini prodotto
+          info: [
+            { name: 'Nome', val: product.nomeProdotto },
+            { name: 'Quantità', val: product.quantità },
+            { name: 'Scadenza', val: product.dataScadenza },
+          ],
+        }));
+      },
+      error: error => {
+        console.error('Errore durante il caricamento dei prodotti:', error);
+        this.productList = []; // Resetta la lista in caso di errore
+      },
+    });
+  }
+
+  private fetchFrigoProduct(): void {
+    this.frigoService.visualizzaFrigo().subscribe({
       next: (products: Prodotto[]) => {
         this.productList = products.map(product => ({
           src: product.img || 'https://via.placeholder.com/200', // Placeholder per immagini prodotto

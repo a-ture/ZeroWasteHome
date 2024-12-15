@@ -64,7 +64,7 @@ public class Prodotto {
    */
   @Column(name = "nome_prodotto")
   @Pattern(
-      regexp = "^[a-zA-Z]{1,50}$",
+      regexp = "^[a-zA-Z0-9\\s]{1,50}$",
       message =
           "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
   private String name;
@@ -174,7 +174,11 @@ public class Prodotto {
    *
    * @return il nome del prodotto
    */
-  public String getName() {
+  public @Pattern(
+      regexp = "^[a-zA-Z0-9\\s]{1,50}$",
+      message =
+          "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
+  String getName() {
     return name;
   }
 
@@ -183,7 +187,12 @@ public class Prodotto {
    *
    * @param name il nome del prodotto
    */
-  public void setName(String name) {
+  public void setName(
+      @Pattern(
+              regexp = "^[a-zA-Z0-9\\s]{1,50}$",
+              message =
+                  "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
+          String name) {
     this.name = name;
   }
 
@@ -203,6 +212,13 @@ public class Prodotto {
    */
   public void setCodiceBarre(String codiceBarre) {
     this.codiceBarre = codiceBarre;
+  }
+
+  public Prodotto(String codiceBarre, String name, List<String> categoria, String img) {
+    this.codiceBarre = codiceBarre;
+    this.name = name;
+    this.categoria = categoria;
+    this.img = img;
   }
 
   /**

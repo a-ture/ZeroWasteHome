@@ -118,7 +118,8 @@ public class ProdottoController {
               prodottoRequestDTO.getCodiceBarre(),
               prodottoRequestDTO.getQuantità(),
               prodottoRequestDTO.getIdUtente(),
-              prodottoRequestDTO.getCategoria());
+              prodottoRequestDTO.getCategoria(),
+              prodottoRequestDTO.getImg());
       return new ResponseEntity<>(prodotto, HttpStatus.OK); // 200 OK
 
     } catch (IllegalStateException e) {
@@ -167,6 +168,50 @@ public class ProdottoController {
     try {
       List<ProdottoRequestDTO> prodottiDispensa = prodottoService.visualizzaProdottiDispensa(email);
       return new ResponseEntity<>(prodottiDispensa, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  /**
+   * Visualizza i prodotti nel frigo di un utente.
+   *
+   * <p>Questo endpoint consente di ottenere tutti i prodotti presenti nel frigo dell'utente con
+   * l'ID specificato. La risposta conterrà la lista dei prodotti nel frigo.
+   *
+   * @return una risposta HTTP con la lista dei prodotti nel frigo
+   */
+  @Operation(summary = "Visualizza i prodotti nel frigo") // Descrizione dell'operazione per Swagger
+  @ApiResponses( // Definisce le risposte API per diversi casi
+      value = {
+        @ApiResponse(
+            responseCode = "200", // Codice di risposta per successo
+            description = "Prodotti visualizzati con successo nel frigo",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = Prodotto.class))),
+        @ApiResponse(
+            responseCode = "404", // Codice di risposta per utente non trovato
+            description = "Utente non trovato",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(example = "{ \"messaggio\": \"Utente non trovato\" }"))),
+        @ApiResponse(
+            responseCode = "500", // Codice di risposta per errore interno
+            description = "Errore interno del server",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(example = "{ \"messaggio\": \"Errore imprevisto\" }")))
+      })
+  @GetMapping("/frigo")
+  public ResponseEntity<?> visualizzaProdottiFrigo() {
+    String email = SecurityContextHolder.getContext().getAuthentication().getName();
+    try {
+      List<ProdottoRequestDTO> prodottiFrigo = prodottoService.visualizzaProdottiFrigo(email);
+      return new ResponseEntity<>(prodottiFrigo, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }

@@ -60,3 +60,11 @@
 :host ::ng-deep .footer {
   margin-top: 55px !important;
 }
+
+:host ::ng-deep img {
+  max-height: 160px; /* Imposta l'altezza massima */
+  width: auto; /* Larghezza automatica per mantenere le proporzioni */
+  object-fit: contain; /* Adatta l'immagine mantenendo le proporzioni senza "schiacciare" */
+  display: block; /* Evita eventuali spazi indesiderati */
+  margin: 0 auto; /* Centra l'immagine orizzontalmente */
+}

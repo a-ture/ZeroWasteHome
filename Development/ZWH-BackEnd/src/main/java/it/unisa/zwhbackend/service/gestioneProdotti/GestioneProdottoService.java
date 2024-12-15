@@ -1,5 +1,6 @@
 package it.unisa.zwhbackend.service.gestioneProdotti;
 
+import it.unisa.zwhbackend.annotations.ExcludeGeneratedFromCodeCoverage;
 import it.unisa.zwhbackend.model.entity.*;
 import it.unisa.zwhbackend.model.repository.PossiedeInDispensaRepository;
 import it.unisa.zwhbackend.model.repository.PossiedeInFrigoRepository;
@@ -91,6 +92,7 @@ public class GestioneProdottoService implements ProdottoService {
    *     di zero
    * @param email l'email dell'utente a cui aggiungere il prodotto; non può essere nulla
    * @param categoria una lista di categorie associate al prodotto; può essere vuota
+   * @param img l'url dell'immagine associata al prodotto
    * @return il prodotto aggiunto o aggiornato
    * @throws IllegalArgumentException se i parametri non rispettano i vincoli di validazione
    * @throws IllegalStateException se l'utente non esiste nel sistema
@@ -101,7 +103,8 @@ public class GestioneProdottoService implements ProdottoService {
       String codiceBarre,
       int quantita,
       String email,
-      List<String> categoria) {
+      List<String> categoria,
+      String img) {
     // Validazione dei campi
 
     DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -145,6 +148,11 @@ public class GestioneProdottoService implements ProdottoService {
 
       // Se il prodotto non esiste, lo creiamo
       prodotto = inserisciProdotto(nomeProdotto, dataScadenza, codiceBarre, categoria);
+
+      if (prodotto != null) {
+        prodotto.setImg(img);
+      }
+
       prodottoRepository.saveAndFlush(
           prodotto); // Inserisce nel DB e lo rende persistente immediatamente
     } else {
@@ -231,7 +239,7 @@ public class GestioneProdottoService implements ProdottoService {
    *     alfabetici o supera la lunghezza di 50 caratteri
    */
   private void validaNomeProdotto(String nomeProdotto) {
-    if (nomeProdotto == null || !nomeProdotto.matches("^[a-zA-Z]{1,50}$")) {
+    if (nomeProdotto == null || !nomeProdotto.matches("^[a-zA-Z0-9\\s]{1,50}$")) {
       throw new IllegalArgumentException(
           "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.");
     }
@@ -305,6 +313,38 @@ public class GestioneProdottoService implements ProdottoService {
     }
   }
 
+  @Override
+  @ExcludeGeneratedFromCodeCoverage
+  public List<ProdottoRequestDTO> visualizzaProdottiFrigo(String email) {
+    try {
+      Utente utente = utenteRepository.findByEmail(email);
+      if (utente == null) {
+        throw new IllegalStateException("Utente con email " + email + " non trovato");
+      }
+
+      List<PossiedeInFrigo> relazioni = possiedeInFrigoRepository.findByUtente(utente);
+
+      List<ProdottoRequestDTO> prodottiInFrigo = new ArrayList<>();
+      for (PossiedeInFrigo relazione : relazioni) {
+        Prodotto prodotto = relazione.getProdotto();
+        prodottiInFrigo.add(
+            new ProdottoRequestDTO(
+                prodotto.getCodiceBarre(),
+                prodotto.getName(),
+                prodotto.getImg(),
+                relazione.getDataScadenza(),
+                relazione.getQuantita(),
+                relazione.getUtente().getEmail()));
+      }
+      return prodottiInFrigo;
+    } catch (NoSuchElementException e) {
+      return new ArrayList<>();
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new RuntimeException("Errore durante il recupero dei prodotti dal frigo", e);
+    }
+  }
+
   /**
    * Esegue una ricerca di prodotti basata su un criterio parziale del nome e filtra i risultati in
    * base ai prodotti presenti nella dispensa dell'utente specificato.
@@ -369,6 +409,7 @@ public class GestioneProdottoService implements ProdottoService {
               dto.setNomeProdotto(prodotto.getName());
               dto.setDataScadenza(record.getDataScadenza());
               dto.setQuantità(record.getQuantita());
+              dto.setImg(prodotto.getImg());
               return dto;
             })
         .collect(Collectors.toList());
