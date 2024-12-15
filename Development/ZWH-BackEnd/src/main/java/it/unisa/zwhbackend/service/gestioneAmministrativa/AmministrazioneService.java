@@ -2,6 +2,7 @@ package it.unisa.zwhbackend.service.gestioneAmministrativa;
 
 import it.unisa.zwhbackend.model.entity.GestorePagamento;
 import it.unisa.zwhbackend.model.entity.SegnalazionePagamento;
+import java.util.List;
 import java.util.Optional;
 
 public interface AmministrazioneService {
@@ -19,6 +20,8 @@ public interface AmministrazioneService {
 
   Optional<SegnalazionePagamento> aggiornaStatoSegnalazionePagamento(
       Long id, GestorePagamento gestorePagamento, String dettagliRisoluzione);
+
+  List<SegnalazionePagamento> getAllSegnalazioni();
 
   /**
    * Risolve una segnalazione di ricetta.

@@ -8,9 +8,8 @@ describe('GestoreReportPagamentoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GestoreReportPagamentoComponent]
-    })
-    .compileComponents();
+      imports: [GestoreReportPagamentoComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GestoreReportPagamentoComponent);
     component = fixture.componentInstance;

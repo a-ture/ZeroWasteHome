@@ -2,6 +2,7 @@ package it.unisa.zwhbackend.service.gestioneAmministrativa;
 
 import it.unisa.zwhbackend.model.entity.GestorePagamento;
 import it.unisa.zwhbackend.model.entity.SegnalazionePagamento;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -33,4 +34,6 @@ public interface SegnalazionePagamentoService {
 
   public Optional<SegnalazionePagamento> aggiornaStatoSegnalazione(
       Long idSegnalazione, GestorePagamento gestore, String dettagliRisoluzione);
+
+  public List<SegnalazionePagamento> getAllSegnalazioni();
 }

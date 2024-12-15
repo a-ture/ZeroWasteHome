@@ -5,7 +5,7 @@ import { BottoneDettagliReportComponent } from '../bottone-dettagli-report/botto
 import { DettagliReportComponent } from '../dettagli-report/dettagli-report.component';
 import { BottoneFormSegnalazioneComponent } from '../bottone-form-segnalazione/bottone-form-segnalazione.component';
 import { FormSegnalazioneComponent } from '../form-segnalazione/form-segnalazione.component';
-
+import { SegnalazionePagamentoService } from '../../services/Servizio-SegnalazionePagamento/segnalazione-pagamento.service';
 @Component({
   selector: 'app-gestore-report-payment-table',
   standalone: true,
@@ -27,18 +27,17 @@ import { FormSegnalazioneComponent } from '../form-segnalazione/form-segnalazion
 export class GestoreReportPaymentTableComponent {
   // lista report
   @Input() reports: {
+    utente: string;
     info: {
-      descrizione: string; // Nome della proprietà, ad esempio "Descrizione", "Data Creazione", ecc.
-      utente: string;
       dataCreazione: Date;
-      statoSegnalazione: string;
-      dettagli: string;
+      stato: string;
+      descrizioneProblema: string;
     }[];
   }[] = [];
 
   // Metodo per controllare se il bottone deve essere visibile
-  isReportOpen(report: { info: { statoSegnalazione: string }[] }): boolean {
-    return report.info.some(info => info.statoSegnalazione === 'APERTA');
+  isReportOpen(report: { info: { stato: string }[] }): boolean {
+    return report.info.some(info => info.stato === 'APERTA');
   }
   // Indice del report selezionato per i dettagli
   selectedReportIndex: number | null = null;
@@ -50,6 +49,6 @@ export class GestoreReportPaymentTableComponent {
 
   // Recupera i dettagli del report selezionato
   getDetails(index: number): string {
-    return this.reports[index]?.info.map(info => info.dettagli).join('\n') || '';
+    return this.reports[index]?.info.map(info => info.descrizioneProblema).join('\n') || '';
   }
 }

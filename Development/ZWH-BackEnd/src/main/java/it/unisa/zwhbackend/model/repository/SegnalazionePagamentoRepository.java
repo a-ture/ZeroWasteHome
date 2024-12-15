@@ -1,6 +1,7 @@
 package it.unisa.zwhbackend.model.repository;
 
 import it.unisa.zwhbackend.model.entity.SegnalazionePagamento;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -28,4 +29,6 @@ public interface SegnalazionePagamentoRepository
    *     trovata
    */
   public Optional<SegnalazionePagamento> findById(Long id);
+
+  public List<SegnalazionePagamento> findAll();
 }
