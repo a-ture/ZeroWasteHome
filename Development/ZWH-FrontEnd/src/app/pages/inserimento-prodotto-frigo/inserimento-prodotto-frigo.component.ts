@@ -3,6 +3,10 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { DynamicFormComponent } from '../../components/dynamic-form/dynamic-form.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
+import {
+  InserisciProdottoFrigoService
+} from '../../services/servizio-inserisci-prodotto-frigo/inserisci-prodotto-frigo.service';
+import { Categoria, ProdottoReq } from '../../services/servizio-inserisci-prodotto-frigo/prodottoRequestDTO';
 
 @Component({
   selector: 'app-inserimento-prodotto-frigo',
@@ -24,6 +28,50 @@ export class InserimentoProdottoFrigoComponent implements OnInit {
 
   imageURL!: string;
 
+  constructor(private gestioneProdottoService: InserisciProdottoFrigoService) {}
+
+  onSubmit(formData: any): void {
+    const productDetails = history.state.productDetails;
+// Inizializza l'array
+    const categorie: Categoria[] = [];
+  if(productDetails != null){
+    if (productDetails.vegan != null && productDetails.vegan == "SI") {
+      categorie.push("VEGANO");
+    }
+    if (productDetails.glutenfree != null && productDetails.glutenfree == "SI") {
+      categorie.push("GLUTENFREE");
+    }
+    if (productDetails.vegetarian != null && productDetails.vegetarian == "SI") {
+      categorie.push("VEGETARIANO");
+    }
+  }
+    let tempBarcode = "100000000000000";
+  //non esistono codici a barre a 15 cifre, il back end capirà come gestirlo
+
+    if(productDetails != null){
+      tempBarcode = productDetails.barcode;
+    }
+    const prodottoInFrigo: ProdottoReq = {
+      codiceBarre: tempBarcode,
+      nomeProdotto: formData['Nome Prodotto'],
+      dataScadenza: formData['Scadenza'],
+      categoria: categorie,
+      quantità: formData['Quantità'],
+    };
+
+    console.log('Payload inviato:', prodottoInFrigo);
+
+    this.gestioneProdottoService.aggiungiProdottoInFrigo(prodottoInFrigo).subscribe({
+      next: response => {
+        console.log('Prodotto aggiunto con successo:', response);
+        alert('Prodotto aggiunto!');
+      },
+      error: error => {
+        console.error("Errore durante l'aggiunta del prodotto:", error);
+        alert(error);
+      },
+    });
+  }
   ngOnInit(): void {
     // Recupera i dati dalla navigazione
     const productDetails = history.state.productDetails;

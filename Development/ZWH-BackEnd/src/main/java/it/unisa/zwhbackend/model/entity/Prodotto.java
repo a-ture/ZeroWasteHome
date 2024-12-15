@@ -24,18 +24,17 @@ import java.util.List;
 }) // Esclude dalla serializzazione la lista utentiPossessori
 public class Prodotto {
 
-  /**
-   * Codice a barre del prodotto.
-   *
-   * <p>Questo campo è obbligatorio e deve avere una lunghezza massima di 8 caratteri, contenente
-   * solo cifre. Annota il campo con {@code @Pattern} per validare il formato del codice.
-   */
+
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment
+  @Column(name = "id", nullable = false)
+  private Long id;
+
   @Column(name = "codice_barre", nullable = false, unique = true)
   @Pattern(
-      regexp = "^[0-9]{1,8}$",
-      message =
-          "Il codice deve avere una lunghezza massima di 8 caratteri e deve contenere solo cifre.")
+          regexp = "^[0-9]{8,16}$",
+          message = "Il codice deve avere una lunghezza minima di 8 caratteri, massima di 16 caratteri e deve contenere solo cifre."
+  )
   private String codiceBarre;
 
   /**
@@ -81,10 +80,10 @@ public class Prodotto {
    * @param nomeProdotto il nome del prodotto
    * @param codiceBarre il codice a barre del prodotto
    */
-  public Prodotto(String nomeProdotto, String codiceBarre) {
+  public Prodotto(String nomeProdotto, String codiceBarre,ArrayList<String> categoria) {
     this.name = nomeProdotto;
     this.codiceBarre = codiceBarre;
-    this.categoria = new ArrayList<>();
+    this.categoria = categoria;
   }
 
   /**
@@ -150,18 +149,18 @@ public class Prodotto {
   }
 
   public @Pattern(
-      regexp = "^[0-9]{1,8}$",
+      regexp = "^[0-9]{8,16}$",
       message =
-          "Il codice deve avere una lunghezza massima di 8 caratteri e deve contenere solo cifre.")
+          "Il codice deve avere una lunghezza minima di 8 caratteri, massima di 16 caratteri e deve contenere solo cifre.")
   String getCodiceBarre() {
     return codiceBarre;
   }
 
   public void setCodiceBarre(
       @Pattern(
-              regexp = "^[0-9]{1,8}$",
+              regexp = "^[0-9]{8,16}$",
               message =
-                  "Il codice deve avere una lunghezza massima di 8 caratteri e deve contenere solo cifre.")
+                  "Il codice deve avere una lunghezza minima di 8 caratteri, massima di 16 caratteri e deve contenere solo cifre.")
           String codiceBarre) {
     this.codiceBarre = codiceBarre;
   }

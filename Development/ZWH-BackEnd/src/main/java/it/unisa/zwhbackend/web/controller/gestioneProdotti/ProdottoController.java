@@ -86,9 +86,11 @@ public class ProdottoController {
                     mediaType = "application/json",
                     schema = @Schema(example = "{ \"messaggio\": \"Errore imprevisto\" }")))
       })
-  @PostMapping("/aggiungi-prodotto/") // Mappa le richieste POST per aggiungere il prodotto
+  @PostMapping("/aggiungi-prodotto") // Mappa le richieste POST per aggiungere il prodotto
   public ResponseEntity<?> aggiungiProdottoFrigo(
       @RequestBody @Valid ProdottoRequestDTO prodottoRequestDTO, BindingResult bindingResult) {
+
+      prodottoRequestDTO.setIdUtente(SecurityContextHolder.getContext().getAuthentication().getName());
 
     // Gestione della validazione
     if (bindingResult.hasErrors()) {
@@ -114,7 +116,8 @@ public class ProdottoController {
               prodottoRequestDTO.getDataScadenza(),
               prodottoRequestDTO.getCodiceBarre(),
               prodottoRequestDTO.getQuantità(),
-              prodottoRequestDTO.getIdUtente());
+              prodottoRequestDTO.getIdUtente(),
+        prodottoRequestDTO.getCategoria());
       return new ResponseEntity<>(prodotto, HttpStatus.OK); // 200 OK
 
     } catch (IllegalStateException e) {

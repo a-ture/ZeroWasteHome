@@ -22,6 +22,20 @@
               </option>
             </select>
 
+            <input
+              *ngIf="field.type === 'date'"
+              type="date"
+              [name]="field.label"
+              [(ngModel)]="field.value"
+              class="form-control date-field"
+              [ngClass]="{
+                focused: focusedField === field.label,
+                'valid-date': field.value && field.value.length > 0,
+              }"
+              (focus)="onFocus(field.label)"
+              (blur)="onBlur(field.label)"
+            />
+
             <!-- Altri input -->
             <input
               *ngIf="field.type !== 'textarea' && field.type !== 'date' && field.type !== 'select'"

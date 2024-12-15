@@ -23,21 +23,22 @@
   text-align: center;
   padding: 10px;
 }
-
-.card-image {
+.card-image img {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f0f0f0;
   border-radius: 15px;
-  padding: 10px;
+  height: 150px;
 }
 
 .card-image img {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
   width: 100%;
-  max-height: 120px;
-  object-fit: contain;
 }
 
 .card-content {

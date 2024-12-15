@@ -29,7 +29,7 @@ public interface ProdottoService {
    * @return il prodotto inserito
    * @throws IllegalArgumentException se uno dei parametri non rispetta i vincoli di validazione
    */
-  public Prodotto inserisciProdotto(String nomeProdotto, String dataScadenza, String codiceBarre);
+  public Prodotto inserisciProdotto(String nomeProdotto, String dataScadenza, String codiceBarre, List<String> categoria);
 
   /**
    * Aggiunge un prodotto al frigo associandolo a un utente.
@@ -50,7 +50,7 @@ public interface ProdottoService {
    * @throws IllegalStateException se l'utente con l'ID specificato non è trovato nel sistema
    */
   public Prodotto aggiungiProdottoFrigo(
-      String nomeProdotto, String dataScadenza, String codiceBarre, int quantita, String idUtente);
+      String nomeProdotto, String dataScadenza, String codiceBarre, int quantita, String idUtente, List<String> categoria);
 
   /**
    * Visualizza i prodotti presenti nella dispensa di un utente.

@@ -4,6 +4,7 @@ import it.unisa.zwhbackend.model.entity.Prodotto;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * Repository per l'entità {@code Prodotto}.
@@ -41,4 +42,7 @@ public interface ProdottoRepository extends JpaRepository<Prodotto, Long> {
    * @return una lista di {@code Prodotto} che soddisfano il criterio di ricerca
    */
   List<Prodotto> findByNameContainingIgnoreCase(String name);
+
+  @Query(value = "SELECT codice_barre FROM prodotto WHERE LENGTH(codice_barre) = 15 ORDER BY codice_barre DESC LIMIT 1", nativeQuery = true)
+  String findMaxCodiceBarreWith15Digits();
 }
