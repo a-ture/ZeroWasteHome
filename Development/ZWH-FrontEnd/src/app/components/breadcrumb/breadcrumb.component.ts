@@ -5,10 +5,10 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 @Component({
   selector: 'app-breadcrumb',
-  templateUrl: './breadcrumb.component.html',
-  styleUrls: ['./breadcrumb.component.scss'],
   standalone: true,
   imports: [BreadcrumbModule],
+  templateUrl: './breadcrumb.component.html',
+  styleUrls: ['./breadcrumb.component.css'],
 })
 export class BreadcrumbComponent implements OnInit {
   home: MenuItem = { icon: 'pi pi-home', label: 'Home', routerLink: '/home' };

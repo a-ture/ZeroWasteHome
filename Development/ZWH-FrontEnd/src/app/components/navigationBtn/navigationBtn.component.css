@@ -1,6 +1,6 @@
 .my-btn1 {
   min-width: 100px;
-  background-color: #4d4d4d;
+  background-color: #8ba576;
   color: #ffffff;
   padding: 10px 15px;
   border: none;
@@ -12,7 +12,7 @@
 }
 
 .my-btn1:hover {
-  background-color: #3a3a3a;
+  background-color: #778a67;
 }
 
 .my-btn1:active {
@@ -23,7 +23,7 @@
 @media (max-width: 768px) {
   .my-btn1 {
     min-width: 10px;
-    background-color: #4d4d4d;
+    background-color: #8ba576;
     color: #ffffff;
     padding: 10px 15px;
     border: none;
