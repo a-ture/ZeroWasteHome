@@ -80,6 +80,33 @@ public class Prodotto {
   private List<String> categoria;
 
   /**
+   * Nome dell'immagine del prodotto.
+   *
+   * <p>Questo campo rappresenta il nome del file immagine associato al prodotto. Viene utilizzato
+   * per memorizzare il percorso relativo o il nome del file immagine caricato per il prodotto.
+   */
+  @Column(name = "img")
+  private String img;
+
+  /**
+   * Getter per il campo img.
+   *
+   * @return il nome del file immagine associato al prodotto.
+   */
+  public String getImg() {
+    return img;
+  }
+
+  /**
+   * Setter per il campo img.
+   *
+   * @param img il nome del file immagine da associare al prodotto.
+   */
+  public void setImg(String img) {
+    this.img = img;
+  }
+
+  /**
    * Lista degli utenti che possiedono il prodotto.
    *
    * <p>Relazione uno-a-molti gestita tramite {@code @OneToMany}. Indica che un prodotto può essere

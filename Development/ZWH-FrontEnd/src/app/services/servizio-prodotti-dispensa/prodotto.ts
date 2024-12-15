@@ -5,6 +5,7 @@ export class Prodotto {
   nomeProdotto: string;
   dataScadenza: string;
   quantità: number;
+  img: string;
   idUtente: string;
 
   constructor(
@@ -12,6 +13,7 @@ export class Prodotto {
     nomeProdotto: string,
     dataScadenza: string,
     quantità: number,
+    img: string,
     idUtente: string,
   ) {
     this.codiceBarre = codiceBarre;
@@ -19,6 +21,7 @@ export class Prodotto {
     this.dataScadenza = dataScadenza;
     this.quantità = quantità;
     this.idUtente = idUtente;
+    this.img = img;
   }
 
   // Metodo statico per mappare una risposta API a un'istanza della classe
@@ -28,6 +31,7 @@ export class Prodotto {
       response.nomeProdotto,
       response.dataScadenza,
       response.quantità,
+      response.img,
       response.idUtente,
     );
   }
@@ -39,6 +43,7 @@ export class Prodotto {
       nomeProdotto: this.nomeProdotto,
       dataScadenza: this.dataScadenza,
       quantità: this.quantità,
+      img: this.img,
       idUtente: this.idUtente,
     };
   }

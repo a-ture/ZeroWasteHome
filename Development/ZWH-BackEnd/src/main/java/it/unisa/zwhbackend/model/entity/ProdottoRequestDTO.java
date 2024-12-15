@@ -59,6 +59,23 @@ public class ProdottoRequestDTO {
   private String idUtente;
 
   /**
+   * Nome dell'immagine del prodotto.
+   *
+   * <p>Questo campo rappresenta il nome del file immagine associato al prodotto. Viene utilizzato
+   * per memorizzare il percorso relativo o il nome del file immagine caricato per il prodotto.
+   */
+  private String img; // Variabile per memorizzare il nome dell'immagine del prodotto
+
+  // Getter e Setter per il campo img
+  public String getImg() {
+    return img;
+  }
+
+  public void setImg(String img) {
+    this.img = img;
+  }
+
+  /**
    * Categoria del prodotto.
    *
    * <p>Una lista di stringhe che rappresenta le categorie associate al prodotto. Ad esempio,
@@ -104,7 +121,22 @@ public class ProdottoRequestDTO {
     this.idUtente = idUtente;
   }
 
-  // Getter e Setter per idUtente
+  public ProdottoRequestDTO(
+      String codiceBarre,
+      String nomeProdotto,
+      String img,
+      String dataScadenza,
+      int quantità,
+      String idUtente) {
+    this.codiceBarre = codiceBarre;
+    this.nomeProdotto = nomeProdotto;
+    this.dataScadenza = dataScadenza;
+    this.quantità = quantità;
+    this.img = img;
+    this.idUtente = idUtente;
+  }
+
+  // Getter e Setter per l'id dell'utente
   public String getIdUtente() {
     return idUtente;
   }

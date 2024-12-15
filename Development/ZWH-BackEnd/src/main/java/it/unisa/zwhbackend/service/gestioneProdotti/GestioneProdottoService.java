@@ -291,6 +291,7 @@ public class GestioneProdottoService implements ProdottoService {
             new ProdottoRequestDTO(
                 prodotto.getCodiceBarre(),
                 prodotto.getName(),
+                prodotto.getImg(),
                 relazione.getDataScadenza(),
                 relazione.getQuantita(),
                 relazione.getUtente().getEmail()));
