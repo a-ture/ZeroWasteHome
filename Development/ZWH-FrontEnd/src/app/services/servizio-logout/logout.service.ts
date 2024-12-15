@@ -13,6 +13,7 @@ export class LogoutService {
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('admin_token');
     this.navigateToRoot();
 
     this.messageService.add({
