@@ -24,7 +24,7 @@ export class InserimentoRicettaComponent {
       options: ['ANTIPASTO', 'PRIMO', 'SECONDO', 'CONTORNO', 'DOLCE'],
     },
     { label: 'Ingredienti', type: 'textarea', value: '' },
-    { label: 'Passaggi', type: 'textarea', value: '' },
+    { label: 'Istruzioni', type: 'textarea', value: '' },
   ];
 
   page: string = 'Informazioni Ricetta';
@@ -39,6 +39,11 @@ export class InserimentoRicettaComponent {
       imageFileName = fileInput.files[0].name; // Ottieni il nome del file caricato
     }
 
+    if (!formData['Categoria ricetta']) {
+      alert('Seleziona una categoria valida per la ricetta');
+      return;
+    }
+
     const ricetta: Ricetta = {
       nome: formData['Nome Ricetta'],
       quantitaPerPersona: parseInt(formData['Quantità per persona'], 10),
@@ -46,8 +51,8 @@ export class InserimentoRicettaComponent {
       ingredienti: formData['Ingredienti']
         ? formData['Ingredienti'].split(',').map((ingrediente: string) => ingrediente.trim())
         : [],
-      istruzioni: formData['Passaggi'],
-      img: imageFileName, // Usa il nome del file
+      istruzioni: formData['Istruzioni'],
+      ...(imageFileName && { img: imageFileName }), // Usa il nome del file solo se esiste
     };
 
     console.log('Payload inviato:', ricetta);
@@ -59,7 +64,7 @@ export class InserimentoRicettaComponent {
       },
       error: error => {
         console.error("Errore durante l'aggiunta della ricetta:", error);
-        alert(error);
+        alert(error.message);
       },
     });
   }

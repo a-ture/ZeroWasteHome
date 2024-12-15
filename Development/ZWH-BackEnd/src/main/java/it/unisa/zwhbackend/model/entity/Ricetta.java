@@ -125,44 +125,83 @@ public class Ricetta {
     this.id = id;
   }
 
-  public String getNome() {
+  public @NotBlank(message = "Il campo 'Nome della ricetta' è obbligatorio") @Size(
+      min = 1,
+      max = 100,
+      message = "Il nome della ricetta deve essere tra 1 e 100 caratteri") String getNome() {
     return nome;
   }
 
-  public void setNome(String nome) {
+  public void setNome(
+      @NotBlank(message = "Il campo 'Nome della ricetta' è obbligatorio")
+          @Size(
+              min = 1,
+              max = 100,
+              message = "Il nome della ricetta deve essere tra 1 e 100 caratteri")
+          String nome) {
     this.nome = nome;
   }
 
-  public List<String> getIngredienti() {
+  public @NotNull(message = "L'elenco ingredienti non può essere nullo") @NotEmpty(
+      message = "L'elenco ingredienti non può essere vuoto") List<String> getIngredienti() {
     return ingredienti;
   }
 
-  public void setIngredienti(List<String> ingredienti) {
+  public void setIngredienti(
+      @NotNull(message = "L'elenco ingredienti non può essere nullo")
+          @NotEmpty(message = "L'elenco ingredienti non può essere vuoto")
+          List<String> ingredienti) {
     this.ingredienti = ingredienti;
   }
 
-  public String getIstruzioni() {
+  public @NotBlank(message = "Il campo 'Istruzioni' è obbligatorio") @Size(
+      max = 5000,
+      message = "Le istruzioni non possono superare i 5000 caratteri") String getIstruzioni() {
     return istruzioni;
   }
 
-  public void setIstruzioni(String istruzioni) {
+  public void setIstruzioni(
+      @NotBlank(message = "Il campo 'Istruzioni' è obbligatorio")
+          @Size(max = 5000, message = "Le istruzioni non possono superare i 5000 caratteri")
+          String istruzioni) {
     this.istruzioni = istruzioni;
   }
 
-  public CategoriaRicetta getCategoria() {
+  public @NotNull(message = "Seleziona una categoria valida per la ricetta") CategoriaRicetta
+      getCategoria() {
     return categoria;
   }
 
-  public void setCategoria(CategoriaRicetta categoria) {
+  public void setCategoria(
+      @NotNull(message = "Seleziona una categoria valida per la ricetta")
+          CategoriaRicetta categoria) {
     this.categoria = categoria;
   }
 
-  public String getImg() {
+  public @Pattern(
+      regexp = ".*\\.(jpg|png)$",
+      message = "Formato immagine non supportato. Carica un file in formato JPG o PNG") String
+      getImg() {
     return img;
   }
 
-  public void setImg(String img) {
+  public void setImg(
+      @Pattern(
+              regexp = ".*\\.(jpg|png)$",
+              message = "Formato immagine non supportato. Carica un file in formato JPG o PNG")
+          String img) {
     this.img = img;
+  }
+
+  @Min(value = 1, message = "La quantità per persona deve essere almeno 1")
+  public int getQuantitaPerPersona() {
+    return quantitaPerPersona;
+  }
+
+  public void setQuantitaPerPersona(
+      @Min(value = 1, message = "La quantità per persona deve essere almeno 1")
+          int quantitaPerPersona) {
+    this.quantitaPerPersona = quantitaPerPersona;
   }
 
   public Utente getAutore() {
@@ -173,11 +212,11 @@ public class Ricetta {
     this.autore = autore;
   }
 
-  public int getQuantitaPerPersona() {
-    return quantitaPerPersona;
+  public List<SegnalazioneRicetta> getSegnalazioniRicetta() {
+    return segnalazioniRicetta;
   }
 
-  public void setQuantitaPerPersona(int quantitaPerPersona) {
-    this.quantitaPerPersona = quantitaPerPersona;
+  public void setSegnalazioniRicetta(List<SegnalazioneRicetta> segnalazioniRicetta) {
+    this.segnalazioniRicetta = segnalazioniRicetta;
   }
 }
