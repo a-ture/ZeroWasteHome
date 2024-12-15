@@ -48,9 +48,9 @@ export class LoginGestoreService {
         });
 
         if (roles == 'GESTORE_COMMUNITY') {
-          this.router.navigate(['/pagina-gestore']);
+          this.router.navigate(['/gestore-community']);
         } else if (roles == 'GESTORE_PAGAMENTO') {
-          this.router.navigate(['/pagina-gestore']);
+          this.router.navigate(['/gestore-segnalazioni']);
         }
       }),
       catchError(error => {

@@ -1,0 +1,61 @@
+/* Stile generale della tabella */
+table {
+  background-color: #e1dac7;
+  width: 800px;
+  margin: 20px auto;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Stile per l'intestazione della tabella */
+thead tr {
+  background-color: #718c5c;
+  color: #ffffff;
+}
+
+th,
+td {
+  padding: 15px;
+  border: 1px solid #ccc;
+}
+
+/* Alternanza dei colori per le righe del corpo */
+tbody tr {
+  background-color: #e6e6e6;
+}
+
+tbody tr:nth-of-type(even) {
+  background-color: #d4d4d4;
+}
+
+/* Righe e celle della tabella */
+th {
+  font-weight: bold;
+}
+
+td {
+  background-color: #e1dac7;
+}
+
+/* Pulsanti di azione nella colonna Azioni */
+td:last-child {
+  text-align: center;
+}
+
+td:last-child navigationBtn {
+  display: inline-block;
+  background-color: #718c5c;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+td:last-child navigationBtn:hover {
+  background-color: #5a6e47;
+}

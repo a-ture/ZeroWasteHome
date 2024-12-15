@@ -1,4 +1,5 @@
 .styled-table {
+  background-color: #e1dac7;
   width: 800px;
   margin: 20px auto;
   border-collapse: collapse;
@@ -9,7 +10,7 @@
 }
 
 .styled-table thead tr {
-  background-color: #4d4d4d;
+  background-color: #718c5c;
   color: #ffffff;
 }
 
@@ -29,6 +30,10 @@
 
 .styled-table th {
   font-weight: bold;
+}
+
+.styled-table td {
+  background-color: #e1dac7;
 }
 
 .styled-table td img {

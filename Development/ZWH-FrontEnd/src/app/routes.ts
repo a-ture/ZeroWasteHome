@@ -110,7 +110,7 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'pagina-gestore',
+    path: 'gestore-community',
     component: SegnalazioneRicettaGestoreComponent,
     canActivate: [AdminAuthGuard],
   },
@@ -141,9 +141,9 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'lista-report',
+    path: 'gestore-segnalazioni',
     component: GestoreReportPagamentoComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AdminAuthGuard],
   },
   {
     path: 'coming-soon',
