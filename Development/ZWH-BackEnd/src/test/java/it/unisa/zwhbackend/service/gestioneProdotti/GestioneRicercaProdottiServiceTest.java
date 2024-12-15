@@ -3,7 +3,10 @@ package it.unisa.zwhbackend.service.gestioneProdotti;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import it.unisa.zwhbackend.model.entity.PossiedeInDispensa;
 import it.unisa.zwhbackend.model.entity.Prodotto;
+import it.unisa.zwhbackend.model.entity.ProdottoRequestDTO;
+import it.unisa.zwhbackend.model.entity.Utente;
 import it.unisa.zwhbackend.model.enums.CategoriaAlimentare;
 import it.unisa.zwhbackend.model.repository.PossiedeInDispensaRepository;
 import it.unisa.zwhbackend.model.repository.PossiedeInFrigoRepository;
@@ -59,18 +62,41 @@ class GestioneRicercaProdottiServiceTest {
   @Test
   void testTC_GUS_RPN_01() {
     // Arrange: Preparazione del contesto di test
+    String emailUtente = "test1@example.com";
     String nomeProdotto = "Pasta";
+
+    // Creazione di un prodotto e di un record in dispensa associato all'utente
     Prodotto prodotto = creaProdotto(nomeProdotto);
+    prodotto.setCodiceBarre("1234567890123");
+
+    PossiedeInDispensa recordDispensa = new PossiedeInDispensa();
+    recordDispensa.setProdotto(prodotto);
+    recordDispensa.setQuantita(2);
+    recordDispensa.setDataScadenza("2024-12-31");
+
+    Utente utente = new Utente();
+    utente.setEmail(emailUtente);
+
+    // Mock del comportamento dei repository
     when(prodottoRepository.findByNameContainingIgnoreCase(nomeProdotto))
-        .thenReturn(List.of(prodotto));
+        .thenReturn(List.of(prodotto)); // Simula il ritorno del prodotto filtrato
+    when(possiedeInDispensaRepository.findByUtente(any(Utente.class)))
+        .thenReturn(List.of(recordDispensa)); // Simula il record in dispensa
 
     // Act: Esecuzione del metodo da testare
-    List<Prodotto> risultato = gestioneProdottoService.RicercaPerNome(nomeProdotto);
+    List<ProdottoRequestDTO> risultato =
+        gestioneProdottoService.RicercaPerNome(emailUtente, nomeProdotto);
 
-    // Assert: Verifica il risultato
+    // Assert: Verifica del risultato
     assertNotNull(risultato);
-    assertEquals(1, risultato.size());
-    assertEquals("Pasta", risultato.get(0).getName());
+    assertEquals(1, risultato.size()); // Verifica che ci sia un solo risultato
+
+    // Verifica dei dettagli del DTO restituito
+    ProdottoRequestDTO dto = risultato.get(0);
+    assertEquals("Pasta", dto.getNomeProdotto());
+    assertEquals("1234567890123", dto.getCodiceBarre());
+    assertEquals("2024-12-31", dto.getDataScadenza());
+    assertEquals(2, dto.getQuantità());
   }
 
   /**
@@ -93,7 +119,7 @@ class GestioneRicercaProdottiServiceTest {
         assertThrows(
             NoSuchElementException.class,
             () -> {
-              gestioneProdottoService.RicercaPerNome(nomeProdotto);
+              gestioneProdottoService.RicercaPerNome("test1@example.com", nomeProdotto);
             });
     assertEquals("Nessun prodotto trovato", exception.getMessage());
   }
