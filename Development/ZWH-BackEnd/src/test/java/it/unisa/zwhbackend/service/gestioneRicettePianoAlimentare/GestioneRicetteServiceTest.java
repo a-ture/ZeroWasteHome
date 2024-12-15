@@ -207,6 +207,7 @@ class GestioneRicetteServiceTest {
     ricetta.setIngredienti(List.of("Farina", " Uova", "Cioccolato"));
     ricetta.setIstruzioni("Mescolare e cuocere a 180 gradi");
     ricetta.setCategoria(CategoriaRicetta.DOLCE);
+    ricetta.setQuantitaPerPersona(1);
     ricetta.setImg("Torta.jpg");
     return ricetta;
   }
