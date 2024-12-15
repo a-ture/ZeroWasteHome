@@ -33,38 +33,40 @@ export class InserimentoProdottoFrigoComponent implements OnInit {
 
   onSubmit(formData: any): void {
     const productDetails = history.state.productDetails;
+
     // Inizializza l'array
     const categorie: Categoria[] = [];
     if (productDetails != null) {
       if (productDetails.vegan != null && productDetails.vegan == 'SI') {
         categorie.push('VEGANO');
       }
-      if (productDetails.glutenfree != null && productDetails.glutenfree == 'SI') {
-        categorie.push('GLUTENFREE');
+      if (productDetails.glutenFree != null && productDetails.glutenFree == 'SI') {
+        categorie.push('SENZA_GLUTINE');
       }
       if (productDetails.vegetarian != null && productDetails.vegetarian == 'SI') {
         categorie.push('VEGETARIANO');
       }
     }
+
     let tempBarcode = '100000000000000';
     //non esistono codici a barre a 15 cifre, il back end capirà come gestirlo
-
-    if (formData['Scadenza'] == null) {
-      alert('Inserisci la data di scadenza');
-    }
 
     if (productDetails != null) {
       tempBarcode = productDetails.barcode;
     }
+
     const prodottoInFrigo: ProdottoReq = {
       codiceBarre: tempBarcode,
       nomeProdotto: formData['Nome Prodotto'],
       dataScadenza: formData['Scadenza'],
       categoria: categorie,
-      quantità: formData['Quantità'],
+      img: this.imageURL || 'https://placehold.jp/200x200.png',
+      quantità: Number(formData['Quantità']),
     };
 
     console.log('Payload inviato:', prodottoInFrigo);
+
+    prodottoInFrigo.nomeProdotto = this.normalizeName(prodottoInFrigo.nomeProdotto);
 
     this.gestioneProdottoService.aggiungiProdottoInFrigo(prodottoInFrigo).subscribe({
       next: response => {
@@ -73,6 +75,7 @@ export class InserimentoProdottoFrigoComponent implements OnInit {
       },
       error: error => {
         console.error("Errore durante l'aggiunta del prodotto:");
+        alert(error);
       },
     });
   }
@@ -91,5 +94,14 @@ export class InserimentoProdottoFrigoComponent implements OnInit {
     }
     // Imposta l'immagine
     this.imageURL = productDetails.imageUrl;
+  }
+
+  normalizeName(nomeProdotto: string): string {
+    // Rimuove le lettere speciali, sostituendole con versioni normali
+    const normalized = nomeProdotto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    // Rimuove le parentesi tonde
+    const noParentheses = normalized.replace(/[()]/g, '');
+    // Ritorna il nome normalizzato
+    return noParentheses;
   }
 }

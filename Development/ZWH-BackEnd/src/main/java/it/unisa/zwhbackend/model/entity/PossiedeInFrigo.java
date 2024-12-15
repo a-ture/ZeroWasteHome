@@ -57,7 +57,7 @@ public class PossiedeInFrigo {
   @Column(name = "data_scadenza")
   @Pattern(
       regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$",
-      message = "La Data deve essere del formato gg/mm/aa.")
+      message = "La Data deve essere del formato gg/mm/aaaa.")
   private String dataScadenza;
 
   /**
@@ -116,14 +116,14 @@ public class PossiedeInFrigo {
 
   public @Pattern(
       regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$",
-      message = "La Data deve essere del formato gg/mm/aa.") String getDataScadenza() {
+      message = "La Data deve essere del formato gg/mm/aaaa.") String getDataScadenza() {
     return dataScadenza;
   }
 
   public void setDataScadenza(
       @Pattern(
               regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$",
-              message = "La Data deve essere del formato gg/mm/aa.")
+              message = "La Data deve essere del formato gg/mm/aaaa.")
           String dataScadenza) {
     this.dataScadenza = dataScadenza;
   }

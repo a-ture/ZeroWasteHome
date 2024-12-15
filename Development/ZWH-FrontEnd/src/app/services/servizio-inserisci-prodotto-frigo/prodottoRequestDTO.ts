@@ -3,7 +3,8 @@ export interface ProdottoReq {
   nomeProdotto: string;
   dataScadenza: string;
   categoria: Categoria[];
+  img: string;
   quantità: number;
 }
 
-export type Categoria = 'VEGANO' | 'VEGETARIANO' | 'GLUTENFREE';
+export type Categoria = 'VEGANO' | 'VEGETARIANO' | 'SENZA_GLUTINE';

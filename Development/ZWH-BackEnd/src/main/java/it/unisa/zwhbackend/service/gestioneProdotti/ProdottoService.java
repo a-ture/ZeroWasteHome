@@ -60,6 +60,7 @@ public interface ProdottoService {
    * @param idUtente l'email dell'utente associato al prodotto; non può essere nulla
    * @param categoria una lista di stringhe che rappresentano le categorie associate al prodotto;
    *     può essere vuota
+   * @param img l'url dell'immagine del prodotto
    * @return il prodotto aggiunto o aggiornato
    * @throws IllegalArgumentException se uno dei parametri non rispetta i vincoli di validazione
    * @throws IllegalStateException se l'utente specificato non esiste nel sistema
@@ -70,7 +71,8 @@ public interface ProdottoService {
       String codiceBarre,
       int quantita,
       String idUtente,
-      List<String> categoria);
+      List<String> categoria,
+      String img);
 
   /**
    * Visualizza i prodotti presenti nella dispensa di un utente.
@@ -84,6 +86,8 @@ public interface ProdottoService {
    * @throws IllegalStateException se l'utente specificato non esiste nel sistema
    */
   List<ProdottoRequestDTO> visualizzaProdottiDispensa(String email);
+
+  List<ProdottoRequestDTO> visualizzaProdottiFrigo(String email);
 
   /**
    * Esegue una ricerca di prodotti di un utente basandosi su un criterio parziale del nome del
