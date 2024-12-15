@@ -55,6 +55,11 @@ export class InserimentoProdottoFrigoComponent implements OnInit {
       tempBarcode = productDetails.barcode;
     }
 
+    if (formData['Scadenza'] == null) {
+      alert('Inserisci la data di scadenza');
+      return;
+    }
+
     const prodottoInFrigo: ProdottoReq = {
       codiceBarre: tempBarcode,
       nomeProdotto: formData['Nome Prodotto'],
