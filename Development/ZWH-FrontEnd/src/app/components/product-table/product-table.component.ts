@@ -12,12 +12,10 @@ import { NgForOf } from '@angular/common';
 export class productTableComponent {
   // Lista prodotti
   @Input() products: {
+    id: number; // Aggiunto ID direttamente nella struttura dei prodotti
     src: string;
     info: { name: string; val: string }[];
   }[] = [];
-
-  // ID dei prodotti
-  @Input() productIds: number[] = [];
 
   // Bottoni da stampare
   @Input() buttuns: string[] = [];
@@ -25,7 +23,7 @@ export class productTableComponent {
   // Eventi dinamici
   @Input() events: ((id: number) => void)[] = [];
 
-  // Struttura che associa bottoni, eventi e ID
+  // Struttura che associa bottoni ed eventi
   structButtons: { button: string; event: (id: number) => void }[] = [];
 
   ngOnInit(): void {

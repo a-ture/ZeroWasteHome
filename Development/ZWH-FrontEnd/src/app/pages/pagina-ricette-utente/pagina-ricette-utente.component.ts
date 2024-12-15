@@ -38,17 +38,23 @@ export class PaginaRicetteUtenteComponent implements OnInit {
   // Proprietà per i buttons relativi ad ogni prodotto
   buttonList = ['Visualizza', 'Modifica', 'Condividi', 'Elimina'];
 
-  //l'id della ricetta va preso dinamicamente dal DB, bisogna avere gli id di tutte le
-  //ricette, metterli in un array e assegnare ogni id all'evento
-  private IdRicetta: number = 1;
-
   // Eventi per i bottoni
   buttonEvents = [
-    () => this.router.navigate(['area-personale/le-mie-ricette/visualizza-ricetta']), // Visualizza
-    () => console.log(`Modifica cliccato per ricetta ${this.IdRicetta}`), // Modifica
-    () => console.log(`Condividi cliccato per ricetta ${this.IdRicetta}`), // Condividi
-    () => console.log(`Elimina cliccato per ricetta ${this.IdRicetta}`), // Elimina
+    (id: number) => this.visualizzaRicetta(id), // Visualizza
+    (id: number) => console.log(), // Modifica
+    (id: number) => console.log(), // Condividi
+    (id: number) => console.log(), // Elimina
   ];
+
+  visualizzaRicetta(id: number): void {
+    this.gestioneRicetteService.getRicettaById(id).subscribe({
+      next: data => {
+        // Naviga alla pagina di visualizzazione della ricetta, passando l'ID
+        this.router.navigate([`/area-personale/le-mie-ricette/visualizza-ricetta`, id]);
+      },
+      error: err => console.error('Errore durante il recupero della ricetta:', err),
+    });
+  }
 
   ngOnInit() {
     this.loadRicette();
@@ -59,7 +65,8 @@ export class PaginaRicetteUtenteComponent implements OnInit {
       next: data => {
         console.log(data);
         this.recipeList = data.map(ricetta => ({
-          src: ricetta.img || 'https://placehold.jp/200x200.png',
+          id: ricetta.id, // Aggiungi l'ID della ricetta
+          src: 'https://placehold.jp/200x200.png',
           info: [
             { name: 'Nome Ricetta', val: ricetta.nome },
             { name: 'Tipologia Ricetta', val: ricetta.categoria },

@@ -33,4 +33,8 @@ export class GestioneRicetteService {
   getRicetteByUtente(): Observable<Ricetta[]> {
     return this.http.get<Ricetta[]>(`${this.apiUrl}/ottieniRicette`);
   }
+
+  getRicettaById(id: any): Observable<Ricetta> {
+    return this.http.get<Ricetta>(`${this.apiUrl}/${id}`);
+  }
 }
