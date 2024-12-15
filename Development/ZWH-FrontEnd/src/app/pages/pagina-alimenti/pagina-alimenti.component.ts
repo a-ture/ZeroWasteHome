@@ -122,7 +122,7 @@ export class PaginaAlimentiComponent implements OnInit {
     this.dispensaService.visualizzaDispensa().subscribe({
       next: (products: Prodotto[]) => {
         this.productList = products.map(product => ({
-          src: 'https://via.placeholder.com/200', // Placeholder per immagini prodotto
+          src: product.img || 'https://via.placeholder.com/200', // Placeholder per immagini prodotto
           info: [
             { name: 'Nome', val: product.nomeProdotto },
             { name: 'Quantità', val: product.quantità },
