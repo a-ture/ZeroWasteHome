@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;
  * dei dati relativi ai prodotti. Include un metodo personalizzato per trovare un prodotto tramite
  * il suo codice a barre.
  *
- * @author Marco Meglio
+ * @author Marco Meglio, Alessandra Trotta
  */
 public interface ProdottoRepository extends JpaRepository<Prodotto, Long> {
 
@@ -43,6 +43,16 @@ public interface ProdottoRepository extends JpaRepository<Prodotto, Long> {
    */
   List<Prodotto> findByNameContainingIgnoreCase(String name);
 
-  @Query(value = "SELECT codice_barre FROM prodotto WHERE LENGTH(codice_barre) = 15 ORDER BY codice_barre DESC LIMIT 1", nativeQuery = true)
+  /**
+   * Recupera il codice a barre di lunghezza esattamente 15 cifre con il valore massimo, ordinato in
+   * ordine decrescente.
+   *
+   * @return il codice a barre più alto di 15 cifre, o {@code null} se non esiste alcun codice a
+   *     barre con queste caratteristiche
+   */
+  @Query(
+      value =
+          "SELECT codice_barre FROM prodotto WHERE LENGTH(codice_barre) = 15 ORDER BY codice_barre DESC LIMIT 1",
+      nativeQuery = true)
   String findMaxCodiceBarreWith15Digits();
 }
