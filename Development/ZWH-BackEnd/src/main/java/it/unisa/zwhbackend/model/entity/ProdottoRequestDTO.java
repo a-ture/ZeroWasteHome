@@ -2,6 +2,8 @@ package it.unisa.zwhbackend.model.entity;
 
 // Importazioni per la validazione dei campi
 
+import java.util.List;
+
 /**
  * Data Transfer Object (DTO) che rappresenta un oggetto di richiesta per un prodotto.
  *
@@ -56,6 +58,15 @@ public class ProdottoRequestDTO {
   private String
       idUtente; // Variabile per avere un corretto riferimento all'utente che inserisci il prodotto
 
+  private List<String> categoria;
+
+  public List<String> getCategoria() {
+    return categoria;
+  }
+
+  public void setCategoria(List<String> categoria) {
+    this.categoria = categoria;
+  }
   public ProdottoRequestDTO(
       String codiceBarre, String nomeProdotto, String dataScadenza, int quantità, String idUtente) {
     this.codiceBarre = codiceBarre;
@@ -71,7 +82,9 @@ public class ProdottoRequestDTO {
   public String getIdUtente() {
     return idUtente;
   }
-
+  public void setIdUtente(String idUtente) {
+    this.idUtente = idUtente;
+  }
   // Getter e Setter per il campo codiceBarre
   public String getCodiceBarre() {
     return codiceBarre;

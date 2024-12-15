@@ -5,6 +5,10 @@ import it.unisa.zwhbackend.model.repository.PossiedeInDispensaRepository;
 import it.unisa.zwhbackend.model.repository.PossiedeInFrigoRepository;
 import it.unisa.zwhbackend.model.repository.ProdottoRepository;
 import it.unisa.zwhbackend.model.repository.UtenteRepository;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -24,7 +28,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class GestioneProdottoService implements ProdottoService {
-
+  private final String PRODOTTO_SENZA_CODICE = "100000000000000";
   // Dichiarazione dei repository utilizzati per interagire con il database
   private final ProdottoRepository prodottoRepository;
   private final PossiedeInFrigoRepository possiedeInFrigoRepository;
@@ -62,9 +66,9 @@ public class GestioneProdottoService implements ProdottoService {
    * @param codiceBarre il codice a barre del prodotto
    * @return il prodotto appena creato e salvato nel database
    */
-  public Prodotto inserisciProdotto(String nomeProdotto, String dataScadenza, String codiceBarre) {
+  public Prodotto inserisciProdotto(String nomeProdotto, String dataScadenza, String codiceBarre, List<String> categoria) {
     // Crea una nuova istanza di Prodotto
-    Prodotto prodotto = new Prodotto(nomeProdotto, codiceBarre);
+    Prodotto prodotto = new Prodotto(nomeProdotto, codiceBarre, categoria);
     return prodottoRepository.save(prodotto); // Salva il prodotto nel database
   }
 
@@ -96,12 +100,43 @@ public class GestioneProdottoService implements ProdottoService {
    * @throws RuntimeException in caso di errore non gestito durante l'aggiunta
    */
   public Prodotto aggiungiProdottoFrigo(
-      String nomeProdotto, String dataScadenza, String codiceBarre, int quantita, String email) {
+      String nomeProdotto, String dataScadenza, String codiceBarre, int quantita, String email, List<String> categoria) {
     // Validazione dei campi
+
+    DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    try {
+      LocalDate date = LocalDate.parse(dataScadenza, inputFormatter);
+      dataScadenza = date.format(outputFormatter);
+    } catch (DateTimeParseException e) {
+      System.out.println("formato data non valido");
+    }
+
+    System.out.println("la data di scadenza è: _" + dataScadenza + "_");
+
     validaCodiceBarre(codiceBarre);
     validaNomeProdotto(nomeProdotto);
     validaQuantita(quantita);
     validaDataScadenza(dataScadenza);
+    System.out.println("aaaaaaaaaa : " + codiceBarre + " aaaa : " + codiceBarre.equals(PRODOTTO_SENZA_CODICE));
+    //è un segnale che si tratta di un prodotto senza codice a barre
+    if (codiceBarre.equals(PRODOTTO_SENZA_CODICE)) {
+      // Trova il codice a 15 cifre con il valore più alto
+      String temp = prodottoRepository.findMaxCodiceBarreWith15Digits();
+
+      // Se non esiste, inizializza con il valore di default
+      if (temp == null) {
+        temp = PRODOTTO_SENZA_CODICE;
+      }
+
+      // Incrementa il valore numerico del codice a barre
+      long nuovoCodiceBarre = Long.parseLong(temp) + 1;
+
+      // Aggiorna il codice a barre come stringa
+      codiceBarre = String.valueOf(nuovoCodiceBarre);
+      System.out.println("Nuovo codice a barre generato: " + codiceBarre);
+    }
 
     // Controlla se il prodotto esiste già nel database
     Optional<Prodotto> prodottoOptional = prodottoRepository.findByCodiceBarre(codiceBarre);
@@ -109,7 +144,7 @@ public class GestioneProdottoService implements ProdottoService {
     if (prodottoOptional.isEmpty()) {
 
       // Se il prodotto non esiste, lo creiamo
-      prodotto = inserisciProdotto(nomeProdotto, dataScadenza, codiceBarre);
+      prodotto = inserisciProdotto(nomeProdotto, dataScadenza, codiceBarre, categoria);
       prodottoRepository.saveAndFlush(
           prodotto); // Inserisce nel DB e lo rende persistente immediatamente
     } else {
@@ -165,17 +200,18 @@ public class GestioneProdottoService implements ProdottoService {
 
     // restituisce il prodotto che sarebbe dovuto essere inserito
     if (prodotto == null) {
-      prodotto = new Prodotto(nomeProdotto, codiceBarre);
+      prodotto = new Prodotto(nomeProdotto, codiceBarre, categoria);
     }
 
     System.out.println(prodotto);
     return prodotto; // Ritorna il prodotto (sia nuovo che trovato)
   }
 
+
   private void validaCodiceBarre(String codiceBarre) {
-    if (codiceBarre == null || !codiceBarre.matches("^[0-9]{1,8}$")) {
+    if (codiceBarre == null || !codiceBarre.matches("^[0-9]{8,16}$")) {
       throw new IllegalArgumentException(
-          "Il codice deve avere una lunghezza massima di 8 caratteri e deve contenere solo cifre.");
+              "Il codice deve avere una lunghezza minima di 8caratteri, massima di 16 caratteri e deve contenere solo cifre.");
     }
   }
 

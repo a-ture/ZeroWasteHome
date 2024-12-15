@@ -67,7 +67,10 @@ export class ConfermaCodiceABarreComponent implements OnInit {
       alert('Inserire un codice valido!');
       return;
     }
-
+    if (this.barcode.length < 8 || this.barcode.length > 16) {
+      alert('Il codice deve avere una lunghezza minima di 8 caratteri, massima di 16 e deve contenere solo cifre');
+      return;
+    }
     this.modalService.getProductDetails(this.barcode).subscribe({
       next: productDetails => {
         // Naviga alla pagina successiva passando i dettagli del prodotto

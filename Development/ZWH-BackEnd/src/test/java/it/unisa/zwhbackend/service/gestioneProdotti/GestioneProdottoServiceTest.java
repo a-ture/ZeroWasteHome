@@ -9,6 +9,9 @@ import it.unisa.zwhbackend.model.repository.PossiedeInDispensaRepository;
 import it.unisa.zwhbackend.model.repository.PossiedeInFrigoRepository;
 import it.unisa.zwhbackend.model.repository.ProdottoRepository;
 import it.unisa.zwhbackend.model.repository.UtenteRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,9 +60,9 @@ class GestioneProdottoServiceTest {
             IllegalArgumentException.class,
             () ->
                 gestioneProdottoService.aggiungiProdottoFrigo(
-                    "Latte", "12/12/2024", "123456789", 2, "user@example.com"));
+                    "Latte", "12/12/2024", "1234567", 2, "user@example.com",  new ArrayList<>(List.of("GLUTENFREE"))));
     assertEquals(
-        "Il codice deve avere una lunghezza massima di 8 caratteri e deve contenere solo cifre.",
+        "Il codice deve avere una lunghezza minima di 8caratteri, massima di 16 caratteri e deve contenere solo cifre.",
         exception.getMessage());
   }
 
@@ -74,7 +77,7 @@ class GestioneProdottoServiceTest {
             IllegalArgumentException.class,
             () ->
                 gestioneProdottoService.aggiungiProdottoFrigo(
-                    "Latte123!", "12/12/2024", "12345678", 2, "user@example.com"));
+                    "Latte123!", "12/12/2024", "12345678", 2, "user@example.com",  new ArrayList<>(List.of("GLUTENFREE"))));
     assertEquals(
         "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.",
         exception.getMessage());
@@ -91,7 +94,7 @@ class GestioneProdottoServiceTest {
             IllegalArgumentException.class,
             () ->
                 gestioneProdottoService.aggiungiProdottoFrigo(
-                    "Latte", "2/31/2024", "12345678", 2, "user@example.com"));
+                    "Latte", "2/31/2024", "12345678", 2, "user@example.com",  new ArrayList<>(List.of("GLUTENFREE"))));
     assertEquals("La Data deve essere del formato gg/mm/aa.", exception.getMessage());
   }
 
@@ -106,7 +109,7 @@ class GestioneProdottoServiceTest {
             IllegalArgumentException.class,
             () ->
                 gestioneProdottoService.aggiungiProdottoFrigo(
-                    "Latte", "31/2/2024", "12345678", -1, "user@example.com"));
+                    "Latte", "31/2/2024", "12345678", -1, "user@example.com",  List.of("GLUTENFREE")));
     assertEquals(
         "La Quantità deve essere un numero positivo maggiore di zero.", exception.getMessage());
   }
@@ -125,14 +128,14 @@ class GestioneProdottoServiceTest {
 
     // Mock dei repository
     Utente utente = mock(Utente.class);
-    Prodotto prodotto = new Prodotto(nomeProdotto, codiceBarre);
+    Prodotto prodotto = new Prodotto(nomeProdotto, codiceBarre, List.of("GLUTENFREE"));
     when(utenteRepository.findByEmail(idUtente)).thenReturn(utente);
     when(prodottoRepository.findByCodiceBarre(codiceBarre)).thenReturn(Optional.empty());
 
     // Chiamata al metodo per aggiungere il prodotto nel frigo
     Prodotto prodottoRestituito =
         gestioneProdottoService.aggiungiProdottoFrigo(
-            nomeProdotto, dataScadenza, codiceBarre, quantita, idUtente);
+            nomeProdotto, dataScadenza, codiceBarre, quantita, idUtente, List.of("GLUTENFREE"));
 
     // Verifica che il prodotto non sia nullo
     assertNotNull(prodottoRestituito);
