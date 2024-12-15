@@ -56,7 +56,7 @@ public class JwtManualProvider {
 
     // Payload
     long now = System.currentTimeMillis() / 1000; // Tempo corrente in secondi
-    long exp = now + (60 * 60); // Scadenza del token (1 ora)
+    long exp = now + (60 * 60 * 24); // Scadenza del token (24 ore)
     String payload =
         String.format(
             "{\"sub\":\"%s\",\"iat\":%d,\"exp\":%d,\"roles\":%s}",
