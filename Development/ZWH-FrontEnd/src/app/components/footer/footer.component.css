@@ -1,7 +1,7 @@
 /* Footer Component Styles */
 .footer {
   margin-top: 200px;
-  background-color: #343a40; /* Dark gray background */
+  background-color: #beb7a4; /* Dark gray background */
   color: #f8f9fa; /* Light gray text */
   display: flex; /* Usa Flexbox */
   flex-direction: column; /* Disporre gli elementi in colonna */
@@ -21,7 +21,7 @@
 }
 
 .footer .links a {
-  color: #ced4da; /* Light gray text for links */
+  color: #000000; /* Light gray text for links */
   text-decoration: none;
   margin: 0 15px;
   font-size: 14px;
@@ -37,27 +37,27 @@
 
 .footer .social-icons button {
   margin: 0 10px;
-  background-color: #6c757d; /* Medium gray button */
+  background-color: #000000; /* Medium gray button */
   border: none;
 }
 
 .footer .social-icons button:hover {
-  background-color: #495057; /* Darker gray on hover */
+  background-color: #000000; /* Darker gray on hover */
 }
 
 .footer .site-title h2 {
-  color: #f8f9fa; /* Light gray title */
+  color: #000000; /* Light gray title */
   font-size: 22px;
 }
 
 .footer .subtitle {
-  color: #adb5bd; /* Lighter gray for subtitle */
+  color: #000000; /* Lighter gray for subtitle */
   font-size: 14px;
   margin-top: 5px;
 }
 
 .footer .social-icons button.pi {
-  color: white; /* Social icons color */
+  color: #000000; /* Social icons color */
 }
 
 .footer .footer-link {
@@ -72,4 +72,12 @@
   margin-right: 0px; /* Spazio tra le icone */
   height: 2.5rem;
   width: 2.5rem;
+}
+
+.p-button.p-button-secondary,
+.p-button-group.p-button-secondary > .p-button,
+.p-splitbutton.p-button-secondary > .p-button {
+  color: #000000;
+  background: #64748b;
+  border: 1px solid #64748b;
 }

@@ -21,7 +21,7 @@
   border-radius: 10px; /* Angoli arrotondati */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Effetto ombra */
   text-align: center;
-  color: black;
+  color: #ffffff;
   max-width: 500px;
   min-width: 200px;
   min-height: 400px;
@@ -46,7 +46,7 @@
 .login-card h1 {
   font-size: 2rem;
   margin-bottom: 1rem; /* Spaziatura sotto il titolo */
-  color: #000000;
+  color: #ffffff;
 }
 
 /* Stile per il gruppo di input */
@@ -83,7 +83,7 @@
   font-size: 1rem;
   border: none; /* Nessun bordo */
   border-radius: 5px; /* Angoli arrotondati */
-  background-color: #45413c; /* Colore di base */
+  background-color: #8ba576; /* Colore di base */
   color: white;
   cursor: pointer; /* Cambia il puntatore al passaggio del mouse */
   transition: background-color 0.3s ease; /* Animazione del colore */

@@ -24,7 +24,3 @@
 :host ::ng-deep .p-breadcrumb {
   border: none;
 }
-
-:host ::ng-deep .footer {
-  margin-top: 55px !important;
-}

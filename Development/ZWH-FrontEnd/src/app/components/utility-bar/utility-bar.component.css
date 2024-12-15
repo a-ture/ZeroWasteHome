@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
-  background-color: #e0e0e0;
+  background-color: #b0b994;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -14,8 +14,7 @@
   gap: 10px;
 }
 
-.utility-button {
-  background-color: #4b4b4b;
+.utility-buttons {
   color: white;
   border: none;
   border-radius: 20px;
@@ -25,9 +24,8 @@
   transition: background-color 0.3s;
 }
 
-.utility-button:hover {
+.utility-buttons:hover {
 }
-
 /********************* Stile label ****************/
 
 .utility-labels {

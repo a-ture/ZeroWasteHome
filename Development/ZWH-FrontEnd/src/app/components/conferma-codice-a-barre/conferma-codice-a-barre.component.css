@@ -20,7 +20,7 @@ h2 {
 
 /* Stile per il contenitore interno */
 .intern-container {
-  background: #d9d9d9;
+  background: #e1dac7;
   border-radius: 25px; /* Angoli arrotondati */
   display: flex; /* Disposizione flessibile per gli elementi figli */
   flex-direction: column; /* Posiziona gli elementi in colonna */
@@ -71,6 +71,7 @@ input {
   width: 80%; /* Campo di input largo l'80% del contenitore */
   padding: 0.75rem; /* Spaziatura interna per un design più leggibile */
   border-radius: 50px; /* Angoli arrotondati */
+  background-color: #fdf4ef;
   border: none; /* Rimuove il bordo */
   font-size: 1rem; /* Dimensione del testo standard */
 }

@@ -1,0 +1,6 @@
+::ng-deep .p-breadcrumb {
+  background: #fdf4ef !important;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 1rem;
+}

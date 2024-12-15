@@ -16,11 +16,11 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #f1f1f1;
+  background-color: #fdfbf2;
 }
 
 thead {
-  background-color: #4a4a4a;
+  background-color: #8ba576;
   color: white;
 }
 
@@ -28,7 +28,7 @@ th,
 td {
   padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #778a67;
 }
 
 input[type='checkbox'] {

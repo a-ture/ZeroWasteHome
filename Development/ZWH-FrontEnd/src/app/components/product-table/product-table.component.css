@@ -9,22 +9,22 @@
 }
 
 .styled-table thead tr {
-  background-color: #4d4d4d;
+  background-color: #8ba576;
   color: #ffffff;
 }
 
 .styled-table th,
 .styled-table td {
   padding: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid #8ba576;
 }
 
 .styled-table > tbody > tr {
-  background-color: #e6e6e6;
+  background-color: #fdfbf2;
 }
 
 .styled-table > tbody > tr:nth-of-type(even) {
-  background-color: #d4d4d4;
+  background-color: #fdfbf2;
 }
 
 .styled-table th {

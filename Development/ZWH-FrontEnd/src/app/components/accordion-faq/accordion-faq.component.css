@@ -1,0 +1,21 @@
+::ng-deep .p-accordion .p-accordion-content {
+  padding: 1.25rem;
+  border: 1px solid #e5e7eb;
+  background: #beb7a4 !important;
+  color: black;
+  border-top: 0;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link {
+  padding: 1.25rem;
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
+  background: #fdf4ef;
+  font-weight: 700;
+  border-radius: 6px;
+  transition: box-shadow 0.2s;
+}
