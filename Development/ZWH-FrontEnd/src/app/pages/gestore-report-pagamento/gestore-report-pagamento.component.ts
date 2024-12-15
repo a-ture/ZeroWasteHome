@@ -1,23 +1,18 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
-import {
-  GestoreReportPaymentTableComponent
-} from '../../components/gestore-report-payment-table/gestore-report-payment-table.component';
+import { GestoreReportPaymentTableComponent } from '../../components/gestore-report-payment-table/gestore-report-payment-table.component';
 import { FooterComponent } from '../../components/footer/footer.component';
+import { SegnalazionePagamentoService } from '../../services/Servizio-SegnalazionePagamento/segnalazione-pagamento.service';
 
 @Component({
   selector: 'app-gestore-report-pagamento',
   standalone: true,
-  imports: [
-    HeaderComponent,
-    GestoreReportPaymentTableComponent,
-    FooterComponent,
-  ],
+  imports: [HeaderComponent, GestoreReportPaymentTableComponent, FooterComponent],
   templateUrl: './gestore-report-pagamento.component.html',
-  styleUrl: './gestore-report-pagamento.component.css'
+  styleUrl: './gestore-report-pagamento.component.css',
 })
 export class GestoreReportPagamentoComponent {
-  reports = [
+  /**reports = [
     {
       info: [
         {
@@ -51,5 +46,15 @@ export class GestoreReportPagamentoComponent {
         },
       ],
     },
-  ];
+  ];*/
+
+  reports: any[] = [];
+
+  constructor(private SegnalazionePagamentoService: SegnalazionePagamentoService) {}
+
+  ngOnInit(): void {
+    this.SegnalazionePagamentoService.getAllSegnalazioni().subscribe(data => {
+      this.reports = data;
+    });
+  }
 }

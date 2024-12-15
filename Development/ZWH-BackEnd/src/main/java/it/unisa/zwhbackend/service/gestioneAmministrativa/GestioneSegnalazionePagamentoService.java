@@ -6,6 +6,7 @@ import it.unisa.zwhbackend.model.entity.SegnalazionePagamento;
 import it.unisa.zwhbackend.model.enums.StatoSegnalazione;
 import it.unisa.zwhbackend.model.repository.SegnalazionePagamentoRepository;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
@@ -135,5 +136,9 @@ public class GestioneSegnalazionePagamentoService implements SegnalazionePagamen
     segnalazioneRepository.save(segnalazione);
 
     return Optional.of(segnalazione); // Ritorna la segnalazione aggiornata
+  }
+
+  public List<SegnalazionePagamento> getAllSegnalazioni() {
+    return segnalazioneRepository.findAll();
   }
 }

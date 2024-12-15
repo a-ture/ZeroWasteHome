@@ -13,11 +13,10 @@
           <!-- Iterazione sulle informazioni del report -->
           <tr *ngFor="let info of report.info">
             <td>
-              <strong>Utente: {{ info.utente }}</strong>
+              <strong>Utente: {{ report.utente }}</strong>
             </td>
-            <td>Descrizione: {{ info.descrizione }}</td>
             <td>Data Creazione: {{ info.dataCreazione | date: 'short' }}</td>
-            <td>Stato segnalazione: {{ info.statoSegnalazione }}</td>
+            <td>Stato segnalazione: {{ info.stato }}</td>
           </tr>
         </table>
       </td>

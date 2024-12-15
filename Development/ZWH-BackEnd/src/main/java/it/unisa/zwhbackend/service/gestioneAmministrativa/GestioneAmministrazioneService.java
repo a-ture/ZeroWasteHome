@@ -3,6 +3,7 @@ package it.unisa.zwhbackend.service.gestioneAmministrativa;
 import it.unisa.zwhbackend.annotations.ExcludeGeneratedFromCodeCoverage;
 import it.unisa.zwhbackend.model.entity.GestorePagamento;
 import it.unisa.zwhbackend.model.entity.SegnalazionePagamento;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,10 @@ public class GestioneAmministrazioneService implements AmministrazioneService {
   @Override
   public String risolviSegnalazioneRicetta(Long id, String gestoreId, String motivoBlocco) {
     return ricettaService.risolviSegnalazione(id, gestoreId, motivoBlocco);
+  }
+
+  @Override
+  public List<SegnalazionePagamento> getAllSegnalazioni() {
+    return pagamentoService.getAllSegnalazioni();
   }
 }

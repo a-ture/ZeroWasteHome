@@ -7,7 +7,12 @@ import it.unisa.zwhbackend.model.entity.GestorePagamento;
 import it.unisa.zwhbackend.model.entity.SegnalazionePagamento;
 import it.unisa.zwhbackend.model.repository.GestorePagamentoRepository;
 import it.unisa.zwhbackend.service.gestioneAmministrativa.AmministrazioneService;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -132,5 +137,49 @@ public class SegnalazionePagamentoController {
 
     // Restituisce la segnalazione aggiornata
     return ResponseEntity.ok(segnalazione.get());
+  }
+
+  @GetMapping
+  public ResponseEntity<List<Map<String, Object>>> getAllSegnalazioniPagamento() {
+    List<SegnalazionePagamento> segnalazioni = amministrazioneService.getAllSegnalazioni();
+
+    List<Map<String, Object>> response =
+        segnalazioni.stream()
+            .map(
+                segnalazione -> {
+                  // Crea una mappa con i dettagli della segnalazione
+                  Map<String, Object> info =
+                      new HashMap<>(
+                          Map.of(
+                              "id", segnalazione.getId(),
+                              "descrizioneProblema", segnalazione.getDescrizioneProblema(),
+                              "stato", segnalazione.getStato(),
+                              "dataCreazione", segnalazione.getDataCreazione(),
+                              "dataRisoluzione",
+                                  segnalazione.getDataRisoluzione() != null
+                                      ? segnalazione.getDataRisoluzione()
+                                      : LocalDate.now(),
+                              "dettagliRisoluzione",
+                                  segnalazione.getDettagliRisoluzione() != null
+                                      ? segnalazione.getDettagliRisoluzione()
+                                      : "Non disponibile"));
+
+                  // Crea il wrapper con il nome dell'utente e info
+                  Map<String, Object> wrapper =
+                      new HashMap<>(
+                          Map.of(
+                              "utente",
+                              segnalazione.getUtente() != null
+                                  ? segnalazione.getUtente().getName()
+                                  : "Utente sconosciuto",
+                              "info",
+                              List.of(info) // Aggiungi info come lista
+                              ));
+
+                  return wrapper;
+                })
+            .collect(Collectors.toList());
+
+    return ResponseEntity.ok(response);
   }
 }
