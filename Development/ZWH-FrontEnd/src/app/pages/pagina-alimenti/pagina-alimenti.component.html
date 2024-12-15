@@ -1,4 +1,9 @@
-<app-header activeLink="alimenti" barra_ricerca="si" loggato="si"></app-header>
+<app-header
+  activeLink="alimenti"
+  barra_ricerca="si"
+  loggato="si"
+  (input)="onSearchInput($event)"
+></app-header>
 <app-breadcrumb class="breadcrumb"></app-breadcrumb>
 <utility-bar
   class="page-utility-bar"
