@@ -67,8 +67,3 @@
   font-weight: normal;
   color: inherit;
 }
-
-.info-table td:first-child {
-  font-weight: bold;
-  width: 50%;
-}
