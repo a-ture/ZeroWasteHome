@@ -1,23 +1,44 @@
 <div class="popup-overlay" *ngIf="isModalVisible">
+  <!-- Overlay della modale visibile solo quando 'isModalVisible' è true -->
   <div class="popup-content">
-    <!-- Intestazione -->
+    <!-- Contenuto della modale -->
+
+    <!-- Intestazione della modale -->
     <h2>{{ title }}</h2>
 
-    <!-- Campo per scrivere la segnalazione -->
-    <form>
+    <!-- Formulario per inserire i dettagli della segnalazione -->
+    <form #myForm="ngForm">
+      <!-- Gruppo del campo testo -->
       <div class="form-group">
+        <!-- Textarea per inserire i dettagli della risoluzione -->
         <textarea
           id="issue"
-          placeholder="Descrivi qui il tuo problema..."
+          placeholder="Inserire i dettagli della risoluzione..."
           rows="6"
+          [(ngModel)]="dettagliRisoluzione"
+          [ngModelOptions]="{ standalone: true }"
           required
         ></textarea>
+        <!-- Attributi spiegati:
+          - 'id': Identificativo del campo, utile per accessibilità e riferimenti.
+          - 'placeholder': Testo che appare nel campo quando è vuoto.
+          - 'rows': Numero di righe visibili nella textarea.
+          - '[(ngModel)]': Legame bidirezionale tra la proprietà 'dettagliRisoluzione' e il contenuto della textarea.
+          - '[ngModelOptions]': Indica che questo modello è standalone e non parte di un form group.
+          - 'required': Indica che il campo è obbligatorio.
+        -->
       </div>
 
-      <!-- Bottoni -->
+      <!-- Sezione dei bottoni -->
       <div class="form-buttons">
+        <!-- Bottone per chiudere la modale -->
         <navigationBtn (click)="closeModal()" label="Chiudi"></navigationBtn>
-        <navigationBtn type="submit" label="Invia"></navigationBtn>
+        <!-- Bottone per inviare i dettagli della risoluzione -->
+        <navigationBtn type="submit" label="Invia" (click)="risoluzioneReport()"></navigationBtn>
+        <!-- Attributi spiegati:
+          - 'type="submit"': Indica che questo bottone sottomette il form.
+          - '(click)="risoluzioneReport()"': Esegue il metodo risoluzioneReport() nel componente TypeScript.
+        -->
       </div>
     </form>
   </div>

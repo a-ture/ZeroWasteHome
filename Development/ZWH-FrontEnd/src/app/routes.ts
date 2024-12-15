@@ -20,6 +20,7 @@ import { ComingSoonComponent } from './pages/coming-soon/coming-soon.component';
 import { DonazioniComponent } from './pages/donazioni/donazioni.component';
 import { CommunityComponent } from './pages/community/community.component';
 import { ErrorComponent } from './pages/error/error.component';
+import { GestoreReportPagamentoComponent } from './pages/gestore-report-pagamento/gestore-report-pagamento.component';
 
 export const routes: Routes = [
   { path: '', component: HomeUtenteNonLoggatoComponent }, // Home page
@@ -136,6 +137,11 @@ export const routes: Routes = [
   {
     path: 'community',
     component: CommunityComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'lista-report',
+    component: GestoreReportPagamentoComponent,
     canActivate: [AuthGuard],
   },
   {
