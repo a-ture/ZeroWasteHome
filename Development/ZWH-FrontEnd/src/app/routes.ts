@@ -19,6 +19,7 @@ import { SegnalazioneRicettaGestoreComponent } from './pages/segnalazione-ricett
 import { ComingSoonComponent } from './pages/coming-soon/coming-soon.component';
 import { DonazioniComponent } from './pages/donazioni/donazioni.component';
 import { CommunityComponent } from './pages/community/community.component';
+import { ErrorComponent } from './pages/error/error.component';
 
 export const routes: Routes = [
   { path: '', component: HomeUtenteNonLoggatoComponent }, // Home page
@@ -141,5 +142,13 @@ export const routes: Routes = [
     path: 'coming-soon',
     component: ComingSoonComponent,
   },
-  { path: '**', redirectTo: 'coming-soon' }, // Redirect per percorsi non trovati
+  {
+    path: 'error',
+    component: ErrorComponent,
+  },
+  {
+    path: 'segnalazioni',
+    component: ComingSoonComponent,
+  },
+  { path: '**', redirectTo: 'error' }, // Redirect per percorsi non trovati
 ];
