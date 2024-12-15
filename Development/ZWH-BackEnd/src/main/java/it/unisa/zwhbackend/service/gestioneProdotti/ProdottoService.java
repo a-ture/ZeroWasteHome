@@ -5,74 +5,98 @@ import it.unisa.zwhbackend.model.entity.ProdottoRequestDTO;
 import java.util.List;
 
 /**
- * Interfaccia che definisce i servizi per la gestione dei prodotti. Fornisce metodi per
- * l'inserimento, la gestione, la visualizzazione dei prodotti associati a un utente.
+ * Interfaccia che definisce i servizi per la gestione dei prodotti nel sistema.
  *
- * <p>Include operazioni per l'aggiunta di prodotti al sistema, l'associazione con utenti, e il
- * recupero di prodotti associati a un determinato utente. Include anche la ricerca dei prodotti per
- * nome.
+ * <p>Questa interfaccia fornisce metodi per:
  *
- * @author Marco Meglio, Alessandra Trotta
+ * <ul>
+ *   <li>Inserire nuovi prodotti nel sistema
+ *   <li>Aggiungere prodotti al frigo di un utente
+ *   <li>Visualizzare i prodotti presenti nella dispensa di un utente
+ *   <li>Ricercare prodotti per nome
+ * </ul>
+ *
+ * <p>Ogni metodo include controlli di validazione per garantire l'integrità dei dati e può lanciare
+ * eccezioni per segnalare errori o violazioni dei vincoli.
+ *
+ * @author Marco Meglio, Ferdinando Ranieri, Alessandra Trotta
  */
 public interface ProdottoService {
 
   /**
    * Inserisce un nuovo prodotto nel sistema.
    *
-   * <p>Questo metodo crea un nuovo prodotto con i dettagli forniti e lo salva nel database. Se il
-   * prodotto esiste già, restituisce una nuova istanza basata sullo stato corrente.
+   * <p>Questo metodo consente di creare un nuovo prodotto con i dettagli forniti e di salvarlo nel
+   * database. Se il prodotto esiste già nel sistema, il comportamento può dipendere
+   * dall'implementazione, ma generalmente restituisce il prodotto esistente.
    *
-   * @param nomeProdotto il nome del prodotto da inserire, non nullo e con una lunghezza massima di
-   *     50 caratteri
-   * @param dataScadenza la data di scadenza del prodotto, in formato "gg/MM/aaaa", non nulla
-   * @param codiceBarre il codice a barre del prodotto, non nullo e composto da massimo 8 cifre
-   * @return il prodotto inserito
+   * @param nomeProdotto il nome del prodotto da inserire; non può essere nullo e deve avere una
+   *     lunghezza massima di 50 caratteri
+   * @param dataScadenza la data di scadenza del prodotto, in formato "dd/MM/yyyy"; non può essere
+   *     nulla
+   * @param codiceBarre il codice a barre del prodotto, non nullo; deve contenere da 8 a 16 cifre
+   * @param categoria una lista di stringhe che rappresentano le categorie associate al prodotto;
+   *     può essere vuota
+   * @return il prodotto inserito o aggiornato
    * @throws IllegalArgumentException se uno dei parametri non rispetta i vincoli di validazione
    */
-  public Prodotto inserisciProdotto(String nomeProdotto, String dataScadenza, String codiceBarre, List<String> categoria);
+  Prodotto inserisciProdotto(
+      String nomeProdotto, String dataScadenza, String codiceBarre, List<String> categoria);
 
   /**
    * Aggiunge un prodotto al frigo associandolo a un utente.
    *
-   * <p>Questo metodo verifica se il prodotto esiste già nel sistema; se non esiste, lo crea.
-   * Successivamente, associa il prodotto all'utente specificato e, se necessario, aggiorna la
-   * quantità o crea una nuova relazione per la data di scadenza fornita.
+   * <p>Se il prodotto non esiste nel sistema, viene creato e salvato nel database. Se il prodotto è
+   * già presente nel frigo dell'utente con la stessa data di scadenza, la quantità viene
+   * aggiornata; altrimenti, viene creata una nuova relazione con la data di scadenza fornita.
    *
-   * @param nomeProdotto il nome del prodotto da aggiungere, non nullo e con una lunghezza massima
-   *     di 50 caratteri
-   * @param dataScadenza la data di scadenza del prodotto, in formato "gg/MM/aaaa", non nulla
-   * @param codiceBarre il codice a barre del prodotto, non nullo e composto da massimo 8 cifre
-   * @param quantita la quantità del prodotto da aggiungere, deve essere un numero positivo maggiore
+   * @param nomeProdotto il nome del prodotto da aggiungere; non può essere nullo e deve avere una
+   *     lunghezza massima di 50 caratteri
+   * @param dataScadenza la data di scadenza del prodotto, in formato "dd/MM/yyyy"; non può essere
+   *     nulla
+   * @param codiceBarre il codice a barre del prodotto, non nullo; deve contenere da 8 a 16 cifre
+   * @param quantita la quantità del prodotto da aggiungere; deve essere un numero positivo maggiore
    *     di zero
-   * @param idUtente l'ID dell'utente associato al prodotto, non nullo
-   * @return il prodotto aggiunto al frigo
+   * @param idUtente l'email dell'utente associato al prodotto; non può essere nulla
+   * @param categoria una lista di stringhe che rappresentano le categorie associate al prodotto;
+   *     può essere vuota
+   * @return il prodotto aggiunto o aggiornato
    * @throws IllegalArgumentException se uno dei parametri non rispetta i vincoli di validazione
-   * @throws IllegalStateException se l'utente con l'ID specificato non è trovato nel sistema
+   * @throws IllegalStateException se l'utente specificato non esiste nel sistema
    */
-  public Prodotto aggiungiProdottoFrigo(
-      String nomeProdotto, String dataScadenza, String codiceBarre, int quantita, String idUtente, List<String> categoria);
+  Prodotto aggiungiProdottoFrigo(
+      String nomeProdotto,
+      String dataScadenza,
+      String codiceBarre,
+      int quantita,
+      String idUtente,
+      List<String> categoria);
 
   /**
    * Visualizza i prodotti presenti nella dispensa di un utente.
    *
-   * <p>Recupera tutti i prodotti associati alla dispensa dell'utente specificato. I prodotti
-   * restituiti includono informazioni come nome, codice a barre, quantità e data di scadenza.
+   * <p>Recupera tutti i prodotti associati alla dispensa dell'utente specificato. Ogni prodotto
+   * include dettagli come nome, codice a barre, quantità e data di scadenza.
    *
-   * @param email l'ID dell'utente di cui si vogliono visualizzare i prodotti nella dispensa, non
-   *     nullo
-   * @return una lista di prodotti presenti nella dispensa dell'utente specificato
-   * @throws IllegalStateException se l'utente con l'ID specificato non è trovato nel sistema
+   * @param email l'email dell'utente di cui si vogliono visualizzare i prodotti nella dispensa; non
+   *     può essere nulla
+   * @return una lista di {@link ProdottoRequestDTO} che rappresentano i prodotti nella dispensa
+   * @throws IllegalStateException se l'utente specificato non esiste nel sistema
    */
-  public List<ProdottoRequestDTO> visualizzaProdottiDispensa(String email);
+  List<ProdottoRequestDTO> visualizzaProdottiDispensa(String email);
 
   /**
-   * Cerca i prodotti in base a un criterio di corrispondenza parziale sul nome.
+   * Esegue una ricerca di prodotti di un utente basandosi su un criterio parziale del nome del
+   * prodotto.
    *
-   * <p>Implementazioni di questo metodo devono garantire la gestione di casi in cui il nome fornito
-   * sia nullo o vuoto.
+   * <p>Il metodo consente di cercare prodotti che contengono nel nome la stringa fornita e
+   * restituisce una lista di oggetti {@link ProdottoRequestDTO} contenenti le informazioni
+   * dettagliate sui prodotti trovati in base all'utente specificato.
    *
-   * @param name la stringa da cercare nei nomi dei prodotti
-   * @return una lista di prodotti che soddisfano il criterio di ricerca
+   * @param emailUtente l'email dell'utente per cui eseguire la ricerca
+   * @param nomeProdotto il criterio di ricerca parziale sul nome del prodotto
+   * @return una lista di {@link ProdottoRequestDTO} contenente i prodotti trovati, basato sull'id
+   *     dell'utente, che soddisfano i criteri di ricerca
    */
-  List<Prodotto> RicercaPerNome(String name);
+  public List<ProdottoRequestDTO> RicercaPerNome(String emailUtente, String nomeProdotto);
 }

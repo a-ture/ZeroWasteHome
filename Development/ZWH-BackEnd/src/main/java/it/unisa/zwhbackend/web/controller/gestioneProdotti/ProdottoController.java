@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
  * In particolare, si occupa di aggiungere un prodotto al frigo di un utente, tramite il metodo
  * {@link #aggiungiProdottoFrigo}.
  *
- * @author Marco Meglio
+ * @author Marco Meglio, Ferdinando Ranieri
  */
 @RestController
 @RequestMapping(
@@ -90,7 +90,8 @@ public class ProdottoController {
   public ResponseEntity<?> aggiungiProdottoFrigo(
       @RequestBody @Valid ProdottoRequestDTO prodottoRequestDTO, BindingResult bindingResult) {
 
-      prodottoRequestDTO.setIdUtente(SecurityContextHolder.getContext().getAuthentication().getName());
+    prodottoRequestDTO.setIdUtente(
+        SecurityContextHolder.getContext().getAuthentication().getName());
 
     // Gestione della validazione
     if (bindingResult.hasErrors()) {
@@ -117,7 +118,7 @@ public class ProdottoController {
               prodottoRequestDTO.getCodiceBarre(),
               prodottoRequestDTO.getQuantità(),
               prodottoRequestDTO.getIdUtente(),
-        prodottoRequestDTO.getCategoria());
+              prodottoRequestDTO.getCategoria());
       return new ResponseEntity<>(prodotto, HttpStatus.OK); // 200 OK
 
     } catch (IllegalStateException e) {

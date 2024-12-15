@@ -71,8 +71,8 @@ class GestioneProdottoDispensaServiceTest {
     utente.setEmail("user@example.com");
 
     // Crea due prodotti
-    Prodotto prodotto1 = new Prodotto("Prodotto1", "123456");
-    Prodotto prodotto2 = new Prodotto("Prodotto2", "789101");
+    Prodotto prodotto1 = new Prodotto("Prodotto1", "123456", List.of("GLUTENFREE"));
+    Prodotto prodotto2 = new Prodotto("Prodotto2", "789101", List.of("GLUTENFREE"));
 
     // Crea due relazioni per l'utente con i prodotti
     PossiedeInDispensa relazione1 = new PossiedeInDispensa(utente, prodotto1, 1, "30/12/2024");

@@ -3,10 +3,11 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { DynamicFormComponent } from '../../components/dynamic-form/dynamic-form.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
+import { InserisciProdottoFrigoService } from '../../services/servizio-inserisci-prodotto-frigo/inserisci-prodotto-frigo.service';
 import {
-  InserisciProdottoFrigoService
-} from '../../services/servizio-inserisci-prodotto-frigo/inserisci-prodotto-frigo.service';
-import { Categoria, ProdottoReq } from '../../services/servizio-inserisci-prodotto-frigo/prodottoRequestDTO';
+  Categoria,
+  ProdottoReq,
+} from '../../services/servizio-inserisci-prodotto-frigo/prodottoRequestDTO';
 
 @Component({
   selector: 'app-inserimento-prodotto-frigo',
@@ -32,23 +33,27 @@ export class InserimentoProdottoFrigoComponent implements OnInit {
 
   onSubmit(formData: any): void {
     const productDetails = history.state.productDetails;
-// Inizializza l'array
+    // Inizializza l'array
     const categorie: Categoria[] = [];
-  if(productDetails != null){
-    if (productDetails.vegan != null && productDetails.vegan == "SI") {
-      categorie.push("VEGANO");
+    if (productDetails != null) {
+      if (productDetails.vegan != null && productDetails.vegan == 'SI') {
+        categorie.push('VEGANO');
+      }
+      if (productDetails.glutenfree != null && productDetails.glutenfree == 'SI') {
+        categorie.push('GLUTENFREE');
+      }
+      if (productDetails.vegetarian != null && productDetails.vegetarian == 'SI') {
+        categorie.push('VEGETARIANO');
+      }
     }
-    if (productDetails.glutenfree != null && productDetails.glutenfree == "SI") {
-      categorie.push("GLUTENFREE");
-    }
-    if (productDetails.vegetarian != null && productDetails.vegetarian == "SI") {
-      categorie.push("VEGETARIANO");
-    }
-  }
-    let tempBarcode = "100000000000000";
-  //non esistono codici a barre a 15 cifre, il back end capirà come gestirlo
+    let tempBarcode = '100000000000000';
+    //non esistono codici a barre a 15 cifre, il back end capirà come gestirlo
 
-    if(productDetails != null){
+    if (formData['Scadenza'] == null) {
+      alert('Inserisci la data di scadenza');
+    }
+
+    if (productDetails != null) {
       tempBarcode = productDetails.barcode;
     }
     const prodottoInFrigo: ProdottoReq = {
@@ -67,11 +72,11 @@ export class InserimentoProdottoFrigoComponent implements OnInit {
         alert('Prodotto aggiunto!');
       },
       error: error => {
-        console.error("Errore durante l'aggiunta del prodotto:", error);
-        alert(error);
+        console.error("Errore durante l'aggiunta del prodotto:");
       },
     });
   }
+
   ngOnInit(): void {
     // Recupera i dati dalla navigazione
     const productDetails = history.state.productDetails;
@@ -84,5 +89,7 @@ export class InserimentoProdottoFrigoComponent implements OnInit {
       this.productFormFields[4].value = productDetails.notes || '';
       this.imageURL = productDetails.imageUrl;
     }
+    // Imposta l'immagine
+    this.imageURL = productDetails.imageUrl;
   }
 }
