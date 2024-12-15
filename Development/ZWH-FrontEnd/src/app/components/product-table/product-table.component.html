@@ -28,7 +28,7 @@
         <div *ngFor="let structButton of structButtons">
           <navigationBtn
             [label]="structButton.button"
-            (event)="structButton.event(productIds[i])"
+            (event)="structButton.event(product.id)"
           ></navigationBtn>
         </div>
       </td>

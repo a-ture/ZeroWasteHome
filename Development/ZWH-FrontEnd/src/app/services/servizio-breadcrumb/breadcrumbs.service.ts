@@ -26,6 +26,11 @@ export class BreadcrumbsService {
       'Le Mie Ricette',
       'Inserimento Ricetta',
     ],
+    '/area-personale/le-mie-ricette/visualizza-ricetta/:id': [
+      'Area Personale',
+      'Le Mie Ricette',
+      'Visualizza Ricetta',
+    ],
     '/area-personale/assistenza': ['Area Personale', 'Assistenza'],
     '/assistenza': ['Assistenza'],
     '/community/inserimento-segnalazione': ['Community', 'Inserisci Segnalazione'],
@@ -43,12 +48,14 @@ export class BreadcrumbsService {
 
   private buildBreadcrumb(url: string): MenuItem[] {
     const breadcrumbs: MenuItem[] = [];
-    const hierarchy = this.breadcrumbHierarchy[url];
+
+    // Controlla se l'URL corrisponde a un percorso con parametro dinamico
+    const hierarchy = this.getBreadcrumbForUrl(url);
 
     if (hierarchy) {
       let accumulatedUrl = '';
       hierarchy.forEach(label => {
-        accumulatedUrl = this.getPathForLabel(label, accumulatedUrl);
+        accumulatedUrl = this.getPathForLabel(label, accumulatedUrl, url); // Passa anche l'URL per il controllo dinamico
         breadcrumbs.push({ label, routerLink: accumulatedUrl });
       });
     }
@@ -57,7 +64,29 @@ export class BreadcrumbsService {
     return breadcrumbs;
   }
 
-  private getPathForLabel(label: string, currentPath: string): string {
+  private getBreadcrumbForUrl(url: string): string[] | undefined {
+    // Cerca nel percorso di breadcrumb per l'URL
+    for (let path in this.breadcrumbHierarchy) {
+      const regex = new RegExp(`^${path.replace(':id', '\\d+$')}$`);
+      if (regex.test(url)) {
+        return this.breadcrumbHierarchy[path];
+      }
+    }
+    return undefined; // Se non trova corrispondenze
+  }
+
+  private getPathForLabel(label: string, currentPath: string, url: string): string {
+    // Gestisci i vari casi come prima, con l'aggiunta della logica per :id
+    if (label === 'Visualizza Ricetta') {
+      // Gestisci la sostituzione del parametro :id con l'ID reale
+      const idMatch = url.match(/\/area-personale\/le-mie-ricette\/visualizza-ricetta\/(\d+)/);
+      if (idMatch) {
+        // Sostituisci :id con l'ID estratto dalla URL
+        return `/area-personale/le-mie-ricette/visualizza-ricetta/${idMatch[1]}`;
+      }
+    }
+
+    // Se nessun caso specifico, continua con il comportamento normale
     if (label === 'Alimenti') {
       return '/alimenti';
     } else if (label === 'Genera Lista') {
@@ -74,6 +103,14 @@ export class BreadcrumbsService {
       return '/area-personale/le-mie-ricette';
     } else if (label === 'Inserimento Ricetta') {
       return '/area-personale/le-mie-ricette/inserimento-ricetta';
+    } else if (label === 'Profilo') {
+      return '/area-personale/profilo';
+    } else if (label === 'Assistenza') {
+      if (this.router.url == '/area-personale/assistenza') {
+        return '/area-personale/assistenza';
+      } else {
+        return '/assistenza';
+      }
     }
 
     // Se nessuna corrispondenza è trovata, restituisci il percorso attuale

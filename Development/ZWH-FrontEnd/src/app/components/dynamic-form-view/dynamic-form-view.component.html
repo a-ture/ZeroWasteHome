@@ -1,0 +1,60 @@
+<div class="form-container">
+  <form id="dynamic-form">
+    <div id="header">
+      <span>{{ page }}</span>
+    </div>
+
+    <div id="form-body">
+      <div id="form-inputs">
+        <!-- Itera sui campi passati come input -->
+        <div *ngFor="let field of fields" class="form-group">
+          <div class="float-label-container">
+            <!-- Menu a tendina -->
+            <select
+              *ngIf="field.type === 'select'"
+              [name]="field.label"
+              [(ngModel)]="field.value"
+              class="form-control"
+              [disabled]="true"
+            >
+              <option *ngFor="let option of field.options" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+
+            <!-- Altri input -->
+            <input
+              *ngIf="field.type !== 'textarea' && field.type !== 'date' && field.type !== 'select'"
+              [type]="field.type"
+              [name]="field.label"
+              [(ngModel)]="field.value"
+              class="form-control"
+              [min]="field.type === 'number' ? 1 : null"
+              [disabled]="true"
+            />
+            <textarea
+              *ngIf="field.type === 'textarea'"
+              [name]="field.label"
+              [(ngModel)]="field.value"
+              class="form-control"
+              [disabled]="true"
+            ></textarea>
+            <label
+              [class.floating]="field.value || focusedField === field.label"
+              for="{{ field.label }}"
+            >
+              {{ field.label }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Anteprima dell'immagine -->
+      <div class="form-group" id="form-img">
+        <div *ngIf="imagePreview" class="image-preview">
+          <img [src]="imagePreview" alt="Anteprima Immagine" />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
