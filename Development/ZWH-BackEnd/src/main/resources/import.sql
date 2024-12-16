@@ -10,6 +10,7 @@ INSERT INTO prodotto (codice_barre, nome_prodotto, img) VALUES ('8002790048554',
 INSERT INTO prodotto (codice_barre, nome_prodotto, img) VALUES ('8076809518581', 'Campagnole con farina di riso', 'https://images.openfoodfacts.org/images/products/807/680/951/8581/front_it.35.400.jpg');
 INSERT INTO prodotto (codice_barre, nome_prodotto, img) VALUES ('8008343200660', 'Penne Rigate N66 500g', 'https://images.openfoodfacts.org/images/products/800/834/320/0660/front_en.76.400.jpg');
 INSERT INTO prodotto (codice_barre, nome_prodotto, img) VALUES ('3017620422003', 'Nutella 400 g', 'https://images.openfoodfacts.org/images/products/301/762/042/2003/front_en.633.400.jpg');
+INSERT INTO prodotto (codice_barre, nome_prodotto, img) VALUES ('8076809579476', 'Pancake 280g', 'https://images.openfoodfacts.org/images/products/807/680/957/9476/front_it.10.400.jpg');
 
 INSERT INTO possiede_in_frigo (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test1@example.com", '3', '22/12/2024', 1);
 INSERT INTO possiede_in_frigo (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test2@example.com", '2', '19/12/2024', 5);
@@ -36,6 +37,7 @@ INSERT INTO possiede_in_dispensa (utente_email, prodotto_id, data_scadenza, quan
 INSERT INTO possiede_in_dispensa (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test2@example.com", '1', '10/01/2025', 3);
 INSERT INTO possiede_in_dispensa (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test1@example.com", '5', '25/01/2025', 2);
 INSERT INTO possiede_in_dispensa (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test2@example.com", '6', '25/01/2025', 2);
+INSERT INTO possiede_in_dispensa (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test1@example.com", '7', '12/01/2025', 1);
 
 INSERT INTO segnalazione_pagamento (`data_creazione`, `descrizione_problema`, `utente_email`, `stato`) VALUES ('2024-12-12', "ho un problema nel pagamento dell'abbonamento", 'test1@example.com', 'APERTA');
 INSERT INTO segnalazione_pagamento (`data_creazione`, `descrizione_problema`, `utente_email`, `stato`) VALUES ('2024-12-18', "non riesco a disattivare il mio abbonamento", 'test2@example.com', 'APERTA');
