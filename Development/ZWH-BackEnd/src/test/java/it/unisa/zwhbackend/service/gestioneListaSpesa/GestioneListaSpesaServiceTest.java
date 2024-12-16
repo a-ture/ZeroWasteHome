@@ -45,12 +45,16 @@ class GestioneListaSpesaServiceTest {
     List<PossiedeInFrigo> possiedeInFrigo =
         List.of(
             createPossiedeInFrigo(
+                "Campagnole con farina di riso",
+                "8076809518581",
+                Arrays.asList(CategoriaAlimentare.VEGANO.toString())),
+            createPossiedeInFrigo(
                 "Marinated Tofu 160 g",
                 "5013683305466",
                 Arrays.asList(CategoriaAlimentare.VEGANO.toString())),
             createPossiedeInFrigo(
-                "Uova biologiche 6 uova",
-                "8002790048554",
+                "Bastoncini di tofu alle verdure 160 g",
+                "8019314000950",
                 Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
 
     when(possiedeInFrigoRepository.findByUtenteEmail(utente.getEmail()))
@@ -69,12 +73,12 @@ class GestioneListaSpesaServiceTest {
     List<PossiedeInFrigo> possiedeInFrigo =
         List.of(
             createPossiedeInFrigo(
-                "Nutella 400 g",
-                "3017620422003",
-                Arrays.asList(CategoriaAlimentare.SENZA_GLUTINE.toString())),
+                "Campagnole con farina di riso",
+                "8076809518581",
+                Arrays.asList(CategoriaAlimentare.VEGETARIANO.toString())),
             createPossiedeInFrigo(
-                "Uova biologiche 6 uova",
-                "8002790048554",
+                "Bastoncini di tofu alle verdure 160 g",
+                "8019314000950",
                 Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
 
     // Spy sulla classe di servizio per simulare il piano giornaliero
@@ -143,12 +147,12 @@ class GestioneListaSpesaServiceTest {
     List<PossiedeInFrigo> possiedeInFrigo =
         List.of(
             createPossiedeInFrigo(
-                "Marinated Tofu 160 g",
-                "3017620422003",
-                Arrays.asList(CategoriaAlimentare.SENZA_GLUTINE.toString())),
+                "Campagnole con farina di riso",
+                "8076809518581",
+                Arrays.asList(CategoriaAlimentare.VEGETARIANO.toString())),
             createPossiedeInFrigo(
-                "Uova biologiche 6 uova",
-                "8002790048554",
+                "Bastoncini di tofu alle verdure 160 g",
+                "8019314000950",
                 Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
 
     when(possiedeInFrigoRepository.findByUtenteEmail(utente.getEmail()))
