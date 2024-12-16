@@ -2,7 +2,6 @@ package it.unisa.zwhbackend.web.controller.gestioneListaSpesa;
 
 import it.unisa.zwhbackend.model.entity.ListaSpesa;
 import it.unisa.zwhbackend.model.entity.Utente;
-import it.unisa.zwhbackend.model.repository.ListaSpesaRepository;
 import it.unisa.zwhbackend.model.repository.UtenteRepository;
 import it.unisa.zwhbackend.service.gestioneListaSpesa.ListaSpesaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
  * @author Giuseppe Russo
  */
 @RestController
-
 @RequestMapping("/api/utente/lista-spesa")
 @CrossOrigin(origins = "http://localhost:4200")
 public class ListaSpesaController {
@@ -38,8 +36,7 @@ public class ListaSpesaController {
    */
   @Autowired
   public ListaSpesaController(
-      ListaSpesaService shoppingListService,
-      UtenteRepository utenteRepository) {
+      ListaSpesaService shoppingListService, UtenteRepository utenteRepository) {
     this.shoppingListService = shoppingListService;
     // this.shoppingListRepository = shoppingListRepository;
     this.utenteRepository = utenteRepository;
