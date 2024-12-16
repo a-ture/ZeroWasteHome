@@ -225,8 +225,8 @@ public class GestioneListaSpesaService implements ListaSpesaService {
     dailyPlanItems.add(
         new Prodotto(
             3,
-            "Uova biologiche 6 uova",
-            "8002790048554",
+            "Bastoncini di tofu alle verdure 160 g",
+            "8019314000950",
             Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
     dailyPlanItems.add(
         new Prodotto(
