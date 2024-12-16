@@ -134,6 +134,21 @@ public class Prodotto {
   }
 
   /**
+   * Costruttore che inizializza il prodotto con id, nome, codice a barre e categorie.
+   *
+   * @param id l'id del prdotto
+   * @param nomeProdotto il nome del prodotto
+   * @param codiceBarre il codice a barre del prodotto
+   * @param categoria le categorie del prodotto
+   */
+  public Prodotto(long id, String nomeProdotto, String codiceBarre, List<String> categoria) {
+    this.id = id;
+    this.name = nomeProdotto;
+    this.codiceBarre = codiceBarre;
+    this.categoria = categoria;
+  }
+
+  /**
    * Restituisce la lista degli utenti che possiedono il prodotto.
    *
    * @return lista di {@code PossiedeInFrigo} associati al prodotto
@@ -149,6 +164,14 @@ public class Prodotto {
    */
   public void setUtentiPossessori(List<PossiedeInFrigo> utentiPossessori) {
     this.utentiPossessori = utentiPossessori;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   /**

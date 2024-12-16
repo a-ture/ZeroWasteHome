@@ -34,9 +34,7 @@ INSERT INTO prodotto_categoria (prodotto_id, categoria) VALUES ('6', 'SENZA_GLUT
 
 -- Inserimenti per i prodotti in dispensa
 INSERT INTO possiede_in_dispensa (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test1@example.com", '1', '05/01/2025', 2);
-INSERT INTO possiede_in_dispensa (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test1@example.com", '4', '15/01/2025', 1);
 INSERT INTO possiede_in_dispensa (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test2@example.com", '1', '10/01/2025', 3);
-INSERT INTO possiede_in_dispensa (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test2@example.com", '4', '20/01/2025', 5);
 INSERT INTO possiede_in_dispensa (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test1@example.com", '5', '25/01/2025', 2);
 INSERT INTO possiede_in_dispensa (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test2@example.com", '6', '25/01/2025', 2);
 

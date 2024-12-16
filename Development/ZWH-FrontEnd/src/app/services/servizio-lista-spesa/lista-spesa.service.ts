@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ShoppingListService {
-  private apiUrl = 'http://localhost:8090/api/lista-spesa'; // URL del backend
+  private apiUrl = 'http://localhost:8090/api/utente/lista-spesa'; // URL del backend
 
   constructor(private http: HttpClient) {}
 
-  generateShoppingList(email: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/generate`, email);
+  generateShoppingList(): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/generate`, null);
   }
 }
