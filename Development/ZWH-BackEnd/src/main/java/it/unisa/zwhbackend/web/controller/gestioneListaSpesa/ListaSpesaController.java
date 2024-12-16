@@ -8,6 +8,7 @@ import it.unisa.zwhbackend.service.gestioneListaSpesa.ListaSpesaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -19,7 +20,8 @@ import org.springframework.web.bind.annotation.*;
  * @author Giuseppe Russo
  */
 @RestController
-@RequestMapping("/api/lista-spesa")
+
+@RequestMapping("/api/utente/lista-spesa")
 @CrossOrigin(origins = "http://localhost:4200")
 public class ListaSpesaController {
 
@@ -33,12 +35,10 @@ public class ListaSpesaController {
    * @param shoppingListService Servizio per la gestione delle liste della spesa.
    * @param utenteRepository Repository per l'entità Utente, utilizzato per accedere ai dati degli
    *     utenti.
-   * @param shoppingListRepository repository per Entità lista della Spesa
    */
   @Autowired
   public ListaSpesaController(
       ListaSpesaService shoppingListService,
-      ListaSpesaRepository shoppingListRepository,
       UtenteRepository utenteRepository) {
     this.shoppingListService = shoppingListService;
     // this.shoppingListRepository = shoppingListRepository;
@@ -53,11 +53,11 @@ public class ListaSpesaController {
    * una lista della spesa risultante. La lista è filtrata in base alle preferenze alimentari
    * dell'utente e alle scadenze dei prodotti.
    *
-   * @param email L'email dell'utente per cui generare la lista della spesa.
    * @return La lista della spesa generata come {@code ResponseEntity}.
    */
   @PostMapping("/generate")
-  public ResponseEntity<ListaSpesa> generateShoppingList(@RequestBody String email) {
+  public ResponseEntity<ListaSpesa> generateShoppingList() {
+    String email = SecurityContextHolder.getContext().getAuthentication().getName();
     Utente utente = utenteRepository.findByEmail(email);
 
     if (utente == null) {

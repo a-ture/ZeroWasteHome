@@ -10,6 +10,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import it.unisa.zwhbackend.model.repository.ProdottoRepository;
+import org.antlr.v4.runtime.misc.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +31,7 @@ public class GestioneListaSpesaService implements ListaSpesaService {
   private final ListaSpesaRepository ListaSpesaRepository;
   private final PossiedeInFrigoRepository PossiedeInFrigoRepository;
   private final PossiedeInDispensaRepository PossiedeInDispensaRepository;
+  private final ProdottoRepository ProdottoRepository;
 
   /**
    * Costruttore che inizializza il servizio per la gestione delle liste della spesa, configurando i
@@ -41,13 +45,14 @@ public class GestioneListaSpesaService implements ListaSpesaService {
    */
   @Autowired
   public GestioneListaSpesaService(
-      ListaSpesaRepository shoppingListRepository,
-      PossiedeInFrigoRepository possiedeInFrigoRepository,
-      it.unisa.zwhbackend.model.repository.PossiedeInDispensaRepository
-          possiedeInDispensaRepository) {
+          ListaSpesaRepository shoppingListRepository,
+          PossiedeInFrigoRepository possiedeInFrigoRepository,
+          PossiedeInDispensaRepository possiedeInDispensaRepository,
+          ProdottoRepository prodottoRepository) {
     this.ListaSpesaRepository = shoppingListRepository;
     this.PossiedeInFrigoRepository = possiedeInFrigoRepository;
     this.PossiedeInDispensaRepository = possiedeInDispensaRepository;
+    this.ProdottoRepository = prodottoRepository;
   }
 
   /**
@@ -60,33 +65,31 @@ public class GestioneListaSpesaService implements ListaSpesaService {
   @Transactional
   @Override
   public ListaSpesa createShoppingList(Utente utente, List<Prodotto> products) {
+    // Salva ogni prodotto che non è ancora persistito
+    List<Prodotto> persistedProducts = products.stream()
+            .map(product -> {
+              if (product.getId() == null) {
+                return ProdottoRepository.save(product); // Salva il prodotto nel database
+              }
+              return product; // Ritorna il prodotto già persistito
+            })
+            .collect(Collectors.toList());
 
     if (utente.getListaSpesa() != null) {
-      // Disassocia la lista della spesa dall'utente
       ListaSpesa oldShoppingList = utente.getListaSpesa();
       utente.setListaSpesa(null);
       oldShoppingList.setUtente(null);
-
-      // Salva i cambiamenti per sincronizzare lo stato con il database
       ListaSpesaRepository.save(oldShoppingList);
-
-      // Elimina la vecchia lista della spesa
       ListaSpesaRepository.delete(oldShoppingList);
     }
 
     ListaSpesa shoppingList = new ListaSpesa();
     shoppingList.setUtente(utente);
-    shoppingList.setProducts(products);
+    shoppingList.setProducts(persistedProducts); // Usa i prodotti persistiti
     shoppingList.setDataCreazione(Date.valueOf(LocalDate.now()));
 
     utente.setListaSpesa(shoppingList);
-
-    ListaSpesa result = ListaSpesaRepository.save(shoppingList);
-
-    if (result == null) {
-      result = new ListaSpesa();
-    }
-    return result;
+    return ListaSpesaRepository.save(shoppingList);
   }
 
   /**
@@ -209,11 +212,11 @@ public class GestioneListaSpesaService implements ListaSpesaService {
     // Esempio di prodotti simulati per il piano giornaliero
     List<Prodotto> dailyPlanItems = new ArrayList<>();
     dailyPlanItems.add(
-        new Prodotto("Latte", "1", Arrays.asList(CategoriaAlimentare.VEGETARIANO.toString())));
+        new Prodotto(4,"Campagnole con farina di riso", "8076809518581", Arrays.asList(CategoriaAlimentare.VEGETARIANO.toString())));
     dailyPlanItems.add(
-        new Prodotto("Pane", "2", Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
+        new Prodotto(3, "Uova biologiche 6 uova", "8002790048554", Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
     dailyPlanItems.add(
-        new Prodotto("Uova", "3", Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
+        new Prodotto(2, "Marinated Tofu 160 g", "5013683305466", Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
 
     // Aggiungere altri prodotti se necessario
     return dailyPlanItems;

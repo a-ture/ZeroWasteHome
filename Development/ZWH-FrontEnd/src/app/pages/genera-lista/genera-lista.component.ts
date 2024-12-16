@@ -31,8 +31,8 @@ export class GeneraListaComponent implements OnInit {
   constructor(private shoppingListService: ShoppingListService) {}
 
   ngOnInit(): void {
-    const email = 'test1@example.com'; // Email dinamica, eventualmente sostituire
-    this.shoppingListService.generateShoppingList(email).subscribe({
+    //const email = 'test1@example.com'; // Email dinamica, eventualmente sostituire
+    this.shoppingListService.generateShoppingList().subscribe({
       next: data => {
         console.log('Dati ricevuti dal backend:', data); // Log dei dati
 
