@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SegnalazioneRicettaService {
-  private apiUrl = `${environment.apiUrl}/utente/gestoreSegnalazioni`;
+  private apiUrl = `${environment.apiUrl}/gestore/gestoreSegnalazioni`;
 
   constructor(private http: HttpClient) {}
 
@@ -27,6 +27,17 @@ export class SegnalazioneRicettaService {
    */
   risolviSegnalazione(id: number, motivoBlocco: string): Observable<string> {
     const body = { motivoBlocco };
-    return this.http.patch<string>(`${this.apiUrl}/${id}`, body);
+    return this.http.patch<string>(`${this.apiUrl}/${id}`, body).pipe(
+      catchError(error => {
+        // Estrarre il messaggio d'errore dalla risposta
+        let errorMessage = 'Errore sconosciuto';
+        if (error?.error?.text) {
+          errorMessage = error.error.text; // Estrai il messaggio dall'oggetto errore
+        }
+
+        // Fai il throw dell'errore con il messaggio estratto
+        return throwError(() => new Error(errorMessage));
+      }),
+    );
   }
 }

@@ -22,3 +22,7 @@
   position: relative;
   z-index: 1001;
 }
+
+.intern-container p {
+  padding: 20px;
+}

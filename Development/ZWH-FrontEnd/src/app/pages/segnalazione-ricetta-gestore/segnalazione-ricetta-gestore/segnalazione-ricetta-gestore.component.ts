@@ -49,12 +49,13 @@ export class SegnalazioneRicettaGestoreComponent implements OnInit {
     this.segnalazioneService.risolviSegnalazione(id, motivoBlocco).subscribe({
       next: response => {
         console.log('Segnalazione risolta:', response);
-        alert('Segnalazione risolta con successo!');
-        this.caricaSegnalazioni(); // Aggiorna la lista delle segnalazioni
+        alert('Segnalazione risolta con successo: ' + response);
       },
       error: error => {
+        // Estrarre il messaggio di errore specifico dalla risposta
         console.error('Errore durante la risoluzione della segnalazione:', error);
-        alert('Errore durante la risoluzione della segnalazione!');
+        window.location.reload();
+        alert(error);
       },
     });
   }

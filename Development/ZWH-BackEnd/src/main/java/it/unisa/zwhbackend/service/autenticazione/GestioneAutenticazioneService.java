@@ -132,7 +132,7 @@ public class GestioneAutenticazioneService implements AutenticazioneService {
       // Se GestoreCommunity è null, restituisce il token con ruolo GESTORE_PAGAMENTO
       if (gestoreCommunity == null) {
         return jwtProvider.generateToken(
-            gestorePagamento.get().getEmail(), List.of("GESTORE_PAGAMENTO"));
+            gestorePagamento.get().getEmail(), List.of("GESTORE_PAGAMENTI"));
       }
     } else {
       // Se la password non corrisponde per GestorePagamento
@@ -140,6 +140,6 @@ public class GestioneAutenticazioneService implements AutenticazioneService {
     }
 
     // Se entrambi i gestori esistono e la password corrisponde, assegna entrambi i ruoli
-    return jwtProvider.generateToken(email, List.of("GESTORE_COMMUNITY", "GESTORE_PAGAMENTO"));
+    return jwtProvider.generateToken(email, List.of("GESTORE_COMMUNITY", "GESTORE_PAGAMENTI"));
   }
 }
