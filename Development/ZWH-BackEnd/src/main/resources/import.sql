@@ -11,7 +11,9 @@ INSERT INTO prodotto (codice_barre, nome_prodotto, img) VALUES ('8076809518581',
 INSERT INTO prodotto (codice_barre, nome_prodotto, img) VALUES ('8008343200660', 'Penne Rigate N66 500g', 'https://images.openfoodfacts.org/images/products/800/834/320/0660/front_en.76.400.jpg');
 INSERT INTO prodotto (codice_barre, nome_prodotto, img) VALUES ('3017620422003', 'Nutella 400 g', 'https://images.openfoodfacts.org/images/products/301/762/042/2003/front_en.633.400.jpg');
 INSERT INTO prodotto (codice_barre, nome_prodotto, img) VALUES ('8076809579476', 'Pancake 280g', 'https://images.openfoodfacts.org/images/products/807/680/957/9476/front_it.10.400.jpg');
+INSERT INTO prodotto (codice_barre, nome_prodotto, img) VALUES ('8019314000950', 'Bastoncini di tofu alle verdure 160 g', 'https://images.openfoodfacts.org/images/products/801/931/400/0950/front_it.34.400.jpg');
 
+INSERT INTO possiede_in_frigo (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test1@example.com", '2', '21/12/2024', 2);
 INSERT INTO possiede_in_frigo (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test1@example.com", '3', '22/12/2024', 1);
 INSERT INTO possiede_in_frigo (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test2@example.com", '2', '19/12/2024', 5);
 INSERT INTO possiede_in_frigo (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test2@example.com", '3', '27/12/2024', 3);
