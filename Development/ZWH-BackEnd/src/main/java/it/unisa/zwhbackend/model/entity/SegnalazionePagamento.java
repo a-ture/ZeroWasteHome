@@ -10,8 +10,7 @@ import java.time.LocalDateTime;
  * "segnalazione_pagamento" nel database.
  *
  * <p>Annota l'entità con {@code @Entity} per indicare che è una classe JPA. Usa {@code @Table} per
- * specificare il nome della tabella nel database. Usa {@code @Data} di Lombok per generare
- * automaticamente i metodi getter, setter, toString, equals e hashCode.
+ * specificare il nome della tabella nel database.
  *
  * @author Benito Farina
  */

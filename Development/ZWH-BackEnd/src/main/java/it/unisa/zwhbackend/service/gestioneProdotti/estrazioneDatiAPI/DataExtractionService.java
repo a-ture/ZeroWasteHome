@@ -6,6 +6,17 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Servizio per l'estrazione dei dettagli di un prodotto dall'API Open Food Facts.
+ *
+ * <p>Questo servizio interagisce con l'API di Open Food Facts per recuperare i dettagli di un
+ * prodotto in base al codice a barre fornito. Elabora la risposta e estrae informazioni rilevanti,
+ * tra cui i dati nutrizionali, il nome del prodotto, gli ingredienti, le etichette e altro ancora.
+ * Il servizio include anche la logica per determinare che un prodotto sia senza glutine, vegano o
+ * vegetariano, in base ai dati disponibili.
+ *
+ * @author Marco Renella
+ */
 @Service
 public class DataExtractionService {
 

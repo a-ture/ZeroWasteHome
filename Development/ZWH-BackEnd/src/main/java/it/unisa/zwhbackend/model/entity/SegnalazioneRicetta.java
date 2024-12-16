@@ -10,8 +10,7 @@ import jakarta.validation.constraints.NotBlank;
  *
  * <p>Questa classe mappa la tabella "segnalazione_ricetta" nel database e include le regole di
  * validazione per i campi. Utilizza le annotazioni di Jakarta Persistence (@Entity, @Table) per
- * configurare l'entità come una classe JPA. Lombok viene utilizzato per generare automaticamente i
- * metodi getter, setter, toString, equals e hashCode.
+ * configurare l'entità come una classe JPA.
  *
  * @author Giovanni Balzano
  */

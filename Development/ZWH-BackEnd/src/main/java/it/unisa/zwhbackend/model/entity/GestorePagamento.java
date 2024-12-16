@@ -10,8 +10,7 @@ import jakarta.validation.constraints.Size;
  * "gestore_pagamenti" nel database.
  *
  * <p>Annota l'entità con {@code @Entity} per indicare che è una classe JPA. Usa {@code @Table} per
- * specificare il nome della tabella nel database. Usa {@code @Data} di Lombok per generare
- * automaticamente i metodi getter, setter, toString, equals e hashCode.
+ * specificare il nome della tabella nel database.
  *
  * @author Benito Farina
  */
@@ -54,38 +53,76 @@ public class GestorePagamento {
   @Column(nullable = false)
   private String password;
 
+  /**
+   * Costruttore per inizializzare un oggetto GestorePagamento con nome, email e password.
+   *
+   * @param nome il nome del gestore dei pagamenti
+   * @param email l'email del gestore dei pagamenti
+   * @param password la password del gestore dei pagamenti
+   */
   public GestorePagamento(String nome, String email, String password) {
     this.nome = nome;
     this.email = email;
     this.password = password;
   }
 
+  /** Costruttore vuoto per la creazione di oggetti GestorePagamento senza parametri. */
   public GestorePagamento() {
     // costruttore vuoto
   }
 
+  /**
+   * Ottiene il nome del gestore dei pagamenti.
+   *
+   * @return il nome del gestore dei pagamenti
+   */
   public String getNome() {
     return nome;
   }
 
+  /**
+   * Imposta il nome del gestore dei pagamenti.
+   *
+   * @param nome il nome del gestore da impostare
+   */
   public void setNome(String nome) {
     this.nome = nome;
   }
 
+  /**
+   * Ottiene l'email del gestore dei pagamenti.
+   *
+   * @return l'email del gestore dei pagamenti
+   */
   public String getEmail() {
     return email;
   }
 
+  /**
+   * Imposta l'email del gestore dei pagamenti.
+   *
+   * @param email l'email del gestore da impostare
+   */
   public void setEmail(String email) {
     this.email = email;
   }
 
+  /**
+   * Ottiene la password del gestore dei pagamenti.
+   *
+   * @return la password del gestore dei pagamenti
+   */
   public @NotBlank(message = "La password è obbligatoria") @Size(
       min = 8,
       message = "La password deve avere almeno 8 caratteri") String getPassword() {
     return password;
   }
 
+  /**
+   * Imposta la password del gestore dei pagamenti.
+   *
+   * @param password la password del gestore da impostare
+   */
   public void setPassword(
       @NotBlank(message = "La password è obbligatoria")
           @Size(min = 8, message = "La password deve avere almeno 8 caratteri")

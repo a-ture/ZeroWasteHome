@@ -87,6 +87,17 @@ public interface ProdottoService {
    */
   List<ProdottoRequestDTO> visualizzaProdottiDispensa(String email);
 
+  /**
+   * Visualizza i prodotti presenti nel frigo di un utente.
+   *
+   * <p>Recupera tutti i prodotti associati al frigo dell'utente specificato. Ogni prodotto include
+   * dettagli come nome, codice a barre, quantità e data di scadenza.
+   *
+   * @param email l'email dell'utente di cui si vogliono visualizzare i prodotti nel frigo; non può
+   *     essere nulla
+   * @return una lista di {@link ProdottoRequestDTO} che rappresentano i prodotti nel frigo
+   * @throws IllegalStateException se l'utente specificato non esiste nel sistema
+   */
   List<ProdottoRequestDTO> visualizzaProdottiFrigo(String email);
 
   /**

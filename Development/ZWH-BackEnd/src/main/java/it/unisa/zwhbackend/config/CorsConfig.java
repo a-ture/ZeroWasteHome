@@ -11,6 +11,8 @@ import org.springframework.web.filter.CorsFilter;
  *
  * <p>Questa classe configura le regole CORS (Cross-Origin Resource Sharing) per consentire la
  * comunicazione tra il frontend e il backend.
+ *
+ * @author Marco Renella
  */
 @Configuration
 public class CorsConfig {
