@@ -89,7 +89,11 @@ export class PaginaAlimentiComponent implements OnInit {
     if (this.activeLabel === 'Dispensa' && this.searchQuery) {
       this.cercaProdotti(this.searchQuery);
     } else if (!this.searchQuery) {
-      this.fetchDispensaProducts();
+      if (this.activeLabel === 'Dispensa') {
+        this.fetchDispensaProducts();
+      } else {
+        this.fetchFrigoProduct();
+      }
     }
   }
 
