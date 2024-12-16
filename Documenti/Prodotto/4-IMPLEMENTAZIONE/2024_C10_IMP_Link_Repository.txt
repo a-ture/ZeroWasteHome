@@ -1,0 +1,5 @@
+# ZeroWaste Home Project Repository
+
+Questa repository contiene tutto il codice, la documentazione e i file relativi al progetto ZeroWaste Home.
+
+Link alla repository: https://github.com/a-ture/ZeroWasteHome
