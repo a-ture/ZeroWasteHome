@@ -49,7 +49,7 @@ export class LoginGestoreService {
 
         if (roles == 'GESTORE_COMMUNITY') {
           this.router.navigate(['/gestore-community']);
-        } else if (roles == 'GESTORE_PAGAMENTO') {
+        } else if (roles == 'GESTORE_PAGAMENTI') {
           this.router.navigate(['/gestore-segnalazioni']);
         }
       }),

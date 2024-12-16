@@ -38,6 +38,7 @@ INSERT INTO possiede_in_dispensa (utente_email, prodotto_id, data_scadenza, quan
 INSERT INTO possiede_in_dispensa (utente_email, prodotto_id, data_scadenza, quantita) VALUES ("test2@example.com", '6', '25/01/2025', 2);
 
 INSERT INTO segnalazione_pagamento (`data_creazione`, `descrizione_problema`, `utente_email`, `stato`) VALUES ('2024-12-12', "ho un problema nel pagamento dell'abbonamento", 'test1@example.com', 'APERTA');
+INSERT INTO segnalazione_pagamento (`data_creazione`, `descrizione_problema`, `utente_email`, `stato`) VALUES ('2024-12-18', "non riesco a disattivare il mio abbonamento", 'test2@example.com', 'APERTA');
 
 INSERT INTO ZeroWasteHome.ricetta (quantita_per_persona, nome, istruzioni, img, utente_email, categoria) VALUES ('2', 'PANNA MONTATA', 'Versa la panna in una ciotola e monta con una frusta fino a ottenere una consistenza ferma.', 'panna_montata.jpg', 'test1@example.com', 'DOLCE');
 INSERT INTO ZeroWasteHome.ricetta (quantita_per_persona, nome, istruzioni, img, utente_email, categoria) VALUES ('1', 'PASTA AL POMODORO', 'Cuoci la pasta in acqua salata e aggiungi il sugo di pomodoro precedentemente preparato.', 'pasta_pomodoro.jpg', 'test2@example.com', 'PRIMO');

@@ -18,7 +18,7 @@ export interface SegnalazionePagamento {
 })
 export class SegnalazionePagamentoService {
   // URL base dell'API, definito nell'ambiente
-  private apiUrl = `${environment.apiUrl}/segnalazioniPagamento`;
+  private apiUrl = `${environment.apiUrl}/gestore/segnalazioniPagamento`;
 
   // Costruttore per iniettare il servizio HttpClient
   constructor(private http: HttpClient) {}

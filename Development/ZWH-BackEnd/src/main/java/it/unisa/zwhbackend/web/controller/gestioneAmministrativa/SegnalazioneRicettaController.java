@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Giovanni Balzano
  */
 @RestController
-@RequestMapping("/api/utente/gestoreSegnalazioni")
+@RequestMapping("/api/gestore/gestoreSegnalazioni")
 public class SegnalazioneRicettaController {
 
   // Variabile per memorizzare il servizio che gestisce le segnalazioni
@@ -81,8 +81,8 @@ public class SegnalazioneRicettaController {
 
     // Passa l'email al servizio
     String response = amministrazioneService.risolviSegnalazioneRicetta(id, email, motivoBlocco);
-    if (response.contains("successo")) {
-      return ResponseEntity.ok(response);
+    if (response.contains("successo") || response.contains("prima violazione")) {
+      return ResponseEntity.ok().body(response);
     }
     return ResponseEntity.badRequest().body(response);
   }

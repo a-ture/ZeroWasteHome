@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Benito Farina
  */
 @RestController
-@RequestMapping("/api/segnalazioniPagamento")
+@RequestMapping("/api/gestore/segnalazioniPagamento")
 public class SegnalazionePagamentoController {
 
   private final AmministrazioneService amministrazioneService;
