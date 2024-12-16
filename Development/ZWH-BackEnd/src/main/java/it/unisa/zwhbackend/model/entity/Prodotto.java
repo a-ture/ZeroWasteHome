@@ -28,7 +28,7 @@ import java.util.List;
 @Entity
 @Table(name = "prodotto")
 @JsonIgnoreProperties({
-  "utentiPossessori"
+        "utentiPossessori"
 }) // Esclude dalla serializzazione la lista utentiPossessori
 public class Prodotto {
 
@@ -51,9 +51,9 @@ public class Prodotto {
    */
   @Column(name = "codice_barre", nullable = false, unique = true)
   @Pattern(
-      regexp = "^[0-9]{8,16}$",
-      message =
-          "Il codice deve avere una lunghezza minima di 8 caratteri, massima di 16 e deve contenere solo cifre.")
+          regexp = "^[0-9]{8,16}$",
+          message =
+                  "Il codice deve avere una lunghezza minima di 8 caratteri, massima di 16 e deve contenere solo cifre.")
   private String codiceBarre;
 
   /**
@@ -64,9 +64,9 @@ public class Prodotto {
    */
   @Column(name = "nome_prodotto")
   @Pattern(
-      regexp = "^[a-zA-Z0-9\\s]{1,50}$",
-      message =
-          "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
+          regexp = "^[a-zA-Z0-9\\s]{1,50}$",
+          message =
+                  "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
   private String name;
 
   /**
@@ -87,24 +87,6 @@ public class Prodotto {
    */
   @Column(name = "img")
   private String img;
-
-  /**
-   * Getter per il campo img.
-   *
-   * @return il nome del file immagine associato al prodotto.
-   */
-  public String getImg() {
-    return img;
-  }
-
-  /**
-   * Setter per il campo img.
-   *
-   * @param img il nome del file immagine da associare al prodotto.
-   */
-  public void setImg(String img) {
-    this.img = img;
-  }
 
   /**
    * Lista degli utenti che possiedono il prodotto.
@@ -134,6 +116,21 @@ public class Prodotto {
   }
 
   /**
+   * Costruttore che inizializza il prodotto con codice a barre, nome, categorie e immagine
+   *
+   * @param codiceBarre il codice a barre del prodotto
+   * @param name il nome del prodotto
+   * @param categoria le categorie del prodotto
+   * @param img l'url dell'immagine del prodotto
+   */
+  public Prodotto(String codiceBarre, String name, List<String> categoria, String img) {
+    this.codiceBarre = codiceBarre;
+    this.name = name;
+    this.categoria = categoria;
+    this.img = img;
+  }
+
+  /**
    * Costruttore che inizializza il prodotto con id, nome, codice a barre e categorie.
    *
    * @param id l'id del prdotto
@@ -146,6 +143,24 @@ public class Prodotto {
     this.name = nomeProdotto;
     this.codiceBarre = codiceBarre;
     this.categoria = categoria;
+  }
+
+  /**
+   * Getter per il campo img.
+   *
+   * @return il nome del file immagine associato al prodotto.
+   */
+  public String getImg() {
+    return img;
+  }
+
+  /**
+   * Setter per il campo img.
+   *
+   * @param img il nome del file immagine da associare al prodotto.
+   */
+  public void setImg(String img) {
+    this.img = img;
   }
 
   /**
@@ -164,14 +179,6 @@ public class Prodotto {
    */
   public void setUtentiPossessori(List<PossiedeInFrigo> utentiPossessori) {
     this.utentiPossessori = utentiPossessori;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   /**
@@ -198,9 +205,9 @@ public class Prodotto {
    * @return il nome del prodotto
    */
   public @Pattern(
-      regexp = "^[a-zA-Z0-9\\s]{1,50}$",
-      message =
-          "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
+          regexp = "^[a-zA-Z0-9\\s]{1,50}$",
+          message =
+                  "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
   String getName() {
     return name;
   }
@@ -211,10 +218,10 @@ public class Prodotto {
    * @param name il nome del prodotto
    */
   public void setName(
-      @Pattern(
-              regexp = "^[a-zA-Z0-9\\s]{1,50}$",
-              message =
-                  "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
+          @Pattern(
+                  regexp = "^[a-zA-Z0-9\\s]{1,50}$",
+                  message =
+                          "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
           String name) {
     this.name = name;
   }
@@ -237,11 +244,22 @@ public class Prodotto {
     this.codiceBarre = codiceBarre;
   }
 
-  public Prodotto(String codiceBarre, String name, List<String> categoria, String img) {
-    this.codiceBarre = codiceBarre;
-    this.name = name;
-    this.categoria = categoria;
-    this.img = img;
+  /**
+   * Restituisce l'id del prodotto
+   *
+   * @return l'id del prodotto
+   */
+  public Long getId() {
+    return id;
+  }
+
+  /**
+   * Imposta l'id del prodotto
+   *
+   * @param id l'id del prodotto
+   */
+  public void setId(Long id) {
+    this.id = id;
   }
 
   /**
@@ -252,14 +270,14 @@ public class Prodotto {
   @Override
   public String toString() {
     return "Prodotto{"
-        + "nome='"
-        + name
-        + '\''
-        + ", codiceBarre='"
-        + codiceBarre
-        + '\''
-        + ", categoria="
-        + categoria
-        + '}';
+            + "nome='"
+            + name
+            + '\''
+            + ", codiceBarre='"
+            + codiceBarre
+            + '\''
+            + ", categoria="
+            + categoria
+            + '}';
   }
 }

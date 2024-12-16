@@ -11,8 +11,7 @@ import java.util.List;
  *
  * <p>Questa classe mappa la tabella "gestore_community" nel database e include le regole di
  * validazione per i campi. Utilizza le annotazioni di Jakarta Persistence (@Entity, @Table) per
- * configurare l'entità come una classe JPA. Lombok viene utilizzato per generare automaticamente i
- * metodi getter, setter, toString, equals e hashCode.
+ * configurare l'entità come una classe JPA.
  *
  * @author Giovanni Balzano
  */
@@ -70,31 +69,61 @@ public class GestoreCommunity {
   @OneToMany(mappedBy = "gestoreAssociato", cascade = CascadeType.ALL)
   private List<SegnalazioneRicetta> segnalazioniGestite;
 
+  /**
+   * Ottiene l'email del gestore della community.
+   *
+   * @return l'email del gestore
+   */
   public @NotBlank(message = "L'email è obbligatoria") @Email(message = "Inserisci un'email valida")
   String getEmail() {
     return email;
   }
 
+  /**
+   * Imposta l'email del gestore della community.
+   *
+   * @param email l'email del gestore da impostare
+   */
   public void setEmail(
       @NotBlank(message = "L'email è obbligatoria") @Email(message = "Inserisci un'email valida")
           String email) {
     this.email = email;
   }
 
+  /**
+   * Ottiene il nome del gestore della community.
+   *
+   * @return il nome del gestore
+   */
   public @NotBlank(message = "Il nome è obbligatorio") String getNome() {
     return nome;
   }
 
+  /**
+   * Imposta il nome del gestore della community.
+   *
+   * @param nome il nome del gestore da impostare
+   */
   public void setNome(@NotBlank(message = "Il nome è obbligatorio") String nome) {
     this.nome = nome;
   }
 
+  /**
+   * Ottiene la password del gestore della community.
+   *
+   * @return la password del gestore
+   */
   public @NotBlank(message = "La password è obbligatoria") @Size(
       min = 8,
       message = "La password deve avere almeno 8 caratteri") String getPassword() {
     return password;
   }
 
+  /**
+   * Imposta la password del gestore della community.
+   *
+   * @param password la password del gestore da impostare
+   */
   public void setPassword(
       @NotBlank(message = "La password è obbligatoria")
           @Size(min = 8, message = "La password deve avere almeno 8 caratteri")
@@ -102,10 +131,20 @@ public class GestoreCommunity {
     this.password = password;
   }
 
+  /**
+   * Ottiene le segnalazioni gestite dal gestore della community.
+   *
+   * @return una lista delle segnalazioni gestite dal gestore
+   */
   public List<SegnalazioneRicetta> getSegnalazioniGestite() {
     return segnalazioniGestite;
   }
 
+  /**
+   * Imposta le segnalazioni gestite dal gestore della community.
+   *
+   * @param segnalazioniGestite le segnalazioni da associare al gestore
+   */
   public void setSegnalazioniGestite(List<SegnalazioneRicetta> segnalazioniGestite) {
     this.segnalazioniGestite = segnalazioniGestite;
   }

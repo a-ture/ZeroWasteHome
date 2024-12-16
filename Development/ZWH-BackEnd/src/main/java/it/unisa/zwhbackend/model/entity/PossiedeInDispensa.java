@@ -13,10 +13,8 @@ import java.util.Objects;
  * <p>Annota l'entità con {@code @Entity} per indicare che è una classe JPA. Usa {@code @Table} per
  * specificare il nome della tabella nel database. La chiave primaria della tabella è composta da
  * due campi: {@code utente} e {@code prodotto}, definita nella classe {@code PossiedeInDispensaId}.
- * Usa {@code @Data} di Lombok per generare automaticamente i metodi getter, setter, toString,
- * equals e hashCode.
  *
- * <p>* @author Ferdinando
+ * @author Ferdinando
  */
 @Entity
 @Table(name = "possiede_in_dispensa")
@@ -98,34 +96,74 @@ public class PossiedeInDispensa {
     this.dataScadenza = dataScadenza;
   }
 
+  /**
+   * Restituisce l'utente associato al prodotto nella dispensa.
+   *
+   * @return l'utente
+   */
   public Utente getUtente() {
     return utente;
   }
 
+  /**
+   * Imposta l'utente associato al prodotto nella dispensa.
+   *
+   * @param utente l'utente da associare
+   */
   public void setUtente(Utente utente) {
     this.utente = utente;
   }
 
+  /**
+   * Restituisce il prodotto posseduto dall'utente nella dispensa.
+   *
+   * @return il prodotto
+   */
   public Prodotto getProdotto() {
     return prodotto;
   }
 
+  /**
+   * Imposta il prodotto posseduto dall'utente nella dispensa.
+   *
+   * @param prodotto il prodotto da associare
+   */
   public void setProdotto(Prodotto prodotto) {
     this.prodotto = prodotto;
   }
 
+  /**
+   * Restituisce la data di scadenza del prodotto.
+   *
+   * @return la data di scadenza
+   */
   public String getDataScadenza() {
     return dataScadenza;
   }
 
+  /**
+   * Imposta la data di scadenza del prodotto.
+   *
+   * @param dataScadenza la data da impostare
+   */
   public void setDataScadenza(String dataScadenza) {
     this.dataScadenza = dataScadenza;
   }
 
+  /**
+   * Restituisce la quantità di prodotto presente nella dispensa.
+   *
+   * @return la quantità del prodotto
+   */
   public int getQuantita() {
     return quantita;
   }
 
+  /**
+   * Imposta la quantità di prodotto presente nella dispensa.
+   *
+   * @param quantita la quantità da impostare
+   */
   public void setQuantita(int quantita) {
     this.quantita = quantita;
   }
@@ -180,26 +218,56 @@ public class PossiedeInDispensa {
       this.dataScadenza = dataScadenza;
     }
 
+    /**
+     * Restituisce l'utente associato al prodotto nella dispensa.
+     *
+     * @return l'utente
+     */
     public Utente getUtente() {
       return utente;
     }
 
+    /**
+     * Imposta l'utente associato al prodotto nella dispensa.
+     *
+     * @param utente l'utente da associare
+     */
     public void setUtente(Utente utente) {
       this.utente = utente;
     }
 
+    /**
+     * Restituisce il prodotto posseduto dall'utente nella dispensa.
+     *
+     * @return il prodotto
+     */
     public Prodotto getProdotto() {
       return prodotto;
     }
 
+    /**
+     * Imposta il prodotto posseduto dall'utente nella dispensa.
+     *
+     * @param prodotto il prodotto da associare
+     */
     public void setProdotto(Prodotto prodotto) {
       this.prodotto = prodotto;
     }
 
+    /**
+     * Restituisce la data di scadenza del prodotto.
+     *
+     * @return la data di scadenza
+     */
     public String getDataScadenza() {
       return dataScadenza;
     }
 
+    /**
+     * Imposta la data di scadenza del prodotto.
+     *
+     * @param dataScadenza la data da impostare
+     */
     public void setDataScadenza(String dataScadenza) {
       this.dataScadenza = dataScadenza;
     }

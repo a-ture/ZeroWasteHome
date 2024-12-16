@@ -313,6 +313,18 @@ public class GestioneProdottoService implements ProdottoService {
     }
   }
 
+  /**
+   * Restituisce tutti i prodotti presenti nel frigo di un utente specifico.
+   *
+   * <p>Questo metodo recupera tutte le relazioni {@link PossiedeInFrigo} associate all'utente
+   * identificato dall'email fornita, trasformandole in una lista di oggetti {@link
+   * ProdottoRequestDTO} contenenti i dettagli del prodotto, la quantità e la scadenza.
+   *
+   * @param email l'email dell'utente di cui visualizzare i prodotti nel frigo
+   * @return una lista di {@link ProdottoRequestDTO} rappresentanti i prodotti nel frigo
+   * @throws IllegalStateException se l'utente con l'email fornita non esiste
+   * @throws RuntimeException se si verifica un errore durante il recupero dei dati
+   */
   @Override
   @ExcludeGeneratedFromCodeCoverage
   public List<ProdottoRequestDTO> visualizzaProdottiFrigo(String email) {

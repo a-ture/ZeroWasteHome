@@ -13,8 +13,6 @@ import java.util.Objects;
  * <p>Annota l'entità con {@code @Entity} per indicare che è una classe JPA. Usa {@code @Table} per
  * specificare il nome della tabella nel database. La chiave primaria della tabella è composta da
  * due campi: {@code utente} e {@code prodotto}, definita nella classe {@code PossiedeInFrigoId}.
- * Usa {@code @Data} di Lombok per generare automaticamente i metodi getter, setter, toString,
- * equals e hashCode.
  *
  * @author Marco Meglio
  */
@@ -98,28 +96,58 @@ public class PossiedeInFrigo {
     this.dataScadenza = dataScadenza;
   }
 
+  /**
+   * Restituisce il prodotto posseduto dall'utente.
+   *
+   * @return il prodotto
+   */
   public Prodotto getProdotto() {
     return prodotto;
   }
 
+  /**
+   * Imposta il prodotto posseduto dall'utente.
+   *
+   * @param prodotto il prodotto da impostare
+   */
   public void setProdotto(Prodotto prodotto) {
     this.prodotto = prodotto;
   }
 
+  /**
+   * Restituisce l'utente associato al prodotto nel frigo.
+   *
+   * @return l'utente
+   */
   public Utente getUtente() {
     return utente;
   }
 
+  /**
+   * Imposta l'utente associato al prodotto nel frigo.
+   *
+   * @param utente l'utente da impostare
+   */
   public void setUtente(Utente utente) {
     this.utente = utente;
   }
 
+  /**
+   * Restituisce la data di scadenza del prodotto.
+   *
+   * @return la data di scadenza
+   */
   public @Pattern(
       regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$",
       message = "La Data deve essere del formato gg/mm/aaaa.") String getDataScadenza() {
     return dataScadenza;
   }
 
+  /**
+   * Imposta la data di scadenza del prodotto.
+   *
+   * @param dataScadenza la data di scadenza da impostare
+   */
   public void setDataScadenza(
       @Pattern(
               regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$",
@@ -128,11 +156,21 @@ public class PossiedeInFrigo {
     this.dataScadenza = dataScadenza;
   }
 
+  /**
+   * Restituisce la quantità del prodotto nel frigo.
+   *
+   * @return la quantità del prodotto
+   */
   @Min(value = 1, message = "La Quantità deve essere un numero positivo maggiore di zero.")
   public int getQuantita() {
     return quantita;
   }
 
+  /**
+   * Imposta la quantità del prodotto nel frigo.
+   *
+   * @param quantita la quantità da impostare
+   */
   public void setQuantita(
       @Min(value = 1, message = "La Quantità deve essere un numero positivo maggiore di zero.")
           int quantita) {
@@ -189,26 +227,56 @@ public class PossiedeInFrigo {
       this.dataScadenza = dataScadenza;
     }
 
+    /**
+     * Restituisce l'utente associato al prodotto nel frigo.
+     *
+     * @return l'utente
+     */
     public Utente getUtente() {
       return utente;
     }
 
+    /**
+     * Imposta l'utente associato al prodotto nel frigo.
+     *
+     * @param utente l'utente da impostare
+     */
     public void setUtente(Utente utente) {
       this.utente = utente;
     }
 
+    /**
+     * Restituisce il prodotto posseduto dall'utente nel frigo.
+     *
+     * @return il prodotto
+     */
     public Prodotto getProdotto() {
       return prodotto;
     }
 
+    /**
+     * Imposta il prodotto posseduto dall'utente nel frigo.
+     *
+     * @param prodotto il prodotto da impostare
+     */
     public void setProdotto(Prodotto prodotto) {
       this.prodotto = prodotto;
     }
 
+    /**
+     * Restituisce la data di scadenza del prodotto.
+     *
+     * @return la data di scadenza
+     */
     public String getDataScadenza() {
       return dataScadenza;
     }
 
+    /**
+     * Imposta la data di scadenza del prodotto.
+     *
+     * @param dataScadenza la data di scadenza da impostare
+     */
     public void setDataScadenza(String dataScadenza) {
       this.dataScadenza = dataScadenza;
     }

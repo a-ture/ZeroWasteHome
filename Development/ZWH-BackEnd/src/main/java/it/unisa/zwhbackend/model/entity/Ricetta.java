@@ -10,9 +10,8 @@ import java.util.List;
  * le regole di validazione per i campi.
  *
  * <p>Annota l'entità con {@code @Entity} per indicare che è una classe JPA. Usa {@code @Table} per
- * specificare il nome della tabella nel database. Usa {@code @Data} di Lombok per generare
- * automaticamente i metodi getter, setter, toString, equals e hashCode. Include regole di
- * validazione per i campi con le annotazioni di Jakarta Validation.
+ * specificare il nome della tabella nel database. Include regole di validazione per i campi con le
+ * annotazioni di Jakarta Validation.
  *
  * @author Anna Tagliamonte
  */
@@ -117,14 +116,29 @@ public class Ricetta {
 
   // Getter e Setter
 
+  /**
+   * Restituisce l'identificatore univoco della ricetta.
+   *
+   * @return l'identificatore univoco della ricetta
+   */
   public Long getId() {
     return id;
   }
 
+  /**
+   * Imposta l'identificatore univoco della ricetta.
+   *
+   * @param id l'identificatore da impostare
+   */
   public void setId(Long id) {
     this.id = id;
   }
 
+  /**
+   * Restituisce il nome della ricetta.
+   *
+   * @return il nome della ricetta
+   */
   public @NotBlank(message = "Il campo 'Nome della ricetta' è obbligatorio") @Size(
       min = 1,
       max = 100,
@@ -132,6 +146,11 @@ public class Ricetta {
     return nome;
   }
 
+  /**
+   * Imposta il nome della ricetta.
+   *
+   * @param nome il nome da impostare
+   */
   public void setNome(
       @NotBlank(message = "Il campo 'Nome della ricetta' è obbligatorio")
           @Size(
@@ -142,11 +161,21 @@ public class Ricetta {
     this.nome = nome;
   }
 
+  /**
+   * Restituisce l'elenco degli ingredienti della ricetta.
+   *
+   * @return l'elenco degli ingredienti
+   */
   public @NotNull(message = "L'elenco ingredienti non può essere nullo") @NotEmpty(
       message = "L'elenco ingredienti non può essere vuoto") List<String> getIngredienti() {
     return ingredienti;
   }
 
+  /**
+   * Imposta l'elenco degli ingredienti della ricetta.
+   *
+   * @param ingredienti l'elenco degli ingredienti da impostare
+   */
   public void setIngredienti(
       @NotNull(message = "L'elenco ingredienti non può essere nullo")
           @NotEmpty(message = "L'elenco ingredienti non può essere vuoto")
@@ -154,12 +183,22 @@ public class Ricetta {
     this.ingredienti = ingredienti;
   }
 
+  /**
+   * Restituisce le istruzioni per preparare la ricetta.
+   *
+   * @return le istruzioni della ricetta
+   */
   public @NotBlank(message = "Il campo 'Istruzioni' è obbligatorio") @Size(
       max = 5000,
       message = "Le istruzioni non possono superare i 5000 caratteri") String getIstruzioni() {
     return istruzioni;
   }
 
+  /**
+   * Imposta le istruzioni per preparare la ricetta.
+   *
+   * @param istruzioni le istruzioni da impostare
+   */
   public void setIstruzioni(
       @NotBlank(message = "Il campo 'Istruzioni' è obbligatorio")
           @Size(max = 5000, message = "Le istruzioni non possono superare i 5000 caratteri")
@@ -167,17 +206,32 @@ public class Ricetta {
     this.istruzioni = istruzioni;
   }
 
+  /**
+   * Restituisce la categoria della ricetta.
+   *
+   * @return la categoria della ricetta
+   */
   public @NotNull(message = "Seleziona una categoria valida per la ricetta") CategoriaRicetta
       getCategoria() {
     return categoria;
   }
 
+  /**
+   * Imposta la categoria della ricetta.
+   *
+   * @param categoria la categoria da impostare
+   */
   public void setCategoria(
       @NotNull(message = "Seleziona una categoria valida per la ricetta")
           CategoriaRicetta categoria) {
     this.categoria = categoria;
   }
 
+  /**
+   * Restituisce l'URL o il percorso dell'immagine della ricetta.
+   *
+   * @return l'URL dell'immagine
+   */
   public @Pattern(
       regexp = ".*\\.(jpg|png)$",
       message = "Formato immagine non supportato. Carica un file in formato JPG o PNG") String
@@ -185,6 +239,11 @@ public class Ricetta {
     return img;
   }
 
+  /**
+   * Imposta l'URL o il percorso dell'immagine della ricetta.
+   *
+   * @param img l'URL da impostare
+   */
   public void setImg(
       @Pattern(
               regexp = ".*\\.(jpg|png)$",
@@ -193,29 +252,59 @@ public class Ricetta {
     this.img = img;
   }
 
+  /**
+   * Restituisce la quantità per persona della ricetta.
+   *
+   * @return la quantità per persona
+   */
   @Min(value = 1, message = "La quantità per persona deve essere almeno 1")
   public int getQuantitaPerPersona() {
     return quantitaPerPersona;
   }
 
+  /**
+   * Imposta la quantità per persona della ricetta.
+   *
+   * @param quantitaPerPersona la quantità da impostare
+   */
   public void setQuantitaPerPersona(
       @Min(value = 1, message = "La quantità per persona deve essere almeno 1")
           int quantitaPerPersona) {
     this.quantitaPerPersona = quantitaPerPersona;
   }
 
+  /**
+   * Restituisce l'autore della ricetta.
+   *
+   * @return l'autore della ricetta
+   */
   public Utente getAutore() {
     return autore;
   }
 
+  /**
+   * Imposta l'autore della ricetta.
+   *
+   * @param autore l'autore da impostare
+   */
   public void setAutore(Utente autore) {
     this.autore = autore;
   }
 
+  /**
+   * Restituisce le segnalazioni associate alla ricetta.
+   *
+   * @return l'elenco delle segnalazioni
+   */
   public List<SegnalazioneRicetta> getSegnalazioniRicetta() {
     return segnalazioniRicetta;
   }
 
+  /**
+   * Imposta le segnalazioni per la ricetta.
+   *
+   * @param segnalazioniRicetta l'elenco delle segnalazioni da impostare
+   */
   public void setSegnalazioniRicetta(List<SegnalazioneRicetta> segnalazioniRicetta) {
     this.segnalazioniRicetta = segnalazioniRicetta;
   }

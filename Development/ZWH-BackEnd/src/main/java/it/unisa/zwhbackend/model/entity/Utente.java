@@ -93,12 +93,14 @@ public class Utente {
   @JsonIgnore
   private List<ListaBloccati> listaBloccati = new ArrayList<>();
 
-  // Conta il numero di volte in cui è stato eliminata una ricetta dell'utente per violazioni delle
-  // linee guida
+  /**
+   * Conta il numero di volte in cui è stato eliminata una ricetta dell'utente per violazioni delle
+   * linee guida
+   */
   @Column(nullable = false, columnDefinition = "int default 0")
   private int numeroSegnalazioni;
 
-  // Stabilisce se un utente è bloccato o meno
+  /** Determina se un utente è bloccato o meno */
   @Column(nullable = false, columnDefinition = "int default 0")
   private Boolean bloccato = Boolean.FALSE;
 
