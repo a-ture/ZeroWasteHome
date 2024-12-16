@@ -28,7 +28,7 @@ import java.util.List;
 @Entity
 @Table(name = "prodotto")
 @JsonIgnoreProperties({
-        "utentiPossessori"
+  "utentiPossessori"
 }) // Esclude dalla serializzazione la lista utentiPossessori
 public class Prodotto {
 
@@ -51,9 +51,9 @@ public class Prodotto {
    */
   @Column(name = "codice_barre", nullable = false, unique = true)
   @Pattern(
-          regexp = "^[0-9]{8,16}$",
-          message =
-                  "Il codice deve avere una lunghezza minima di 8 caratteri, massima di 16 e deve contenere solo cifre.")
+      regexp = "^[0-9]{8,16}$",
+      message =
+          "Il codice deve avere una lunghezza minima di 8 caratteri, massima di 16 e deve contenere solo cifre.")
   private String codiceBarre;
 
   /**
@@ -64,9 +64,9 @@ public class Prodotto {
    */
   @Column(name = "nome_prodotto")
   @Pattern(
-          regexp = "^[a-zA-Z0-9\\s]{1,50}$",
-          message =
-                  "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
+      regexp = "^[a-zA-Z0-9\\s]{1,50}$",
+      message =
+          "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
   private String name;
 
   /**
@@ -205,9 +205,9 @@ public class Prodotto {
    * @return il nome del prodotto
    */
   public @Pattern(
-          regexp = "^[a-zA-Z0-9\\s]{1,50}$",
-          message =
-                  "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
+      regexp = "^[a-zA-Z0-9\\s]{1,50}$",
+      message =
+          "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
   String getName() {
     return name;
   }
@@ -218,10 +218,10 @@ public class Prodotto {
    * @param name il nome del prodotto
    */
   public void setName(
-          @Pattern(
-                  regexp = "^[a-zA-Z0-9\\s]{1,50}$",
-                  message =
-                          "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
+      @Pattern(
+              regexp = "^[a-zA-Z0-9\\s]{1,50}$",
+              message =
+                  "La lunghezza massima per questo campo è 50 caratteri e deve contenere solo lettere dell'alfabeto.")
           String name) {
     this.name = name;
   }
@@ -270,14 +270,14 @@ public class Prodotto {
   @Override
   public String toString() {
     return "Prodotto{"
-            + "nome='"
-            + name
-            + '\''
-            + ", codiceBarre='"
-            + codiceBarre
-            + '\''
-            + ", categoria="
-            + categoria
-            + '}';
+        + "nome='"
+        + name
+        + '\''
+        + ", codiceBarre='"
+        + codiceBarre
+        + '\''
+        + ", categoria="
+        + categoria
+        + '}';
   }
 }
