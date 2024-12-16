@@ -39,6 +39,7 @@ public class GestioneListaSpesaService implements ListaSpesaService {
    *     dei prodotti presenti in frigo.
    * @param possiedeInDispensaRepository Repository per l'entità PossiedeInDispensa, che gestisce i
    *     dati dei prodotti presenti in dispensa.
+   * @param prodottoRepository Repository per l'entità Prodotto.
    */
   @Autowired
   public GestioneListaSpesaService(
@@ -215,6 +216,12 @@ public class GestioneListaSpesaService implements ListaSpesaService {
   List<Prodotto> createStaticDailyPlanItems() {
     // Esempio di prodotti simulati per il piano giornaliero
     List<Prodotto> dailyPlanItems = new ArrayList<>();
+    dailyPlanItems.add(
+        new Prodotto(
+            4,
+            "Campagnole con farina di riso",
+            "8076809518581",
+            Arrays.asList(CategoriaAlimentare.VEGETARIANO.toString())));
     dailyPlanItems.add(
         new Prodotto(
             3,
