@@ -62,7 +62,7 @@ public class GestioneListaSpesaService implements ListaSpesaService {
    * @param products Lista dei prodotti da aggiungere alla lista della spesa.
    * @return La lista della spesa creata.
    */
-  @Transactional
+ // @Transactional
   @Override
   public ListaSpesa createShoppingList(Utente utente, List<Prodotto> products) {
     // Salva ogni prodotto che non è ancora persistito
@@ -89,7 +89,12 @@ public class GestioneListaSpesaService implements ListaSpesaService {
     shoppingList.setDataCreazione(Date.valueOf(LocalDate.now()));
 
     utente.setListaSpesa(shoppingList);
-    return ListaSpesaRepository.save(shoppingList);
+
+    if(shoppingList == null) {
+      shoppingList = new ListaSpesa();
+    }
+    ListaSpesaRepository.save(shoppingList);
+    return shoppingList;
   }
 
   /**
@@ -212,8 +217,6 @@ public class GestioneListaSpesaService implements ListaSpesaService {
     // Esempio di prodotti simulati per il piano giornaliero
     List<Prodotto> dailyPlanItems = new ArrayList<>();
     dailyPlanItems.add(
-        new Prodotto(4,"Campagnole con farina di riso", "8076809518581", Arrays.asList(CategoriaAlimentare.VEGETARIANO.toString())));
-    dailyPlanItems.add(
         new Prodotto(3, "Uova biologiche 6 uova", "8002790048554", Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
     dailyPlanItems.add(
         new Prodotto(2, "Marinated Tofu 160 g", "5013683305466", Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
@@ -235,6 +238,10 @@ public class GestioneListaSpesaService implements ListaSpesaService {
     if (userPreferences == null || userPreferences.isEmpty()) {
       return true; // Nessuna preferenza impostata, tutto è compatibile
     }
+
+//    if(userPreferences != null && productCategories.isEmpty()) {
+//
+//    }
     // Controlla se almeno una delle categorie del prodotto è compatibile con le preferenze
     return productCategories.stream().anyMatch(userPreferences::contains);
   }

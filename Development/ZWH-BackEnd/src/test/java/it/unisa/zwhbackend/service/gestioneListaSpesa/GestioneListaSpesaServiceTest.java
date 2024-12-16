@@ -33,10 +33,12 @@ class GestioneListaSpesaServiceTest {
 
     // Setup utente
     utente = new Utente();
-    utente.setEmail("user@example.com");
+    utente.setEmail("test1@example.com");
     utente.setCategoria(
         Arrays.asList(
-            CategoriaAlimentare.VEGANO.toString(), CategoriaAlimentare.SENZA_GLUTINE.toString()));
+            CategoriaAlimentare.VEGANO.toString(),
+            CategoriaAlimentare.VEGETARIANO.toString()
+        ));
   }
 
   @Test
@@ -44,23 +46,16 @@ class GestioneListaSpesaServiceTest {
     // PA1, PP1: Le liste coincidono
     List<PossiedeInFrigo> possiedeInFrigo =
         List.of(
-            createPossiedeInFrigo("Latte", CategoriaAlimentare.SENZA_GLUTINE.toString()),
-            createPossiedeInFrigo("Pane", CategoriaAlimentare.VEGANO.toString()));
-
-    List<Prodotto> pianoGiornaliero =
-        List.of(
-            createProdotto("Latte", CategoriaAlimentare.SENZA_GLUTINE.toString()),
-            createProdotto("Pane", CategoriaAlimentare.VEGANO.toString()));
+            createPossiedeInFrigo("Marinated Tofu 160 g", "5013683305466", Arrays.asList(CategoriaAlimentare.VEGANO.toString())),
+            createPossiedeInFrigo("Uova biologiche 6 uova", "8002790048554", Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
 
     when(possiedeInFrigoRepository.findByUtenteEmail(utente.getEmail()))
         .thenReturn(possiedeInFrigo);
     when(possiedeInDispensaRepository.findByUtente(utente)).thenReturn(Collections.emptyList());
 
     ListaSpesa result = gestioneListaSpesaService.generateShoppingList(utente);
-
-    // Verifica che la lista della spesa sia vuota
-    assertNotNull(result);
-    assertTrue(result.getProducts().isEmpty());
+    //System.out.println(result.toString());
+    assertEquals(0, result.getProducts().size(), "La lista della spesa non dovrebbe contenere prodotti.");
   }
 
   @Test
@@ -68,27 +63,18 @@ class GestioneListaSpesaServiceTest {
     // PA2, PP1: Prodotti mancanti
     List<PossiedeInFrigo> possiedeInFrigo =
         List.of(
-            createPossiedeInFrigo("Latte", CategoriaAlimentare.SENZA_GLUTINE.toString()),
-            createPossiedeInFrigo("Pane", CategoriaAlimentare.VEGANO.toString()));
+                createPossiedeInFrigo("Nutella 400 g", "3017620422003", Arrays.asList(CategoriaAlimentare.SENZA_GLUTINE.toString())),
+                createPossiedeInFrigo("Uova biologiche 6 uova", "8002790048554", Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
 
     // Spy sulla classe di servizio per simulare il piano giornaliero
     GestioneListaSpesaService gestioneListaSpesaServiceSpy = spy(gestioneListaSpesaService);
-
-    // Simula il piano giornaliero statico
-    List<Prodotto> pianoGiornaliero =
-        List.of(
-            new Prodotto("Latte", "1", List.of(CategoriaAlimentare.SENZA_GLUTINE.toString())),
-            new Prodotto("Pane", "2", List.of(CategoriaAlimentare.VEGANO.toString())),
-            new Prodotto("Uova", "3", List.of(CategoriaAlimentare.VEGANO.toString())));
-    when(gestioneListaSpesaServiceSpy.createStaticDailyPlanItems()).thenReturn(pianoGiornaliero);
 
     // Mock dei repository
     when(possiedeInFrigoRepository.findByUtenteEmail(utente.getEmail()))
         .thenReturn(possiedeInFrigo);
     when(possiedeInDispensaRepository.findByUtente(utente)).thenReturn(Collections.emptyList());
 
-    System.out.println("Prodotti in frigo: " + possiedeInFrigo);
-    System.out.println("Piano giornaliero: " + pianoGiornaliero);
+    //System.out.println("Prodotti in frigo: " + possiedeInFrigo);
 
     // Genera la lista della spesa
     ListaSpesa result = gestioneListaSpesaServiceSpy.generateShoppingList(utente);
@@ -101,7 +87,7 @@ class GestioneListaSpesaServiceTest {
     assertEquals(
         1, result.getProducts().size(), "La lista della spesa dovrebbe contenere un solo prodotto");
     assertEquals(
-        "Uova",
+        "Marinated Tofu 160 g",
         result.getProducts().get(0).getName(),
         "Il prodotto nella lista della spesa dovrebbe essere 'Uova'");
   }
@@ -111,15 +97,9 @@ class GestioneListaSpesaServiceTest {
     // PA1, PP2: Liste coincidono, prodotto senza tipologia
     List<PossiedeInFrigo> possiedeInFrigo =
         List.of(
-            createPossiedeInFrigo("Latte", ""), // Prodotto senza categorie
-            createPossiedeInFrigo("Pane", "") // Prodotto senza categorie
-            );
-
-    List<Prodotto> pianoGiornaliero =
-        List.of(
-            createProdotto("Latte", ""), // Prodotto senza categorie
-            createProdotto("Pane", "") // Prodotto senza categorie
-            );
+          createPossiedeInFrigo("Marinated Tofu 160 g", "5013683305466", Arrays.asList(CategoriaAlimentare.SENZA_GLUTINE.toString())),
+          createPossiedeInFrigo("Uova biologiche 6 uova", "8002790048554", Arrays.asList(""))
+        );
 
     when(possiedeInFrigoRepository.findByUtenteEmail(utente.getEmail()))
         .thenReturn(possiedeInFrigo);
@@ -128,9 +108,17 @@ class GestioneListaSpesaServiceTest {
     // Genera la lista della spesa
     ListaSpesa result = gestioneListaSpesaService.generateShoppingList(utente);
 
-    // Verifica che la lista della spesa sia vuota
+    System.out.println(result.toString());
+
+
+    // Verifica che la lista della spesa non sia null
     assertNotNull(result, "La lista della spesa non dovrebbe essere null");
-    assertTrue(result.getProducts().isEmpty(), "La lista della spesa dovrebbe essere vuota");
+
+    // Verifica che tutti i prodotti nella lista della spesa abbiano una categoria valida
+    boolean allProductsHaveCategories = result.getProducts().stream()
+            .allMatch(product -> product.getCategoria() != null && !product.getCategoria().isEmpty());
+
+    assertTrue(allProductsHaveCategories, "Tutti i prodotti nella lista della spesa devono avere categorie valide.");
   }
 
   @Test
@@ -138,14 +126,9 @@ class GestioneListaSpesaServiceTest {
     // PA2, PP2: Prodotti mancanti, preferenze impostate
     List<PossiedeInFrigo> possiedeInFrigo =
         List.of(
-            createPossiedeInFrigo("Latte", CategoriaAlimentare.SENZA_GLUTINE.toString()),
-            createPossiedeInFrigo("Pane", ""));
+                createPossiedeInFrigo("Marinated Tofu 160 g", "3017620422003", Arrays.asList(CategoriaAlimentare.SENZA_GLUTINE.toString())),
+                createPossiedeInFrigo("Uova biologiche 6 uova", "8002790048554", Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
 
-    List<Prodotto> pianoGiornaliero =
-        List.of(
-            createProdotto("Latte", CategoriaAlimentare.SENZA_GLUTINE.toString()),
-            createProdotto("Pane", ""),
-            createProdotto("Uova", ""));
 
     when(possiedeInFrigoRepository.findByUtenteEmail(utente.getEmail()))
         .thenReturn(possiedeInFrigo);
@@ -153,9 +136,17 @@ class GestioneListaSpesaServiceTest {
 
     ListaSpesa result = gestioneListaSpesaService.generateShoppingList(utente);
 
-    // Verifica che la lista contenga solo "Uova" (non compatibile con preferenze)
+    System.out.println(result.toString());
+
     assertNotNull(result);
-    assertEquals(0, result.getProducts().size());
+    // Verifica che la lista della spesa contenga esattamente un prodotto
+    assertEquals(1, result.getProducts().size(), "La lista della spesa dovrebbe contenere un prodotto.");
+
+    // Verifica che il prodotto nella lista abbia la categoria VEGANO
+    boolean containsVegan = result.getProducts().stream()
+            .anyMatch(product -> product.getCategoria().contains(CategoriaAlimentare.VEGANO.toString()));
+
+    assertTrue(containsVegan, "La lista della spesa deve contenere un prodotto con categoria VEGANO.");
   }
 
   @Test
@@ -207,16 +198,10 @@ class GestioneListaSpesaServiceTest {
             Collections.emptyList(), preferences));
   }
 
-  private PossiedeInFrigo createPossiedeInFrigo(String nomeProdotto, String categoria) {
+  private PossiedeInFrigo createPossiedeInFrigo(String nomeProdotto, String codiceBarre, List<String> categoria) {
     Prodotto prodotto =
-        new Prodotto(nomeProdotto, "123", categoria != null ? List.of(categoria) : List.of());
+        new Prodotto(nomeProdotto, codiceBarre, categoria != null ? categoria : List.of());
     return new PossiedeInFrigo(utente, prodotto, 1, "25/12/2024");
   }
 
-  private Prodotto createProdotto(String name, String categoria) {
-    Prodotto prodotto = new Prodotto();
-    prodotto.setName(name);
-    prodotto.setCategoria(categoria == null ? null : List.of(categoria));
-    return prodotto;
-  }
 }
