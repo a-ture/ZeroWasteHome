@@ -5,17 +5,14 @@ import it.unisa.zwhbackend.model.enums.CategoriaAlimentare;
 import it.unisa.zwhbackend.model.repository.ListaSpesaRepository;
 import it.unisa.zwhbackend.model.repository.PossiedeInDispensaRepository;
 import it.unisa.zwhbackend.model.repository.PossiedeInFrigoRepository;
+import it.unisa.zwhbackend.model.repository.ProdottoRepository;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import it.unisa.zwhbackend.model.repository.ProdottoRepository;
-import org.antlr.v4.runtime.misc.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementazione del servizio per la gestione delle liste della spesa.
@@ -45,10 +42,10 @@ public class GestioneListaSpesaService implements ListaSpesaService {
    */
   @Autowired
   public GestioneListaSpesaService(
-          ListaSpesaRepository shoppingListRepository,
-          PossiedeInFrigoRepository possiedeInFrigoRepository,
-          PossiedeInDispensaRepository possiedeInDispensaRepository,
-          ProdottoRepository prodottoRepository) {
+      ListaSpesaRepository shoppingListRepository,
+      PossiedeInFrigoRepository possiedeInFrigoRepository,
+      PossiedeInDispensaRepository possiedeInDispensaRepository,
+      ProdottoRepository prodottoRepository) {
     this.ListaSpesaRepository = shoppingListRepository;
     this.PossiedeInFrigoRepository = possiedeInFrigoRepository;
     this.PossiedeInDispensaRepository = possiedeInDispensaRepository;
@@ -62,17 +59,19 @@ public class GestioneListaSpesaService implements ListaSpesaService {
    * @param products Lista dei prodotti da aggiungere alla lista della spesa.
    * @return La lista della spesa creata.
    */
- // @Transactional
+  // @Transactional
   @Override
   public ListaSpesa createShoppingList(Utente utente, List<Prodotto> products) {
     // Salva ogni prodotto che non è ancora persistito
-    List<Prodotto> persistedProducts = products.stream()
-            .map(product -> {
-              if (product.getId() == null) {
-                return ProdottoRepository.save(product); // Salva il prodotto nel database
-              }
-              return product; // Ritorna il prodotto già persistito
-            })
+    List<Prodotto> persistedProducts =
+        products.stream()
+            .map(
+                product -> {
+                  if (product.getId() == null) {
+                    return ProdottoRepository.save(product); // Salva il prodotto nel database
+                  }
+                  return product; // Ritorna il prodotto già persistito
+                })
             .collect(Collectors.toList());
 
     if (utente.getListaSpesa() != null) {
@@ -90,7 +89,7 @@ public class GestioneListaSpesaService implements ListaSpesaService {
 
     utente.setListaSpesa(shoppingList);
 
-    if(shoppingList == null) {
+    if (shoppingList == null) {
       shoppingList = new ListaSpesa();
     }
     ListaSpesaRepository.save(shoppingList);
@@ -217,9 +216,17 @@ public class GestioneListaSpesaService implements ListaSpesaService {
     // Esempio di prodotti simulati per il piano giornaliero
     List<Prodotto> dailyPlanItems = new ArrayList<>();
     dailyPlanItems.add(
-        new Prodotto(3, "Uova biologiche 6 uova", "8002790048554", Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
+        new Prodotto(
+            3,
+            "Uova biologiche 6 uova",
+            "8002790048554",
+            Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
     dailyPlanItems.add(
-        new Prodotto(2, "Marinated Tofu 160 g", "5013683305466", Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
+        new Prodotto(
+            2,
+            "Marinated Tofu 160 g",
+            "5013683305466",
+            Arrays.asList(CategoriaAlimentare.VEGANO.toString())));
 
     // Aggiungere altri prodotti se necessario
     return dailyPlanItems;
@@ -239,9 +246,9 @@ public class GestioneListaSpesaService implements ListaSpesaService {
       return true; // Nessuna preferenza impostata, tutto è compatibile
     }
 
-//    if(userPreferences != null && productCategories.isEmpty()) {
-//
-//    }
+    //    if(userPreferences != null && productCategories.isEmpty()) {
+    //
+    //    }
     // Controlla se almeno una delle categorie del prodotto è compatibile con le preferenze
     return productCategories.stream().anyMatch(userPreferences::contains);
   }
